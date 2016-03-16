@@ -1,0 +1,5 @@
+build.xml
+dist/
+nbproject/private/
+build/
+.DS_Store
