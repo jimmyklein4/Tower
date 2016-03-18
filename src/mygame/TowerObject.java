@@ -1,5 +1,6 @@
 package mygame;
 
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
@@ -31,7 +32,9 @@ public class TowerObject{
     }
     //==========================================================================
     private void initPhysics(){
-        
+        RigidBodyControl towerBodyControl = new RigidBodyControl(0.0f);
+        tower.addControl(towerBodyControl);
+        msa.bullet.getPhysicsSpace().add(tower);
     }
     //==========================================================================
     private void initMesh(){

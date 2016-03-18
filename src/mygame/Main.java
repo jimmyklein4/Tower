@@ -14,9 +14,10 @@ import java.awt.Toolkit;
  */
 public class Main extends SimpleApplication {
     
-    BulletAppState bullet = new BulletAppState(); 
+    BulletAppState bullet; 
     TowerObject tower;
     Lighting light;
+    
     public static void main(String[] args) {
         Main app = new Main();
         initAppScreen(app);
@@ -25,6 +26,7 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        initPhysics();
         viewPort.setBackgroundColor(ColorRGBA.White);
         tower = new TowerObject(this);
         light = new Lighting(this);
@@ -49,5 +51,10 @@ public class Main extends SimpleApplication {
         apps.setResolution(screen.width, screen.height);
         sa.setSettings(apps);
         sa.setShowSettings(false);
+    }
+    
+    private void initPhysics(){
+        bullet = new BulletAppState();
+        stateManager.attach(bullet);
     }
 }
