@@ -10,7 +10,7 @@ import com.jme3.math.ColorRGBA;
 
 /**
  *
- * @author Expression Chris is undefined on line 12, column 14 in Templates/Classes/Class.java.
+ * @author Chris 
  */
 public class Lighting {
     Main msa;

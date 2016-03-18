@@ -2,16 +2,15 @@ package mygame;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.light.AmbientLight;
-import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Box;
+import com.jme3.system.AppSettings;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 /**
- * test
- * @author normenhansen
+ * 
+ * @author
  */
 public class Main extends SimpleApplication {
     
@@ -20,6 +19,7 @@ public class Main extends SimpleApplication {
     Lighting light;
     public static void main(String[] args) {
         Main app = new Main();
+        initAppScreen(app);
         app.start();
     }
 
@@ -28,6 +28,7 @@ public class Main extends SimpleApplication {
         viewPort.setBackgroundColor(ColorRGBA.White);
         tower = new TowerObject(this);
         light = new Lighting(this);
+        setDisplayStatView(false);
     }
 
     @Override
@@ -38,5 +39,15 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleRender(RenderManager rm) {
         //TODO: add render code
+    }
+    
+    private static void initAppScreen(SimpleApplication sa){
+        AppSettings apps = new AppSettings(true);
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        screen.width *=0.75;
+        screen.height *= 0.75;
+        apps.setResolution(screen.width, screen.height);
+        sa.setSettings(apps);
+        sa.setShowSettings(false);
     }
 }
