@@ -64,12 +64,12 @@ public class Main extends SimpleApplication {
     
     private void initSky(){
         sky = SkyFactory.createSky(assetManager, 
-        assetManager.loadTexture(""), 
-        assetManager.loadTexture("Textures/Space3.jpg"), 
-        assetManager.loadTexture("Textures/Space4.jpg"), 
-        assetManager.loadTexture("Textures/Space4.jpg"), 
-        assetManager.loadTexture("Textures/Space3.jpg"), 
-        assetManager.loadTexture("Textures/Space3.jpg"));
+        assetManager.loadTexture("Textures/SkyboxN.png"), 
+        assetManager.loadTexture("Textures/SkyboxN.png"), 
+        assetManager.loadTexture("Textures/SkyboxN.png"), 
+        assetManager.loadTexture("Textures/SkyboxN.png"), 
+        assetManager.loadTexture("Textures/SkyboxTop.png"), 
+        assetManager.loadTexture("Textures/SkyboxBottom.png"));
         rootNode.attachChild(sky);
     }
 }
