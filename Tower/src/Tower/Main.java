@@ -1,8 +1,11 @@
 package Tower;
 
+import com.jme3.scene.Node;
+import com.jme3.scene.CameraNode;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
@@ -20,6 +23,7 @@ public class Main extends SimpleApplication {
     TowerObject tower;
     Lighting light;
     Spatial sky;
+    private Node cameraTarget;
     
     public static void main(String[] args) {
         Main app = new Main();
@@ -34,6 +38,8 @@ public class Main extends SimpleApplication {
         viewPort.setBackgroundColor(ColorRGBA.White);
         tower = new TowerObject(this);
         light = new Lighting(this);
+        initCamera();
+
         setDisplayStatView(false);
     }
 
@@ -71,5 +77,19 @@ public class Main extends SimpleApplication {
         assetManager.loadTexture("Textures/SkyboxTop.png"), 
         assetManager.loadTexture("Textures/SkyboxBottom.png"));
         rootNode.attachChild(sky);
+    }
+    
+    /*TODO: Currently attaching a cameraTarget to the root node gets rid of the
+     * tower and I don't know why
+     */ 
+    private void initCamera(){
+        //CameraNode cameraNode = new CameraNode("Camera Node", getCamera());
+        //cameraTarget = new Node();
+        
+        //Setting to false for testing purposes
+        getFlyByCamera().setEnabled(false);
+        //cameraNode.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
+        //cameraTarget.attachChild(cameraNode);
+        //attachChild(cameraTarget);
     }
 }
