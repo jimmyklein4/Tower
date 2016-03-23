@@ -27,6 +27,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         initPhysics();
+        initSky();
         viewPort.setBackgroundColor(ColorRGBA.White);
         tower = new TowerObject(this);
         light = new Lighting(this);
@@ -56,5 +57,9 @@ public class Main extends SimpleApplication {
     private void initPhysics(){
         bullet = new BulletAppState();
         stateManager.attach(bullet);
+    }
+    
+    private void initSky(){
+        
     }
 }

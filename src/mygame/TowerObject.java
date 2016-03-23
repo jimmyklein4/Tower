@@ -44,9 +44,9 @@ public class TowerObject{
     private void initMat(){
         matTowerBase = new Material(msa.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
         matTowerBase.setBoolean("UseMaterialColors", true);
-        matTowerBase.setColor("Specular", ColorRGBA.Cyan);
+        matTowerBase.setColor("Specular", ColorRGBA.Yellow);
         matTowerBase.setColor("Diffuse", ColorRGBA.LightGray);
-        matTowerBase.setColor("Ambient", ColorRGBA.Cyan);
+        matTowerBase.setColor("Ambient", ColorRGBA.Yellow);
         matTowerBase.setFloat("Shininess", 10f);
     }
     //==========================================================================
@@ -73,22 +73,33 @@ public class TowerObject{
     //==========================================================================
     private ActionListener actionListener = new ActionListener(){
         public void onAction(String name, boolean isPressed, float tpf) {
-            if(name.equals("RRight")){
-                tower.rotate(0, FastMath.PI/2, 0);
-                if(rotated){
-                    rotated = false;
+            float timer;
+            float change = 0.1f;
+            if(isPressed){
+                if(name.equals("RRight")){
+                    timer = 0;
+                    while(timer < FastMath.PI/2){
+                        tower.rotate(0, change, 0);
+                        timer += change;
+                    }
+                    if(rotated){
+                        rotated = false;
+                    }
+                    else{
+                        rotated = true;
+                    }
                 }
-                else{
-                    rotated = true;
-                }
-            }
-            if(name.equals("RLeft")){
-                tower.rotate(0, -FastMath.PI/2, 0);
-                if(rotated){
-                    rotated = false;
-                }
-                else{
-                    rotated = true;
+                if(name.equals("RLeft")){
+                    timer = 0;
+                    while(timer < FastMath.PI/2){
+                        tower.rotate(0, -change, 0);
+                    }
+                    if(rotated){
+                        rotated = false;
+                    }
+                    else{
+                        rotated = true;
+                    }
                 }
             }
         }
