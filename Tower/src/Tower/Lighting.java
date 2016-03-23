@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package mygame;
+package Tower;
 
 import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;

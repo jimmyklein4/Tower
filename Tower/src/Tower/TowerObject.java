@@ -1,4 +1,4 @@
-package mygame;
+package Tower;
 
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;
