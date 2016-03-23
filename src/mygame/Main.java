@@ -4,7 +4,9 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
+import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
+import com.jme3.util.SkyFactory;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -17,6 +19,7 @@ public class Main extends SimpleApplication {
     BulletAppState bullet; 
     TowerObject tower;
     Lighting light;
+    Spatial sky;
     
     public static void main(String[] args) {
         Main app = new Main();
@@ -60,6 +63,13 @@ public class Main extends SimpleApplication {
     }
     
     private void initSky(){
-        
+        sky = SkyFactory.createSky(assetManager, 
+        assetManager.loadTexture("Textures/Space3.jpg"), 
+        assetManager.loadTexture("Textures/Space3.jpg"), 
+        assetManager.loadTexture("Textures/Space4.jpg"), 
+        assetManager.loadTexture("Textures/Space4.jpg"), 
+        assetManager.loadTexture("Textures/Space3.jpg"), 
+        assetManager.loadTexture("Textures/Space3.jpg"));
+        rootNode.attachChild(sky);
     }
 }
