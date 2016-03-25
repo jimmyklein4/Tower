@@ -35,6 +35,8 @@ public class TowerObject {
     private boolean initialPress;
     private Vector3f previousCollision;
     private  Quaternion totalRot = Quaternion.IDENTITY;
+    
+    private Quaternion front, left, right, back;
     //private CameraNode cameraNode;
     //==========================================================================
 
@@ -45,6 +47,12 @@ public class TowerObject {
     public TowerObject(Main msa) {
         this.msa = msa;
         init();
+        front = new Quaternion();
+        left = new Quaternion();
+        right = new Quaternion();
+        front.fromAngleAxis(FastMath.PI/4, new Vector3f(0,1,0));
+        left.fromAngleAxis(FastMath.PI/2, new Vector3f(0,1,0));
+        right.fromAngleAxis(3*(FastMath.PI/4), new Vector3f(0,1,0));
     }
 
     public Node getTowerNode() {
@@ -104,6 +112,7 @@ public class TowerObject {
         public void onAction(String name, boolean isPressed, float tpf) {
             float timer;
             float change = 0.1f;
+            
             if (isPressed) {
                 if (name.equals("RRight")) {
                     timer = 0;
@@ -130,6 +139,22 @@ public class TowerObject {
                 }
                 if (name.equals("Select")) {
                     initialPress = true;
+                }
+            }
+            else{
+                Vector3f axis = new Vector3f();
+                float angle = tower.getLocalRotation().toAngleAxis(axis);
+                if(angle <= 45 || angle >= 315){
+                    tower.setLocalRotation(front);
+                }
+                if(angle <= 135 && angle > 45){
+                    tower.setLocalRotation(right);
+                }
+                if(angle <= 225 && angle > 135){
+                    tower.setLocalRotation(left);
+                }
+                if(angle < 315 && angle > 225){
+                    tower.setLocalRotation(back);
                 }
             }
         }
