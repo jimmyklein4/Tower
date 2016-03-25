@@ -12,6 +12,7 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
+import com.jme3.math.Matrix3f;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
@@ -173,8 +174,9 @@ public class TowerObject {
                         previousCollision = currentCollision;
                     } else {
                         Quaternion q = computeRotation(currentCollision);
+                        Quaternion q2 = new Quaternion(0, q.getY(), 0,q.getW()).normalizeLocal();
                         previousCollision = currentCollision;
-                        totalRot = q.mult(totalRot);
+                        totalRot = q2.mult(totalRot);
                         tower.setLocalRotation(totalRot);
                         //msa.getCamera().setRotation(totalRot);
                     }
