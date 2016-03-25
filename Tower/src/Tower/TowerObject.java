@@ -51,9 +51,13 @@ public class TowerObject {
         front = new Quaternion();
         left = new Quaternion();
         right = new Quaternion();
-        front.fromAngleAxis(FastMath.PI/4, new Vector3f(0,1,0));
-        left.fromAngleAxis(FastMath.PI/2, new Vector3f(0,1,0));
-        right.fromAngleAxis(3*(FastMath.PI/4), new Vector3f(0,1,0));
+        back = new Quaternion();
+        
+        front.fromAngleAxis(0, new Vector3f(0,1,0));
+        left.fromAngleAxis(3*FastMath.PI/2, new Vector3f(0,1,0));
+        right.fromAngleAxis(FastMath.PI/2, new Vector3f(0,1,0));
+        back.fromAngleAxis(FastMath.PI, new Vector3f(0,1,0));
+        
     }
 
     public Node getTowerNode() {
@@ -111,51 +115,34 @@ public class TowerObject {
     //==========================================================================
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean isPressed, float tpf) {
-            float timer;
-            float change = 0.1f;
             
             if (isPressed) {
-                if (name.equals("RRight")) {
-                    timer = 0;
-                    while (timer < FastMath.PI / 2) {
-                        tower.rotate(0, change, 0);
-                        timer += change;
-                    }
-                    if (rotated) {
-                        rotated = false;
-                    } else {
-                        rotated = true;
-                    }
-                }
-                if (name.equals("RLeft")) {
-                    timer = 0;
-                    while (timer < FastMath.PI / 2) {
-                        tower.rotate(0, -change, 0);
-                    }
-                    if (rotated) {
-                        rotated = false;
-                    } else {
-                        rotated = true;
-                    }
-                }
                 if (name.equals("Select")) {
                     initialPress = true;
                 }
             }
             else{
                 Vector3f axis = new Vector3f();
-                float angle = tower.getLocalRotation().toAngleAxis(axis);
-                if(angle <= 45 || angle >= 315){
+                float angle = tower.getWorldRotation().toAngleAxis(axis);
+                if(angle <= Math.PI/4 || angle >= 7*Math.PI/4){
                     tower.setLocalRotation(front);
+                    System.out.println("Front " + totalRot);
+                    totalRot = tower.getLocalRotation();
                 }
-                if(angle <= 135 && angle > 45){
+                if(angle <= 3*Math.PI/4 && angle > Math.PI/4){
                     tower.setLocalRotation(right);
+                    System.out.println("Right " + totalRot);
+                    totalRot = tower.getLocalRotation();
                 }
-                if(angle <= 225 && angle > 135){
-                    tower.setLocalRotation(left);
-                }
-                if(angle < 315 && angle > 225){
+                if(angle <= 5*Math.PI/4 && angle > 3*Math.PI/4){
                     tower.setLocalRotation(back);
+                    System.out.println("Back " + totalRot);
+                    totalRot = tower.getLocalRotation();
+                }
+                if(angle <= 7*Math.PI/4 && angle >= 5*Math.PI/4){
+                    tower.setLocalRotation(left);
+                    System.out.println("Left " + totalRot);
+                    totalRot = tower.getLocalRotation();
                 }
             }
         }
@@ -168,13 +155,13 @@ public class TowerObject {
             if (name.equals("Select")) {
                 Vector3f currentCollision = getRayCollision();
                 if (currentCollision != null) {
-                    currentCollision = currentCollision.subtract(geomTowerBase.getWorldTranslation()).normalize();
+                    currentCollision = currentCollision.subtract(geomTowerBase.getWorldTranslation());
                     if (initialPress) {
                         initialPress = false;
                         previousCollision = currentCollision;
                     } else {
                         Quaternion q = computeRotation(currentCollision);
-                        Quaternion q2 = new Quaternion(0, q.getY(), 0,q.getW()).normalizeLocal();
+                        Quaternion q2 = new Quaternion(0, q.getY()*13, 0,q.getW()).normalizeLocal();
                         previousCollision = currentCollision;
                         totalRot = q2.mult(totalRot);
                         tower.setLocalRotation(totalRot);
@@ -190,6 +177,7 @@ public class TowerObject {
         CollisionResults results = new CollisionResults();
         Vector2f click2d = msa.getInputManager().getCursorPosition();
         Vector3f click3d = msa.getCamera().getWorldCoordinates(new Vector2f(click2d.x, click2d.y), 0f).clone();
+        /*
         Vector3f dir = msa.getCamera().getWorldCoordinates(new Vector2f(click2d.x, click2d.y), 1f).subtractLocal(click3d).normalizeLocal();
         Ray ray = new Ray(click3d, dir);
         tower.collideWith(ray, results);
@@ -197,15 +185,18 @@ public class TowerObject {
         for (int i = 0; i < results.size(); i++) {
             Vector3f pt = results.getCollision(i).getContactPoint();
             String target = results.getCollision(i).getGeometry().getName();
-            if (target.equals("TowerBase")) {
+            //if (target.equals("TowerBase")) {
                 float dist = results.getCollision(i).getDistance();
                 if (dist < minDist) {
                     hitVector = pt;
+  
+                    System.out.println("Selection #" + i + ": " + target + " at " + pt + ", " + dist + " WU away.");
                     minDist = dist;
                 }
-            }
+           // }
         }
-        return hitVector;
+        */
+        return click3d;
     }
     private Quaternion computeRotation(Vector3f currentCollision){
         Vector3f axis = currentCollision.cross(previousCollision);
