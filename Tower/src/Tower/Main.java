@@ -1,8 +1,10 @@
 package Tower;
 
+import com.jme3.app.DebugKeysAppState;
 import com.jme3.scene.Node;
 import com.jme3.scene.CameraNode;
 import com.jme3.app.SimpleApplication;
+import com.jme3.app.StatsAppState;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -25,6 +27,10 @@ public class Main extends SimpleApplication {
     Spatial sky;
     private Node cameraTarget;
     
+    public Main(){
+        super(new StatsAppState(), new DebugKeysAppState());
+    }
+    
     public static void main(String[] args) {
         Main app = new Main();
         initAppScreen(app);
@@ -45,7 +51,8 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        //TODO: add update code
+        cam.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
+
     }
 
     @Override
@@ -87,7 +94,7 @@ public class Main extends SimpleApplication {
         //cameraTarget = new Node();
         
         //Setting to false for testing purposes
-        getFlyByCamera().setEnabled(false);
+        //getFlyByCamera().setEnabled(false);
         //cameraNode.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
         //cameraTarget.attachChild(cameraNode);
         //attachChild(cameraTarget);

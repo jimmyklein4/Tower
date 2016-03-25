@@ -12,6 +12,7 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -31,6 +32,9 @@ public class TowerObject {
     Material matTowerBase;
     Vector2f originalCursor;
     Node tower = new Node();
+    private boolean initialPress;
+    private Vector3f previousCollision;
+    private  Quaternion totalRot = Quaternion.IDENTITY;
     //private CameraNode cameraNode;
     //==========================================================================
 
@@ -95,7 +99,6 @@ public class TowerObject {
         msa.getInputManager().addListener(actionListener, new String[]{"RLeft", "RRight", "Select"});
         msa.getInputManager().addListener(analogListener, new String[]{"Select"});
     }
-    
     //==========================================================================
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean isPressed, float tpf) {
@@ -126,37 +129,63 @@ public class TowerObject {
                     }
                 }
                 if (name.equals("Select")) {
-                    originalCursor = msa.getInputManager().getCursorPosition();
+                    initialPress = true;
                 }
             }
         }
     };
-    
     /* TODO: Set this so that you can click and drag to position the tower in 
      * different locations
      */
     private AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float value, float tpf) {
             if (name.equals("Select")) {
-                CollisionResults results = new CollisionResults();
-                Vector2f click2d = msa.getInputManager().getCursorPosition();
-                Vector3f click3d = msa.getCamera().getWorldCoordinates(new Vector2f(click2d.x, click2d.y), 0f).clone();
-                Vector3f dir = msa.getCamera().getWorldCoordinates(new Vector2f(click2d.x, click2d.y), 1f).subtractLocal(click3d).normalizeLocal();
-                Vector3f pt = new Vector3f();
-
-                Ray ray = new Ray(click3d, dir);
-                tower.collideWith(ray, results);
-                //Print whats going on 
-                for (int i = 0; i < results.size(); i++) {
-                    //float dist = results.getCollision(i).getDistance();
-                    pt = results.getCollision(i).getContactPoint();
-                    String target = results.getCollision(i).getGeometry().getName();
-                    if(target.equals("TowerBase")){
-                        //cameraNode.rotate(0, tpf, 0);
+                Vector3f currentCollision = getRayCollision();
+                if (currentCollision != null) {
+                    currentCollision = currentCollision.subtract(geomTowerBase.getWorldTranslation()).normalize();
+                    if (initialPress) {
+                        initialPress = false;
+                        previousCollision = currentCollision;
+                    } else {
+                        Quaternion q = computeRotation(currentCollision);
+                        previousCollision = currentCollision;
+                        totalRot = q.mult(totalRot);
+                        tower.setLocalRotation(totalRot);
+                        //msa.getCamera().setRotation(totalRot);
                     }
-                    //System.out.println("Selection #" + i + ": " + target + " at " + pt + ", " + dist + " WU away.");
                 }
             }
         }
     };
+
+    private Vector3f getRayCollision() {
+        Vector3f hitVector = null;
+        CollisionResults results = new CollisionResults();
+        Vector2f click2d = msa.getInputManager().getCursorPosition();
+        Vector3f click3d = msa.getCamera().getWorldCoordinates(new Vector2f(click2d.x, click2d.y), 0f).clone();
+        Vector3f dir = msa.getCamera().getWorldCoordinates(new Vector2f(click2d.x, click2d.y), 1f).subtractLocal(click3d).normalizeLocal();
+        Ray ray = new Ray(click3d, dir);
+        tower.collideWith(ray, results);
+        float minDist = Float.MAX_VALUE;
+        for (int i = 0; i < results.size(); i++) {
+            Vector3f pt = results.getCollision(i).getContactPoint();
+            String target = results.getCollision(i).getGeometry().getName();
+            if (target.equals("TowerBase")) {
+                float dist = results.getCollision(i).getDistance();
+                if (dist < minDist) {
+                    hitVector = pt;
+                    minDist = dist;
+                }
+            }
+        }
+        return hitVector;
+    }
+    private Quaternion computeRotation(Vector3f currentCollision){
+        Vector3f axis = currentCollision.cross(previousCollision);
+        float cosine = currentCollision.dot(previousCollision);
+        float alpha = -FastMath.atan2(axis.length(), cosine);
+        Quaternion q = new Quaternion();
+        q.fromAngleAxis(alpha, axis);
+        return q;
+    }
 }
