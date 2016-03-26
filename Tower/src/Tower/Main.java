@@ -21,6 +21,7 @@ import java.awt.Toolkit;
  */
 public class Main extends SimpleApplication {
     
+    private Node startNode = new Node();
     BulletAppState bullet; 
     TowerObject tower;
     Lighting light;
@@ -41,6 +42,9 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         initPhysics();
         initSky();
+        
+        startNode.setLocalTranslation(new Vector3f(0,0,4));
+        rootNode.attachChild(startNode);
         viewPort.setBackgroundColor(ColorRGBA.White);
         tower = new TowerObject(this);
         light = new Lighting(this);
@@ -58,6 +62,10 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleRender(RenderManager rm) {
         //TODO: add render code
+    }
+    
+    public Node getStartNode(){
+        return startNode;
     }
     
     private static void initAppScreen(SimpleApplication sa){

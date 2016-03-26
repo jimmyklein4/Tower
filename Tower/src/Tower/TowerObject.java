@@ -20,9 +20,12 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 /**
  * @author Chris
+ * @author Jimmy
  */
 public class TowerObject {
 
@@ -34,6 +37,7 @@ public class TowerObject {
     Vector2f originalCursor;
     Node tower = new Node();
     private boolean initialPress;
+    private Node frontNode, leftNode, rightNode, backNode;
     private Vector3f previousCollision;
     private  Quaternion totalRot = Quaternion.IDENTITY;
     
@@ -68,6 +72,7 @@ public class TowerObject {
         initMesh();
         initMat();
         initGeo();
+        initNodes();
         initPhysics();
         msa.getRootNode().attachChild(tower);
         initKeys();
@@ -101,7 +106,6 @@ public class TowerObject {
         geomTowerBase.setMaterial(matTowerBase);
         tower.attachChild(geomTowerBase);
     }
-    //TODO: Change this to click and drag for the tower
 
     private void initKeys() {
         msa.getInputManager().addMapping("Select", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
@@ -112,7 +116,44 @@ public class TowerObject {
         msa.getInputManager().addListener(actionListener, new String[]{"RLeft", "RRight", "Select"});
         msa.getInputManager().addListener(analogListener, new String[]{"Select"});
     }
-    //==========================================================================
+
+    private void initNodes(){
+        Box box = new Box(1,1,1);
+        Material boxmat = new Material(msa.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
+        boxmat.setColor("Diffuse", ColorRGBA.Blue);
+        Geometry geobox = new Geometry("box", box);
+        geobox.setMaterial(boxmat);
+        frontNode = new Node();
+        frontNode.setLocalTranslation(tower.getLocalTranslation().x, 
+                tower.getLocalTranslation().y,
+                tower.getLocalTranslation().z+4);
+        
+        rightNode = new Node();
+        rightNode.setLocalTranslation(tower.getLocalTranslation().x+4, 
+                tower.getLocalTranslation().y,
+                tower.getLocalTranslation().z);
+        
+        leftNode = new Node();
+        leftNode.setLocalTranslation(tower.getLocalTranslation().x-4, 
+                tower.getLocalTranslation().y,
+                tower.getLocalTranslation().z);
+        
+        backNode = new Node();
+        backNode.setLocalTranslation(tower.getLocalTranslation().x, 
+                tower.getLocalTranslation().y,
+                tower.getLocalTranslation().z-4);
+        
+        leftNode.attachChild(geobox);
+        tower.attachChild(frontNode);
+        tower.attachChild(rightNode);
+        tower.attachChild(leftNode);
+        tower.attachChild(backNode);
+        System.out.println("Front Node: "+ frontNode.getWorldRotation() + 
+                        "Right Node: "+ rightNode.getWorldRotation() + 
+                        "Left Node: "+ leftNode.getWorldRotation() + 
+                        "Back Node: "+ backNode.getWorldRotation());    
+    }
+    
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean isPressed, float tpf) {
             
@@ -122,28 +163,58 @@ public class TowerObject {
                 }
             }
             else{
-                Vector3f axis = new Vector3f();
+                System.out.println(msa.getCamera().getLocation());
+
+                float leftDistance = leftNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
+                float rightDistance = rightNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
+                float frontDistance = frontNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
+                float backDistance = backNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
+                
+                Float distances[] = {leftDistance,rightDistance,frontDistance,backDistance};
+                Arrays.sort(distances);
+                System.out.println(distances[0] +" " +  distances[1] +" "  + distances[2] +" "  + distances[3]);
+                System.out.println("Front Node: "+ frontNode.getWorldRotation()+ 
+                        "Right Node: "+ rightNode.getWorldRotation()+ 
+                        "Left Node: "+ leftNode.getWorldRotation()+ 
+                        "Back Node: "+ backNode.getWorldRotation()); 
+                if(leftDistance == distances[0]){
+                    tower.setLocalRotation(new Quaternion(0,0.7f,0,0.7f));
+                    System.out.println("Left " + leftDistance);
+                    totalRot = tower.getLocalRotation();
+                }else if(rightDistance == distances[0]){
+                    tower.setLocalRotation(new Quaternion(0,0.7f,0,-0.7f));
+                    System.out.println("Right " + rightDistance);
+                    totalRot = tower.getLocalRotation();
+                }else if(frontDistance == distances[0]){
+                    tower.setLocalRotation(new Quaternion(0,0,0,1));
+                    System.out.println("Front " + frontDistance);
+                    totalRot = tower.getLocalRotation();
+                }else if(backDistance == distances[0]){
+                    tower.setLocalRotation(new Quaternion(0,1,0,0));
+                    System.out.println("Back " + backDistance);
+                    totalRot = tower.getLocalRotation();
+                } else {
+                    System.out.println("Error");
+                }
+                //DISTANCETONEARPLANE DOES NOT WORK
+                
+                /*
                 float angle = tower.getWorldRotation().toAngleAxis(axis);
                 if(angle <= Math.PI/4 || angle >= 7*Math.PI/4){
-                    tower.setLocalRotation(front);
-                    System.out.println("Front " + totalRot);
-                    totalRot = tower.getLocalRotation();
+                    
                 }
                 if(angle <= 3*Math.PI/4 && angle > Math.PI/4){
-                    tower.setLocalRotation(right);
-                    System.out.println("Right " + totalRot);
-                    totalRot = tower.getLocalRotation();
+                    
                 }
                 if(angle <= 5*Math.PI/4 && angle > 3*Math.PI/4){
-                    tower.setLocalRotation(back);
-                    System.out.println("Back " + totalRot);
-                    totalRot = tower.getLocalRotation();
+                    
                 }
                 if(angle <= 7*Math.PI/4 && angle >= 5*Math.PI/4){
                     tower.setLocalRotation(left);
-                    System.out.println("Left " + totalRot);
+                    System.out.println("Left " + msa.getCamera().getLocation().distance(leftNode.getLocalTranslation()));
                     totalRot = tower.getLocalRotation();
                 }
+                */
             }
         }
     };
@@ -155,7 +226,7 @@ public class TowerObject {
             if (name.equals("Select")) {
                 Vector3f currentCollision = getRayCollision();
                 if (currentCollision != null) {
-                    currentCollision = currentCollision.subtract(geomTowerBase.getWorldTranslation());
+                    currentCollision = currentCollision.subtract(tower.getWorldTranslation());
                     if (initialPress) {
                         initialPress = false;
                         previousCollision = currentCollision;
@@ -173,29 +244,9 @@ public class TowerObject {
     };
 
     private Vector3f getRayCollision() {
-        Vector3f hitVector = null;
-        CollisionResults results = new CollisionResults();
         Vector2f click2d = msa.getInputManager().getCursorPosition();
         Vector3f click3d = msa.getCamera().getWorldCoordinates(new Vector2f(click2d.x, click2d.y), 0f).clone();
-        /*
-        Vector3f dir = msa.getCamera().getWorldCoordinates(new Vector2f(click2d.x, click2d.y), 1f).subtractLocal(click3d).normalizeLocal();
-        Ray ray = new Ray(click3d, dir);
-        tower.collideWith(ray, results);
-        float minDist = Float.MAX_VALUE;
-        for (int i = 0; i < results.size(); i++) {
-            Vector3f pt = results.getCollision(i).getContactPoint();
-            String target = results.getCollision(i).getGeometry().getName();
-            //if (target.equals("TowerBase")) {
-                float dist = results.getCollision(i).getDistance();
-                if (dist < minDist) {
-                    hitVector = pt;
-  
-                    System.out.println("Selection #" + i + ": " + target + " at " + pt + ", " + dist + " WU away.");
-                    minDist = dist;
-                }
-           // }
-        }
-        */
+
         return click3d;
     }
     private Quaternion computeRotation(Vector3f currentCollision){
