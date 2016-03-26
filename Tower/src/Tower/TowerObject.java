@@ -52,15 +52,7 @@ public class TowerObject {
     public TowerObject(Main msa) {
         this.msa = msa;
         init();
-        front = new Quaternion();
-        left = new Quaternion();
-        right = new Quaternion();
-        back = new Quaternion();
         
-        front.fromAngleAxis(0, new Vector3f(0,1,0));
-        left.fromAngleAxis(3*FastMath.PI/2, new Vector3f(0,1,0));
-        right.fromAngleAxis(FastMath.PI/2, new Vector3f(0,1,0));
-        back.fromAngleAxis(FastMath.PI, new Vector3f(0,1,0));
         
     }
 
@@ -110,14 +102,14 @@ public class TowerObject {
     private void initKeys() {
         msa.getInputManager().addMapping("Select", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
 
-        msa.getInputManager().addMapping("RLeft", new KeyTrigger(KeyInput.KEY_Q));
-        msa.getInputManager().addMapping("RRight", new KeyTrigger(KeyInput.KEY_E));
 
-        msa.getInputManager().addListener(actionListener, new String[]{"RLeft", "RRight", "Select"});
+        msa.getInputManager().addListener(actionListener, new String[]{"Select"});
         msa.getInputManager().addListener(analogListener, new String[]{"Select"});
     }
 
     private void initNodes(){
+        
+        //Box is just here as a reference point
         Box box = new Box(1,1,1);
         Material boxmat = new Material(msa.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
         boxmat.setColor("Diffuse", ColorRGBA.Blue);
@@ -147,11 +139,7 @@ public class TowerObject {
         tower.attachChild(frontNode);
         tower.attachChild(rightNode);
         tower.attachChild(leftNode);
-        tower.attachChild(backNode);
-        System.out.println("Front Node: "+ frontNode.getWorldRotation() + 
-                        "Right Node: "+ rightNode.getWorldRotation() + 
-                        "Left Node: "+ leftNode.getWorldRotation() + 
-                        "Back Node: "+ backNode.getWorldRotation());    
+        tower.attachChild(backNode);  
     }
     
     private ActionListener actionListener = new ActionListener() {
@@ -163,7 +151,6 @@ public class TowerObject {
                 }
             }
             else{
-                System.out.println(msa.getCamera().getLocation());
 
                 float leftDistance = leftNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
                 float rightDistance = rightNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
@@ -172,14 +159,9 @@ public class TowerObject {
                 
                 Float distances[] = {leftDistance,rightDistance,frontDistance,backDistance};
                 Arrays.sort(distances);
-                System.out.println(distances[0] +" " +  distances[1] +" "  + distances[2] +" "  + distances[3]);
-                System.out.println("Front Node: "+ frontNode.getWorldRotation()+ 
-                        "Right Node: "+ rightNode.getWorldRotation()+ 
-                        "Left Node: "+ leftNode.getWorldRotation()+ 
-                        "Back Node: "+ backNode.getWorldRotation()); 
+
                 if(leftDistance == distances[0]){
                     tower.setLocalRotation(new Quaternion(0,0.7f,0,0.7f));
-                    System.out.println("Left " + leftDistance);
                     totalRot = tower.getLocalRotation();
                 }else if(rightDistance == distances[0]){
                     tower.setLocalRotation(new Quaternion(0,0.7f,0,-0.7f));
@@ -187,7 +169,6 @@ public class TowerObject {
                     totalRot = tower.getLocalRotation();
                 }else if(frontDistance == distances[0]){
                     tower.setLocalRotation(new Quaternion(0,0,0,1));
-                    System.out.println("Front " + frontDistance);
                     totalRot = tower.getLocalRotation();
                 }else if(backDistance == distances[0]){
                     tower.setLocalRotation(new Quaternion(0,1,0,0));
@@ -196,25 +177,6 @@ public class TowerObject {
                 } else {
                     System.out.println("Error");
                 }
-                //DISTANCETONEARPLANE DOES NOT WORK
-                
-                /*
-                float angle = tower.getWorldRotation().toAngleAxis(axis);
-                if(angle <= Math.PI/4 || angle >= 7*Math.PI/4){
-                    
-                }
-                if(angle <= 3*Math.PI/4 && angle > Math.PI/4){
-                    
-                }
-                if(angle <= 5*Math.PI/4 && angle > 3*Math.PI/4){
-                    
-                }
-                if(angle <= 7*Math.PI/4 && angle >= 5*Math.PI/4){
-                    tower.setLocalRotation(left);
-                    System.out.println("Left " + msa.getCamera().getLocation().distance(leftNode.getLocalTranslation()));
-                    totalRot = tower.getLocalRotation();
-                }
-                */
             }
         }
     };
