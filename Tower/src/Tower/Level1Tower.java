@@ -63,13 +63,18 @@ public class Level1Tower extends Node{
         this.attachChild(geomTowerBase);
         
         ledges = new Geometry[100];
-        for(int i = 0; i < 32; i++){
+        for(int i = 0; i < 8; i++){
             ledges[i] = new Geometry("Ledge" + i, meshLedge);
             ledges[i].setMaterial(matLedge);
-            ledges[i].setLocalTranslation(-4+((i+1)*0.25f), -0.60f , 4f);
+            ledges[i].setLocalTranslation(-4+((i+1)*0.5f), -0.60f , 4f);
             this.attachChild(ledges[i]);
         }
-        //for(int i = )
+        for(int i =8; i < 16; i++){
+            ledges[i] = new Geometry("Ledge" + i, meshLedge);
+            ledges[i].setMaterial(matLedge);
+            ledges[i].setLocalTranslation(-4+((i+1)*0.5f), -0.60f+ ((i-8)*0.5f), 4f);
+            this.attachChild(ledges[i]);
+        }
     }
 
 }

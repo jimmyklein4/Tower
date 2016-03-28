@@ -60,7 +60,7 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        cam.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
+        //cam.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
 
     }
 
