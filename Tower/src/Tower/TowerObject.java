@@ -163,6 +163,7 @@ public class TowerObject {
                 if(leftDistance == distances[0]){
                     tower.setLocalRotation(new Quaternion(0,0.7f,0,0.7f));
                     totalRot = tower.getLocalRotation();
+                    System.out.print("Left " + frontDistance);
                 }else if(rightDistance == distances[0]){
                     tower.setLocalRotation(new Quaternion(0,0.7f,0,-0.7f));
                     System.out.println("Right " + rightDistance);
@@ -170,6 +171,7 @@ public class TowerObject {
                 }else if(frontDistance == distances[0]){
                     tower.setLocalRotation(new Quaternion(0,0,0,1));
                     totalRot = tower.getLocalRotation();
+                    System.out.println("Front " + frontDistance);
                 }else if(backDistance == distances[0]){
                     tower.setLocalRotation(new Quaternion(0,1,0,0));
                     System.out.println("Back " + backDistance);
