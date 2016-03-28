@@ -28,6 +28,8 @@ public class CharacterObject {
         initKeys();
         initModel();
         initPhysics();
+        //sa.getRootNode().attachChild(characterNode);
+
     }
     
     public Node getCharacterNode(){
@@ -46,13 +48,17 @@ public class CharacterObject {
         public void onAnalog(String name, float value, float tpf) {
             if(name.equals("Left")){
                 Vector3f v = characterNode.getLocalTranslation();
-                if(!(v.x < -5))
-                    characterNode.setLocalTranslation(v.x - value*5, v.y, v.z);
+                if(!(v.x < -5)){
+                    //characterNode.setLocalTranslation(v.x - value*5, v.y, v.z);
+                    characterNode.move(-tpf, 0, 0);
+                }
             }
             if(name.equals("Right")){
                 Vector3f v = characterNode.getLocalTranslation();
-                if(!(v.x < -5))
-                    characterNode.setLocalTranslation(v.x + value*5, v.y, v.z);
+                if(!(v.x < -5)){
+                    //characterNode.setLocalTranslation(v.x + value*5, v.y, v.z);
+                    characterNode.move(tpf,0,0);
+                }
             }
         }
     };
@@ -60,20 +66,19 @@ public class CharacterObject {
         //TODO: Get a real character model
         //Using oto as a placeholder model
         characterNode = (Node)sa.getAssetManager().loadModel("Models/Sinbad/Sinbad.mesh.xml");
-        //characterNode.setLocalTranslation(-3.5f,1.0f,4.5f);
+        characterNode.setLocalTranslation(0,2.0f,4.5f);
 //        
         Quaternion faceRight = new Quaternion(); 
         faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
         characterNode.setLocalRotation(faceRight);
         
         characterNode.setLocalScale(0.1f);
-        sa.getRootNode().attachChild(characterNode);
     }
     
     private void initPhysics(){
-        BetterCharacterControl characterBodyControl = new BetterCharacterControl(0.5f, 6.0f, 1.0f);
+        RigidBodyControl characterBodyControl = new RigidBodyControl(1.0f);
         characterNode.addControl(characterBodyControl);
         sa.bullet.getPhysicsSpace().add(characterNode);
-        characterBodyControl.warp(new Vector3f(-3.5f, 2.0f, 4.5f));
+        //characterBodyControl.warp(new Vector3f(0, 2.0f, 4.5f));
     }
 }

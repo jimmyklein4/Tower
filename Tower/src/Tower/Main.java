@@ -99,13 +99,13 @@ public class Main extends SimpleApplication {
     private void initCharacter(){
         oto = new CharacterObject(this);
         flyCam.setEnabled(false);
-
-        camNode = new CameraNode("Camera Node",cam);
-        camNode.setControlDir(ControlDirection.CameraToSpatial);
-        oto.getCharacterNode().attachChild(camNode);
-        camNode.setLocalTranslation(0, 0, 10);
-        camNode.lookAt(oto.getCharacterNode().getLocalTranslation(), Vector3f.UNIT_Y);
         tower.getTowerNode().attachChild(oto.getCharacterNode());
+
+        //camNode = new CameraNode("Camera Node",cam);
+        //camNode.setControlDir(ControlDirection.CameraToSpatial);
+        //oto.getCharacterNode().attachChild(camNode);
+        //camNode.setLocalTranslation(0, 0, 10);
+        //camNode.lookAt(oto.getCharacterNode().getLocalTranslation(), Vector3f.UNIT_Y);
 
     }
     

@@ -5,6 +5,7 @@
 package Tower;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
@@ -17,14 +18,14 @@ import com.jme3.scene.shape.Box;
  * @author Theo
  */
 public class Level1Tower extends Node{
-    SimpleApplication msa;
+    Main msa;
     Box meshTowerBase, meshLedge;
     Geometry geomTowerBase;
     Geometry ledges[];
     Material matTowerBase, matLedge;
     Vector2f originalCursor;
     
-    public Level1Tower(SimpleApplication msa){
+    public Level1Tower(Main msa){
         this.msa = msa;
         init();
     }
@@ -33,6 +34,7 @@ public class Level1Tower extends Node{
         initMesh();
         initMat();
         initGeo();
+        initPhysics();
     }
     private void initMesh() {
         meshTowerBase = new Box(4, 10, 4);
@@ -75,6 +77,11 @@ public class Level1Tower extends Node{
             ledges[i].setLocalTranslation(-4+((i+1)*0.5f), -0.60f+ ((i-8)*0.5f), 4f);
             this.attachChild(ledges[i]);
         }
+    }
+    private void initPhysics(){
+        RigidBodyControl towerBodyControl = new RigidBodyControl(0.0f);
+        this.addControl(towerBodyControl);
+        msa.bullet.getPhysicsSpace().add(this);
     }
 
 }
