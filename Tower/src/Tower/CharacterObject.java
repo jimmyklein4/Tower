@@ -4,6 +4,9 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
 /**
@@ -45,7 +48,14 @@ public class CharacterObject {
     private void initModel(){
         //TODO: Get a real character model
         //Using oto as a placeholder model
-        characterNode = (Node)sa.getAssetManager().loadModel("Models/Oto/Oto.mesh.xml");
+        characterNode = (Node)sa.getAssetManager().loadModel("Models/Sinbad/Sinbad.mesh.xml");
+        characterNode.setLocalTranslation(-3.5f,0,4.5f);
+        
+        Quaternion faceRight = new Quaternion(); 
+        faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
+        characterNode.setLocalRotation(faceRight);
+        
+        characterNode.scale(0.1f);
         sa.getRootNode().attachChild(characterNode);
     }
     

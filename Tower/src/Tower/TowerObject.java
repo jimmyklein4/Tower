@@ -31,11 +31,7 @@ public class TowerObject {
 
     Main msa;
     boolean rotated = false;
-    Box meshTowerBase;
-    Geometry geomTowerBase;
-    Material matTowerBase;
-    Vector2f originalCursor;
-    Node tower = new Node();
+    Level1Tower tower;
     private boolean initialPress;
     private Node frontNode, leftNode, rightNode, backNode;
     private Vector3f previousCollision;
@@ -51,6 +47,7 @@ public class TowerObject {
 
     public TowerObject(Main msa) {
         this.msa = msa;
+        tower = new Level1Tower(msa);
         init();
         
         
@@ -61,9 +58,6 @@ public class TowerObject {
     }
 
     private void init() {
-        initMesh();
-        initMat();
-        initGeo();
         initNodes();
         initPhysics();
         msa.getRootNode().attachChild(tower);
@@ -76,29 +70,7 @@ public class TowerObject {
         tower.addControl(towerBodyControl);
         msa.bullet.getPhysicsSpace().add(tower);
     }
-    //==========================================================================
-
-    private void initMesh() {
-        meshTowerBase = new Box(3, 10, 3);
-    }
-    //==========================================================================
-
-    private void initMat() {
-        matTowerBase = new Material(msa.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
-        matTowerBase.setBoolean("UseMaterialColors", true);
-        matTowerBase.setColor("Specular", ColorRGBA.Yellow);
-        matTowerBase.setColor("Diffuse", ColorRGBA.LightGray);
-        matTowerBase.setColor("Ambient", ColorRGBA.Yellow);
-        matTowerBase.setFloat("Shininess", 10f);
-    }
-    //==========================================================================
-
-    private void initGeo() {
-        geomTowerBase = new Geometry("TowerBase", meshTowerBase);
-        geomTowerBase.setMaterial(matTowerBase);
-        tower.attachChild(geomTowerBase);
-    }
-
+    
     private void initKeys() {
         msa.getInputManager().addMapping("Select", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
 

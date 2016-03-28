@@ -22,6 +22,7 @@ import java.awt.Toolkit;
 public class Main extends SimpleApplication {
     
     private Node startNode = new Node();
+    private Vector3f st = new Vector3f(0,0,4);
     BulletAppState bullet; 
     TowerObject tower;
     Lighting light;
@@ -49,6 +50,10 @@ public class Main extends SimpleApplication {
         tower = new TowerObject(this);
         light = new Lighting(this);
         initCamera();
+        
+        CharacterObject oto = new CharacterObject(this);
+        tower.tower.attachChild(oto.getCharacterNode());
+        
 
         setDisplayStatView(false);
     }
