@@ -31,7 +31,7 @@ public class TowerObject {
 
     Main msa;
     boolean rotated = false;
-    Level1Tower tower;
+    private Level1Tower tower;
     private boolean initialPress;
     private Node frontNode, leftNode, rightNode, backNode;
     private Vector3f previousCollision;
