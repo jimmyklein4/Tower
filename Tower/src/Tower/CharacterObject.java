@@ -23,6 +23,7 @@ public class CharacterObject {
     private Main sa;
     private Node characterNode = new Node();
     private Node cNode;
+    private BetterCharacterControl characterBodyControl;
     public CharacterObject(Main sa){
         this.sa = sa;
         initKeys();
@@ -51,15 +52,18 @@ public class CharacterObject {
             if(name.equals("Left")){
                 Vector3f v = characterNode.getLocalTranslation();
                 if(!(v.x < -5)){
-                    characterNode.setLocalTranslation(v.x - value*5, v.y, v.z);
+                    characterBodyControl.warp(new Vector3f(characterNode.getLocalTranslation().x-tpf, 
+                            characterNode.getLocalTranslation().y, 
+                            characterNode.getLocalTranslation().z));
                     //cNode.move(-tpf, 0, 0);
                 }
             }
             if(name.equals("Right")){
                 Vector3f v = characterNode.getLocalTranslation();
                 if(!(v.x < -5)){
-                    characterNode.setLocalTranslation(v.x + value*5, v.y, v.z);
-                    //cNode.move(tpf,0,0);
+                    characterBodyControl.warp(new Vector3f(characterNode.getLocalTranslation().x+tpf, 
+                            characterNode.getLocalTranslation().y, 
+                            characterNode.getLocalTranslation().z));                    //cNode.move(tpf,0,0);
                 }
             }
         }
@@ -73,13 +77,13 @@ public class CharacterObject {
         //characterNode.setLocalTranslation(0,2.0f,4.5f);
 //        
         Quaternion faceRight = new Quaternion(); 
-        //faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
-        //characterNode.setLocalRotation(faceRight);
+        faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
+        cNode.setLocalRotation(faceRight);
         
     }
     
     private void initPhysics(){
-        BetterCharacterControl characterBodyControl = new BetterCharacterControl(0.2f, 1f, 20f);
+        characterBodyControl = new BetterCharacterControl(0.2f, 1f, 20f);
         
         characterBodyControl.setApplyPhysicsLocal(true);
         characterNode.addControl(characterBodyControl);
