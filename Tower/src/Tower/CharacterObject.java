@@ -71,7 +71,7 @@ public class CharacterObject {
     }
     
     private void initPhysics(){
-        BetterCharacterControl characterBodyControl = new BetterCharacterControl(0.5f, 6.0, 1.0f);
+        BetterCharacterControl characterBodyControl = new BetterCharacterControl(0.5f, 6.0f, 1.0f);
         characterNode.addControl(characterBodyControl);
         sa.bullet.getPhysicsSpace().add(characterNode);
         characterBodyControl.warp(new Vector3f(-3.5f, 2.0f, 4.5f));
