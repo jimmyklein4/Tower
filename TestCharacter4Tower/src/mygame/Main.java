@@ -154,6 +154,7 @@ public class Main extends SimpleApplication {
         geomIris.setLocalTranslation(0, 0, 0.4f);
         headNode.attachChild(eyeNode);
         headNode.attachChild(geomHead);
+        headNode.setLocalTranslation(0, speed, 0);
         
         rootNode.attachChild(headNode);
     }
