@@ -10,6 +10,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.control.CameraControl.ControlDirection;
 import com.jme3.system.AppSettings;
 import com.jme3.util.SkyFactory;
 import java.awt.Dimension;
@@ -27,12 +28,13 @@ public class Main extends SimpleApplication {
     TowerObject tower;
     Lighting light;
     Spatial sky;
-    private Node cameraTarget;
-    
+    private CameraNode camNode;
+    CharacterObject oto;
+    /*
     public Main(){
         super(new StatsAppState(), new DebugKeysAppState());
     }
-    
+    */
     public static void main(String[] args) {
         Main app = new Main();
         initAppScreen(app);
@@ -43,18 +45,13 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         initPhysics();
         initSky();
-        
         startNode.setLocalTranslation(new Vector3f(0,0,4));
         rootNode.attachChild(startNode);
         viewPort.setBackgroundColor(ColorRGBA.White);
         tower = new TowerObject(this);
+        initCharacter();
         light = new Lighting(this);
         initCamera();
-        
-        CharacterObject oto = new CharacterObject(this);
-        tower.tower.attachChild(oto.getCharacterNode());
-        
-
         setDisplayStatView(false);
     }
 
@@ -86,7 +83,8 @@ public class Main extends SimpleApplication {
     private void initPhysics(){
         bullet = new BulletAppState();
         stateManager.attach(bullet);
-        
+        bullet.setDebugEnabled(true);
+
     }
     
     private void initSky(){
@@ -100,6 +98,19 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(sky);
     }
     
+    private void initCharacter(){
+        oto = new CharacterObject(this);
+        flyCam.setEnabled(false);
+        tower.getTowerNode().attachChild(oto.getCharacterNode());
+
+        //camNode = new CameraNode("Camera Node",cam);
+        //camNode.setControlDir(ControlDirection.CameraToSpatial);
+        //oto.getCharacterNode().attachChild(camNode);
+        //camNode.setLocalTranslation(0, 0, 10);
+        //camNode.lookAt(oto.getCharacterNode().getLocalTranslation(), Vector3f.UNIT_Y);
+
+    }
+    
     /*TODO: Currently attaching a cameraTarget to the root node gets rid of the
      * tower and I don't know why
      */ 
@@ -108,7 +119,7 @@ public class Main extends SimpleApplication {
         //cameraTarget = new Node();
         
         //Setting to false for testing purposes
-        //getFlyByCamera().setEnabled(false);
+        //getFlyByCamera().setEnabled(true);
         //cameraNode.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
         //cameraTarget.attachChild(cameraNode);
         //attachChild(cameraTarget);
