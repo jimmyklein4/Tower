@@ -160,7 +160,8 @@ public class TowerObject {
                 } else {
                     System.out.println("Error");
                 }
-                //msa.oto.getCharacterBodyControl().warp(msa.oto.getCharacterNode().getWorldTranslation());
+                Vector3f pos = msa.oto.follow.getWorldTranslation();
+                msa.oto.getCharacterNode().setLocalTranslation(pos.x, pos.y+0.05f, pos.z);
             }
         }
     };

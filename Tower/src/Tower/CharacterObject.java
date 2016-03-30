@@ -52,6 +52,7 @@ public class CharacterObject {
         sa.getInputManager().addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
         sa.getInputManager().addListener(actionListener, new String[]{"Jump"});
     }
+    
     private AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float value, float tpf) {
             if(name.equals("Left")){
