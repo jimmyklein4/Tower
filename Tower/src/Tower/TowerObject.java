@@ -1,5 +1,6 @@
 package Tower;
 
+import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.collision.CollisionResults;
 import com.jme3.scene.CameraNode;
@@ -12,13 +13,13 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
-import com.jme3.math.Matrix3f;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -36,6 +37,7 @@ public class TowerObject {
     private Node frontNode, leftNode, rightNode, backNode;
     private Vector3f previousCollision;
     private  Quaternion totalRot = Quaternion.IDENTITY;
+    private RigidBodyControl towerBodyControl;
     
     private Quaternion front, left, right, back;
     //private CameraNode cameraNode;
@@ -62,12 +64,12 @@ public class TowerObject {
         initPhysics();
         msa.getRootNode().attachChild(tower);
         initKeys();
-
     }
 
     private void initPhysics() {
-        RigidBodyControl towerBodyControl = new RigidBodyControl(0.0f);
+        towerBodyControl = new RigidBodyControl(0.0f);
         tower.addControl(towerBodyControl);
+        towerBodyControl.setKinematic(true);
         msa.bullet.getPhysicsSpace().add(tower);
     }
     
@@ -111,7 +113,7 @@ public class TowerObject {
         tower.attachChild(frontNode);
         tower.attachChild(rightNode);
         tower.attachChild(leftNode);
-        tower.attachChild(backNode);  
+        tower.attachChild(backNode); 
     }
     
     private ActionListener actionListener = new ActionListener() {
@@ -120,6 +122,9 @@ public class TowerObject {
             if (isPressed) {
                 if (name.equals("Select")) {
                     initialPress = true;
+                    msa.oto.follow.setLocalTranslation(msa.oto.getCharacterNode().getLocalTranslation());
+                    Vector3f pos = msa.oto.follow.getLocalTranslation();
+                    System.out.println("Follow posistion: "+ pos.x+ "," + pos.y + "," + pos.z);
                 }
             }
             else{
@@ -135,7 +140,11 @@ public class TowerObject {
                 if(leftDistance == distances[0]){
                     tower.setLocalRotation(new Quaternion(0,0.7f,0,0.7f));
                     totalRot = tower.getLocalRotation();
-                    System.out.print("Left " + frontDistance);
+                    
+                    Node cn = (Node)msa.getRootNode().getChild("characterNode");
+                    //cn.setRotation(totalRot);
+                    
+                    System.out.println("Left " + frontDistance);
                 }else if(rightDistance == distances[0]){
                     tower.setLocalRotation(new Quaternion(0,0.7f,0,-0.7f));
                     System.out.println("Right " + rightDistance);
@@ -151,6 +160,7 @@ public class TowerObject {
                 } else {
                     System.out.println("Error");
                 }
+                //msa.oto.getCharacterBodyControl().warp(msa.oto.getCharacterNode().getWorldTranslation());
             }
         }
     };
@@ -172,7 +182,8 @@ public class TowerObject {
                         previousCollision = currentCollision;
                         totalRot = q2.mult(totalRot);
                         tower.setLocalRotation(totalRot);
-                        //msa.getCamera().setRotation(totalRot);
+                        
+                        msa.oto.getCharacterBodyControl().warp(msa.oto.follow.getWorldTranslation());
                     }
                 }
             }

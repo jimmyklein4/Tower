@@ -13,6 +13,7 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 
 /**
  *
@@ -23,7 +24,8 @@ public class CharacterObject {
     
     private Main sa;
     private Node characterNode = new Node();
-    private Node cNode;
+    public Node follow = new Node();
+    private Spatial cNode;
     private BetterCharacterControl characterBodyControl;
     private Vector3f camLoc;
     
@@ -35,7 +37,7 @@ public class CharacterObject {
         sa.getRootNode().attachChild(characterNode);
         characterNode.scale(0.1f);
         characterNode.move(0, 1, 0);
-
+        characterNode.setName("characterNode");
     }
     
     public Node getCharacterNode(){
@@ -62,6 +64,7 @@ public class CharacterObject {
                     
                     camLoc = sa.getCamera().getLocation();
                     sa.getCamera().setLocation(new Vector3f(camLoc.x-tpf, camLoc.y, camLoc.z));
+                    follow.setLocalTranslation(characterNode.getLocalTranslation());
                 }
             }
             if(name.equals("Right")){
@@ -74,6 +77,7 @@ public class CharacterObject {
                     
                     camLoc = sa.getCamera().getLocation();
                     sa.getCamera().setLocation(new Vector3f(camLoc.x+tpf, camLoc.y, camLoc.z));
+                    follow.setLocalTranslation(characterNode.getLocalTranslation());
                 }
             }
         }
@@ -87,6 +91,7 @@ public class CharacterObject {
                     camLoc = sa.getCamera().getLocation();
                     camLoc.setY(characterNode.getLocalTranslation().y);
                     sa.getCamera().setLocation(camLoc);
+                    follow.setLocalTranslation(characterNode.getLocalTranslation());
                 }
             }
         }
@@ -94,7 +99,7 @@ public class CharacterObject {
     private void initModel(){
         //TODO: Get a real character model
         //Using oto as a placeholder model
-        cNode =  (Node)sa.getAssetManager().loadModel("Models/Sinbad/Sinbad.mesh.xml");
+        cNode = sa.getAssetManager().loadModel("Models/Sinbad/Sinbad.mesh.xml");
         characterNode.attachChild(cNode);
         cNode.setLocalTranslation(0, 5, 0);
         //characterNode.setLocalTranslation(0,2.0f,4.5f);
@@ -108,9 +113,14 @@ public class CharacterObject {
     private void initPhysics(){
         characterBodyControl = new BetterCharacterControl(0.2f, 1f, 20f);
         
-        characterBodyControl.setApplyPhysicsLocal(true);
+        //characterBodyControl.setApplyPhysicsLocal(true);
         characterNode.addControl(characterBodyControl);
         sa.bullet.getPhysicsSpace().add(characterNode);
         characterBodyControl.warp(new Vector3f(0, 2.0f, 4.5f));
+        
+        follow.setLocalTranslation(characterNode.getLocalTranslation());
+    }
+    public BetterCharacterControl getCharacterBodyControl(){
+        return characterBodyControl;
     }
 }

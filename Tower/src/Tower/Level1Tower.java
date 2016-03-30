@@ -81,6 +81,7 @@ public class Level1Tower extends Node{
     private void initPhysics(){
         RigidBodyControl towerBodyControl = new RigidBodyControl(0.0f);
         this.addControl(towerBodyControl);
+        towerBodyControl.setKinematic(true);
         msa.bullet.getPhysicsSpace().add(this);
     }
 

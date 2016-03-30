@@ -58,7 +58,10 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         //cam.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
-
+        Vector3f camLoc = cam.getLocation();
+        //cam.setLocation(new Vector3f(oto.getCharacterNode().getLocalTranslation().x, oto.getCharacterNode().getLocalTranslation().y, camLoc.z));
+        
+        
     }
 
     @Override
@@ -102,6 +105,7 @@ public class Main extends SimpleApplication {
         oto = new CharacterObject(this);
         flyCam.setEnabled(false);
         tower.getTowerNode().attachChild(oto.getCharacterNode());
+        tower.getTowerNode().attachChild(oto.follow);
 
         //camNode = new CameraNode("Camera Node",cam);
         //camNode.setControlDir(ControlDirection.CameraToSpatial);
@@ -111,9 +115,6 @@ public class Main extends SimpleApplication {
 
     }
     
-    /*TODO: Currently attaching a cameraTarget to the root node gets rid of the
-     * tower and I don't know why
-     */ 
     private void initCamera(){
         //CameraNode cameraNode = new CameraNode("Camera Node", getCamera());
         //cameraTarget = new Node();
