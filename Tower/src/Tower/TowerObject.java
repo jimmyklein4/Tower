@@ -122,8 +122,8 @@ public class TowerObject {
             if (isPressed) {
                 if (name.equals("Select")) {
                     initialPress = true;
-                    msa.oto.follow.setLocalTranslation(msa.oto.getCharacterNode().getLocalTranslation());
-                    Vector3f pos = msa.oto.follow.getLocalTranslation();
+                    Vector3f pos = msa.oto.getCharacterNode().getLocalTranslation();
+                    msa.oto.follow.setLocalTranslation(pos.x, pos.y+0.1f, pos.z);
                     System.out.println("Follow posistion: "+ pos.x+ "," + pos.y + "," + pos.z);
                 }
             }
