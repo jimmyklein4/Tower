@@ -59,7 +59,7 @@ public class Main extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         //cam.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
         Vector3f camLoc = cam.getLocation();
-        cam.setLocation(new Vector3f(oto.getCharacterNode().getLocalTranslation().x, oto.getCharacterNode().getLocalTranslation().y, camLoc.z));
+        //cam.setLocation(new Vector3f(oto.getCharacterNode().getWorldTranslation().x, oto.getCharacterNode().getWorldTranslation().y, camLoc.z));
         
         
     }
