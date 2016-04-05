@@ -9,8 +9,10 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
 /**
@@ -21,6 +23,7 @@ public class Level1Tower extends Node{
     Main msa;
     Box meshTowerBase, meshLedge, meshLedge2;
     Geometry geomTowerBase;
+    Spatial towerModel;
     Geometry ledges[];
     Material matTowerBase, matLedge;
     Vector2f originalCursor;
@@ -34,6 +37,7 @@ public class Level1Tower extends Node{
         initMesh();
         initMat();
         initGeo();
+        //initModel();
         initPhysics();
     }
     private void initMesh() {
@@ -102,6 +106,12 @@ public class Level1Tower extends Node{
         ledges[28].setLocalTranslation(5f, 2.9f, -5f);
         this.attachChild(ledges[28]);
         
+    }
+    private void initModel(){
+        towerModel = msa.getAssetManager().loadModel("Models/tower_test/tower_test.j3o");
+        towerModel.scale(3);
+        towerModel.move(new Vector3f(0,-2,0));
+        this.attachChild(towerModel);
     }
     private void initPhysics(){
         RigidBodyControl towerBodyControl = new RigidBodyControl(0.0f);

@@ -35,8 +35,8 @@ public class CharacterObject {
         initModel();
         initPhysics();
         sa.getRootNode().attachChild(characterNode);
-        characterNode.scale(0.1f);
-        characterNode.move(0, 1, 0);
+        characterNode.scale(0.25f);
+        //characterNode.move(0, 1, 0);
         characterNode.setName("characterNode");
     }
     
@@ -100,9 +100,10 @@ public class CharacterObject {
     private void initModel(){
         //TODO: Get a real character model
         //Using oto as a placeholder model
-        cNode = sa.getAssetManager().loadModel("Models/Sinbad/Sinbad.mesh.xml");
+        cNode = sa.getAssetManager().loadModel("Models/character/character.j3o");
         characterNode.attachChild(cNode);
         cNode.setLocalTranslation(0, 5, 0);
+        cNode.move(0, -4.5f, 0);
         //characterNode.setLocalTranslation(0,2.0f,4.5f);
 //        
         Quaternion faceRight = new Quaternion(); 
