@@ -34,10 +34,10 @@ public class Level1Tower extends Node{
     }
     
     private void init(){
-        //initMesh();
-        //initMat();
-        //initGeo();
-        initModel();
+        initMesh();
+        initMat();
+        initGeo();
+        //initModel();
         initPhysics();
     }
     private void initMesh() {
