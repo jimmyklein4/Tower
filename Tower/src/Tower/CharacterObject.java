@@ -103,7 +103,7 @@ public class CharacterObject {
         cNode = sa.getAssetManager().loadModel("Models/character/character.j3o");
         characterNode.attachChild(cNode);
         cNode.setLocalTranslation(0, 5, 0);
-        cNode.move(0, -4.5f, 0);
+        cNode.move(0, -4.8f, 0);
         //characterNode.setLocalTranslation(0,2.0f,4.5f);
 //        
         Quaternion faceRight = new Quaternion(); 
