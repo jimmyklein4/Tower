@@ -27,7 +27,7 @@ public class CharacterObject {
     public Node follow = new Node();
     private Spatial cNode;
     private BetterCharacterControl characterBodyControl;
-    private Vector3f camLoc;
+    private Vector3f camLoc, charLoc;
     private Vector3f walkDirection = new Vector3f(0,0,0);
     
     public CharacterObject(Main sa){
@@ -57,12 +57,14 @@ public class CharacterObject {
         public void onAnalog(String name, float value, float tpf) {
             if(name.equals("Left")){
                 camLoc = sa.getCamera().getLocation();
-                sa.getCamera().setLocation(new Vector3f(camLoc.x-tpf, camLoc.y, camLoc.z));
+                charLoc = characterNode.getWorldTranslation();
+                sa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
                 follow.setLocalTranslation(characterNode.getLocalTranslation());
             }
             if(name.equals("Right")){ 
                 camLoc = sa.getCamera().getLocation();
-                sa.getCamera().setLocation(new Vector3f(camLoc.x+tpf, camLoc.y, camLoc.z));
+                charLoc = characterNode.getWorldTranslation();
+                sa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
                 follow.setLocalTranslation(characterNode.getLocalTranslation());
             }
         }
