@@ -28,6 +28,7 @@ public class CharacterObject {
     private Spatial cNode;
     private BetterCharacterControl characterBodyControl;
     private Vector3f camLoc;
+    private Vector3f walkDirection = new Vector3f(0,0,0);
     
     public CharacterObject(Main sa){
         this.sa = sa;
@@ -47,10 +48,10 @@ public class CharacterObject {
     private void initKeys(){
         sa.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
         sa.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
-        sa.getInputManager().addListener(analogListener, new String[]{"Left", "Right"});
+        //sa.getInputManager().addListener(analogListener, new String[]{"Left", "Right"});
         
         sa.getInputManager().addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
-        sa.getInputManager().addListener(actionListener, new String[]{"Jump"});
+        sa.getInputManager().addListener(actionListener, new String[]{"Jump", "Left", "Right"});
     }
     
     private AnalogListener analogListener = new AnalogListener() {
@@ -58,22 +59,24 @@ public class CharacterObject {
             if(name.equals("Left")){
                 Vector3f v = characterNode.getLocalTranslation();
                 if(!(v.x < -5)){
+                    //characterBodyControl.setWalkDirection(new Vector3f(characterNode.getWorldTranslation().x-tpf, 0,0));
                     characterBodyControl.warp(new Vector3f(characterNode.getWorldTranslation().x-tpf, 
                             characterNode.getWorldTranslation().y, 
                             characterNode.getWorldTranslation().z));
                     //cNode.move(-tpf, 0, 0);
                     
                     camLoc = sa.getCamera().getLocation();
-                    sa.getCamera().setLocation(new Vector3f(camLoc.x-tpf, camLoc.y, camLoc.z));
+                    //sa.getCamera().setLocation(new Vector3f(camLoc.x-tpf, camLoc.y, camLoc.z));
                     follow.setLocalTranslation(characterNode.getLocalTranslation());
                 }
             }
             if(name.equals("Right")){
                 Vector3f v = characterNode.getLocalTranslation();
                 if(!(v.x < -5)){
-                    characterBodyControl.warp(new Vector3f(characterNode.getWorldTranslation().x+tpf, 
+                    characterBodyControl.setWalkDirection(new Vector3f(characterNode.getWorldTranslation().x-+tpf, 0,0));
+                    /*characterBodyControl.warp(new Vector3f(characterNode.getWorldTranslation().x+tpf, 
                             characterNode.getWorldTranslation().y, 
-                            characterNode.getWorldTranslation().z));                   
+                            characterNode.getWorldTranslation().z));   */                
                     //cNode.move(tpf,0,0);
                     
                     camLoc = sa.getCamera().getLocation();
@@ -94,6 +97,18 @@ public class CharacterObject {
                     sa.getCamera().setLocation(camLoc);
                     follow.setLocalTranslation(characterNode.getLocalTranslation());
                 }
+            }
+            if(name.equals("Left")){
+                if(isPressed)
+                    characterBodyControl.setWalkDirection(new Vector3f(-1, 0,0));
+                else
+                    characterBodyControl.setWalkDirection(new Vector3f(0, 0,0));
+            }
+            if(name.equals("Right")){
+                if(isPressed)
+                    characterBodyControl.setWalkDirection(new Vector3f(1, 0,0));
+                else
+                    characterBodyControl.setWalkDirection(new Vector3f(0, 0,0));
             }
         }
     };
