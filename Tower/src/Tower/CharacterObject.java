@@ -97,15 +97,17 @@ public class CharacterObject {
         }
     };
     private void initModel(){
-        //TODO: Get a real character model
-        //Using oto as a placeholder model
         cNode = sa.getAssetManager().loadModel("Models/character/character.j3o");
         characterNode.attachChild(cNode);
 //        
         Quaternion faceRight = new Quaternion(); 
         faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
         cNode.setLocalRotation(faceRight);
-        
+        //To set the camera in the location of the character
+        //WARNING: I suspect this is causing the tower to not rotate correctly
+        Vector3f camLocation = sa.getCamera().getLocation();
+        camLocation.x-=4.5f;
+        sa.getCamera().setLocation(camLocation);
     }
     
     private void initPhysics(){
@@ -114,7 +116,7 @@ public class CharacterObject {
         //characterBodyControl.setApplyPhysicsLocal(true);
         characterNode.addControl(characterBodyControl);
         sa.bullet.getPhysicsSpace().add(characterNode);
-        characterBodyControl.warp(new Vector3f(0, 2.0f, 5f));
+        characterBodyControl.warp(new Vector3f(-4.5f, 2.0f, 4.5f));
         
         follow.setLocalTranslation(characterNode.getLocalTranslation());
     }
