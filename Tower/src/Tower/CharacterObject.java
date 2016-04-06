@@ -82,17 +82,25 @@ public class CharacterObject {
                 }
             }
             if(name.equals("Left")){
-                if(isPressed)
-                    characterBodyControl.setWalkDirection(new Vector3f(-1, 0,0));
-                else
-                    characterBodyControl.setWalkDirection(new Vector3f(0, 0,0));
+                if(isPressed){
+                    walkDirection = new Vector3f(-1, 0,0).mult(1.5f);
+                    characterBodyControl.setWalkDirection(walkDirection);
+                }
+                else{
+                    walkDirection.set(0,0,0);
+                    characterBodyControl.setWalkDirection(walkDirection);
+                }
             }
             if(name.equals("Right")){
-                if(isPressed)
-                    characterBodyControl.setWalkDirection(new Vector3f(1, 0,0));
-                else
+                if(isPressed){
+                    walkDirection = new Vector3f(1, 0,0).mult(1.5f);
+                    characterBodyControl.setWalkDirection(walkDirection);
+                }
+                else{
+                    walkDirection.set(0,0,0);
                     characterBodyControl.setWalkDirection(new Vector3f(0, 0,0));
-            }
+                }                
+            }    
         }
     };
     private void initModel(){
