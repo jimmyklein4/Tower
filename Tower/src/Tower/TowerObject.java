@@ -122,8 +122,8 @@ public class TowerObject {
             if (isPressed) {
                 if (name.equals("Select")) {
                     initialPress = true;
-                    Vector3f pos = msa.oto.getCharacterNode().getLocalTranslation();
-                    msa.oto.follow.setLocalTranslation(pos.x, pos.y+0.1f, pos.z);
+                    Vector3f pos = msa.character.getCharacterNode().getLocalTranslation();
+                    msa.character.follow.setLocalTranslation(pos.x, pos.y+0.1f, pos.z);
                     System.out.println("Follow posistion: "+ pos.x+ "," + pos.y + "," + pos.z);
                 }
             }
@@ -160,9 +160,9 @@ public class TowerObject {
                 } else {
                     System.out.println("Error");
                 }
-                Vector3f pos = msa.oto.follow.getWorldTranslation();
-                msa.oto.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y+0.1f, pos.z));
-                Vector3f charLoc = msa.oto.follow.getLocalTranslation();
+                Vector3f pos = msa.character.follow.getWorldTranslation();
+                msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y+0.1f, pos.z));
+                Vector3f charLoc = msa.character.follow.getLocalTranslation();
                 Vector3f camLoc = msa.getCamera().getLocation();
                 msa.getCamera().setLocation(new Vector3f(-camLoc.x,camLoc.y, msa.getCamera().getLocation().z));
             }
@@ -187,7 +187,7 @@ public class TowerObject {
                         totalRot = q2.mult(totalRot);
                         tower.setLocalRotation(totalRot);
                         
-                        msa.oto.getCharacterBodyControl().warp(msa.oto.follow.getWorldTranslation());
+                        msa.character.getCharacterBodyControl().warp(msa.character.follow.getWorldTranslation());
                     }
                 }
             }

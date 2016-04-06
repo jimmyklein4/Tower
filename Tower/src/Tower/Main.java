@@ -29,7 +29,7 @@ public class Main extends SimpleApplication {
     Lighting light;
     Spatial sky;
     private CameraNode camNode;
-    CharacterObject oto;
+    CharacterObject character;
     /*
     public Main(){
         super(new StatsAppState(), new DebugKeysAppState());
@@ -59,7 +59,7 @@ public class Main extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         //cam.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
         Vector3f camLoc = cam.getLocation();
-        cam.setLocation(new Vector3f(camLoc.x, oto.getCharacterNode().getWorldTranslation().y, camLoc.z));
+        cam.setLocation(new Vector3f(camLoc.x, character.getCharacterNode().getWorldTranslation().y, camLoc.z));
         
         
     }
@@ -102,10 +102,10 @@ public class Main extends SimpleApplication {
     }
     
     private void initCharacter(){
-        oto = new CharacterObject(this);
+        character = new CharacterObject(this);
         flyCam.setEnabled(false);
-        tower.getTowerNode().attachChild(oto.getCharacterNode());
-        tower.getTowerNode().attachChild(oto.follow);
+        tower.getTowerNode().attachChild(character.getCharacterNode());
+        tower.getTowerNode().attachChild(character.follow);
 
         //camNode = new CameraNode("Camera Node",cam);
         //camNode.setControlDir(ControlDirection.CameraToSpatial);

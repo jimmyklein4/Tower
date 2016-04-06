@@ -22,7 +22,7 @@ import com.jme3.scene.Spatial;
  */
 public class CharacterObject {
     
-    private Main sa;
+    private Main msa;
     private Node characterNode = new Node();
     public Node follow = new Node();
     private Spatial cNode;
@@ -31,7 +31,7 @@ public class CharacterObject {
     private Vector3f walkDirection = new Vector3f(0,0,0);
     
     public CharacterObject(Main sa){
-        this.sa = sa;
+        this.msa = sa;
         initKeys();
         initModel();
         initPhysics();
@@ -45,26 +45,26 @@ public class CharacterObject {
     }
     
     private void initKeys(){
-        sa.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
-        sa.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
-        sa.getInputManager().addListener(analogListener, new String[]{"Left", "Right"});
+        msa.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
+        msa.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
+        msa.getInputManager().addListener(analogListener, new String[]{"Left", "Right"});
         
-        sa.getInputManager().addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
-        sa.getInputManager().addListener(actionListener, new String[]{"Jump", "Left", "Right"});
+        msa.getInputManager().addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
+        msa.getInputManager().addListener(actionListener, new String[]{"Jump", "Left", "Right"});
     }
     
     private AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float value, float tpf) {
             if(name.equals("Left")){
-                camLoc = sa.getCamera().getLocation();
+                camLoc = msa.getCamera().getLocation();
                 charLoc = characterNode.getWorldTranslation();
-                sa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
+                msa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
                 follow.setLocalTranslation(characterNode.getLocalTranslation());
             }
             if(name.equals("Right")){ 
-                camLoc = sa.getCamera().getLocation();
+                camLoc = msa.getCamera().getLocation();
                 charLoc = characterNode.getWorldTranslation();
-                sa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
+                msa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
                 follow.setLocalTranslation(characterNode.getLocalTranslation());
             }
         }
@@ -75,9 +75,9 @@ public class CharacterObject {
                 if(isPressed)
                     characterBodyControl.jump();
                 else{
-                    camLoc = sa.getCamera().getLocation();
+                    camLoc = msa.getCamera().getLocation();
                     camLoc.setY(characterNode.getLocalTranslation().y);
-                    sa.getCamera().setLocation(camLoc);
+                    msa.getCamera().setLocation(camLoc);
                     follow.setLocalTranslation(characterNode.getLocalTranslation());
                 }
             }
@@ -96,7 +96,7 @@ public class CharacterObject {
         }
     };
     private void initModel(){
-        cNode = sa.getAssetManager().loadModel("Models/character/character.j3o");
+        cNode = msa.getAssetManager().loadModel("Models/character/character.j3o");
         characterNode.attachChild(cNode);
 //        
         Quaternion faceRight = new Quaternion(); 
@@ -104,9 +104,9 @@ public class CharacterObject {
         cNode.setLocalRotation(faceRight);
         //To set the camera in the location of the character
         //WARNING: I suspect this is causing the tower to not rotate correctly
-        Vector3f camLocation = sa.getCamera().getLocation();
+        Vector3f camLocation = msa.getCamera().getLocation();
         camLocation.x-=4.5f;
-        sa.getCamera().setLocation(camLocation);
+        msa.getCamera().setLocation(camLocation);
     }
     
     private void initPhysics(){
@@ -114,7 +114,7 @@ public class CharacterObject {
         
         //characterBodyControl.setApplyPhysicsLocal(true);
         characterNode.addControl(characterBodyControl);
-        sa.bullet.getPhysicsSpace().add(characterNode);
+        msa.bullet.getPhysicsSpace().add(characterNode);
         characterBodyControl.warp(new Vector3f(-4.5f, 2.0f, 4.5f));
         
         follow.setLocalTranslation(characterNode.getLocalTranslation());
