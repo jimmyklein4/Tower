@@ -36,7 +36,6 @@ public class CharacterObject {
         initPhysics();
         sa.getRootNode().attachChild(characterNode);
         characterNode.scale(0.25f);
-        //characterNode.move(0, 1, 0);
         characterNode.setName("characterNode");
     }
     
@@ -102,9 +101,6 @@ public class CharacterObject {
         //Using oto as a placeholder model
         cNode = sa.getAssetManager().loadModel("Models/character/character.j3o");
         characterNode.attachChild(cNode);
-        cNode.setLocalTranslation(0, 5, 0);
-        cNode.move(0, -4.5f, 0);
-        //characterNode.setLocalTranslation(0,2.0f,4.5f);
 //        
         Quaternion faceRight = new Quaternion(); 
         faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
@@ -118,7 +114,7 @@ public class CharacterObject {
         //characterBodyControl.setApplyPhysicsLocal(true);
         characterNode.addControl(characterBodyControl);
         sa.bullet.getPhysicsSpace().add(characterNode);
-        characterBodyControl.warp(new Vector3f(0, 2.0f, 4.5f));
+        characterBodyControl.warp(new Vector3f(-4.5f, 2.0f, 4.5f));
         
         follow.setLocalTranslation(characterNode.getLocalTranslation());
     }

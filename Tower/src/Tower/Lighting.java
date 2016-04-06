@@ -24,7 +24,7 @@ public class Lighting {
         //AmbientLight ambient = new AmbientLight();
         //Changing this just for rotation reference 
         DirectionalLight ambient = new DirectionalLight();
-        ambient.setDirection((new Vector3f(0, 0, -10)).normalizeLocal());
+        ambient.setDirection((new Vector3f(-2, 0, -10)).normalizeLocal());
         ambient.setColor(ColorRGBA.White);
         this.msa.getRootNode().addLight(ambient);  
     }
