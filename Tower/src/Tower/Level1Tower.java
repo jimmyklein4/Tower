@@ -34,10 +34,10 @@ public class Level1Tower extends Node{
     }
     
     private void init(){
-        initMesh();
-        initMat();
-        initGeo();
-        //initModel();
+        //initMesh();
+        //initMat();
+        //initGeo();
+        initModel();
         initPhysics();
     }
     private void initMesh() {
@@ -108,7 +108,7 @@ public class Level1Tower extends Node{
         
     }
     private void initModel(){
-        towerModel = msa.getAssetManager().loadModel("Models/tower_test/tower_test.j3o");
+        towerModel = msa.getAssetManager().loadModel("Models/tower/towerExterior.j3o");
         towerModel.scale(3);
         towerModel.move(new Vector3f(0,-2,0));
         this.attachChild(towerModel);
