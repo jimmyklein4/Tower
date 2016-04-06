@@ -57,9 +57,9 @@ public class CharacterObject {
             if(name.equals("Left")){
                 Vector3f v = characterNode.getLocalTranslation();
                 if(!(v.x < -5)){
-                    characterBodyControl.warp(new Vector3f(characterNode.getLocalTranslation().x-tpf, 
-                            characterNode.getLocalTranslation().y, 
-                            characterNode.getLocalTranslation().z));
+                    characterBodyControl.warp(new Vector3f(characterNode.getWorldTranslation().x-tpf, 
+                            characterNode.getWorldTranslation().y, 
+                            characterNode.getWorldTranslation().z));
                     //cNode.move(-tpf, 0, 0);
                     
                     camLoc = sa.getCamera().getLocation();
@@ -70,9 +70,9 @@ public class CharacterObject {
             if(name.equals("Right")){
                 Vector3f v = characterNode.getLocalTranslation();
                 if(!(v.x < -5)){
-                    characterBodyControl.warp(new Vector3f(characterNode.getLocalTranslation().x+tpf, 
-                            characterNode.getLocalTranslation().y, 
-                            characterNode.getLocalTranslation().z));                   
+                    characterBodyControl.warp(new Vector3f(characterNode.getWorldTranslation().x+tpf, 
+                            characterNode.getWorldTranslation().y, 
+                            characterNode.getWorldTranslation().z));                   
                     //cNode.move(tpf,0,0);
                     
                     camLoc = sa.getCamera().getLocation();
@@ -114,7 +114,7 @@ public class CharacterObject {
         //characterBodyControl.setApplyPhysicsLocal(true);
         characterNode.addControl(characterBodyControl);
         sa.bullet.getPhysicsSpace().add(characterNode);
-        characterBodyControl.warp(new Vector3f(-4.5f, 2.0f, 4.5f));
+        characterBodyControl.warp(new Vector3f(0, 2.0f, 5f));
         
         follow.setLocalTranslation(characterNode.getLocalTranslation());
     }

@@ -161,7 +161,10 @@ public class TowerObject {
                     System.out.println("Error");
                 }
                 Vector3f pos = msa.oto.follow.getWorldTranslation();
-                msa.oto.getCharacterNode().setLocalTranslation(pos.x, pos.y+0.05f, pos.z);
+                msa.oto.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y+0.1f, pos.z));
+                Vector3f charLoc = msa.oto.follow.getLocalTranslation();
+                Vector3f camLoc = msa.getCamera().getLocation();
+                msa.getCamera().setLocation(new Vector3f(-camLoc.x,camLoc.y, msa.getCamera().getLocation().z));
             }
         }
     };
