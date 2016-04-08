@@ -128,7 +128,9 @@ public class TowerObject {
                 }
             }
             else{
-
+                if(name.equals("Select")){
+                    msa.chase.setEnabled(true);
+                }
                 float leftDistance = leftNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
                 float rightDistance = rightNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
                 float frontDistance = frontNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
@@ -164,7 +166,7 @@ public class TowerObject {
                 msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y+0.1f, pos.z));
                 Vector3f charLoc = msa.character.follow.getLocalTranslation();
                 Vector3f camLoc = msa.getCamera().getLocation();
-                msa.getCamera().setLocation(new Vector3f(-camLoc.x,camLoc.y, msa.getCamera().getLocation().z));
+                //msa.getCamera().setLocation(new Vector3f(-camLoc.x,camLoc.y, msa.getCamera().getLocation().z));
             }
         }
     };
@@ -174,6 +176,8 @@ public class TowerObject {
     private AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float value, float tpf) {
             if (name.equals("Select")) {
+                msa.chase.setEnabled(false);
+                msa.getCamera().lookAt(msa.character.follow.getWorldTranslation(),msa.chase.getUpVector());
                 Vector3f currentCollision = getRayCollision();
                 if (currentCollision != null) {
                     currentCollision = currentCollision.subtract(tower.getWorldTranslation());

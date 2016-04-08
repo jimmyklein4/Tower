@@ -6,6 +6,7 @@ import com.jme3.scene.CameraNode;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.StatsAppState;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.input.ChaseCamera;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
@@ -29,6 +30,7 @@ public class Main extends SimpleApplication {
     Lighting light;
     Spatial sky;
     private CameraNode camNode;
+    ChaseCamera chase;
     CharacterObject character;
     /*
     public Main(){
@@ -118,6 +120,29 @@ public class Main extends SimpleApplication {
     private void initCamera(){
         //CameraNode cameraNode = new CameraNode("Camera Node", getCamera());
         //cameraTarget = new Node();
+        cam.setLocation(new Vector3f(0,0,8));
+        chase = new ChaseCamera(cam, character.getCharacterNode(), inputManager);
+        chase.setMinDistance(6);
+        chase.setMaxDistance(8);
+        chase.setUpVector(new Vector3f(0,1,0));
+        chase.setMaxVerticalRotation(0);
+        chase.setMinVerticalRotation(0);
+        float radian = (float)Math.toRadians(90f);
+        chase.setDefaultHorizontalRotation(radian);
+        chase.setDragToRotate(false);
+        chase.setRotationSpeed(0);
+        chase.setRotationSensitivity(0);
+        chase.setDefaultVerticalRotation(0);
+        //camNode = new CameraNode("Camera Node", cam);
+        //This mode means that camera copies the movements of the target:
+        //camNode.setControlDir(ControlDirection.SpatialToCamera);
+        //Attach the camNode to the target:
+        //character.follow.attachChild(camNode);
+        //Move camNode, e.g. behind and above the target:
+        //camNode.setLocalTranslation(new Vector3f(0, 0, 8));
+        //camNode.
+        //Rotate the camNode to look at the target:
+        //camNode.lookAt(character.follow.getLocalTranslation(), Vector3f.UNIT_Y);
         
         //Setting to false for testing purposes
         //getFlyByCamera().setEnabled(true);
