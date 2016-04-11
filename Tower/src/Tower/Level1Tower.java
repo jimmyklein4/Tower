@@ -113,7 +113,7 @@ public class Level1Tower extends Node{
         
     }
     private void initModel(){
-        towerModel = msa.getAssetManager().loadModel("Models/tower/towerExterior.j3o");
+        towerModel = msa.getAssetManager().loadModel("Models/towerExterior/towerExterior.j3o");
         towerModel.scale(3);
         towerModel.move(new Vector3f(0,-2,0));
         this.attachChild(towerModel);
@@ -125,16 +125,6 @@ public class Level1Tower extends Node{
         ledges[1] = new Geometry("Ledge1", meshLedge);
         ledges[1].setMaterial(matLedge);
         this.attachChild(ledges[1]);
-        
-        ledges[2] = new Geometry("Ledge2", meshLedge);
-        ledges[2].setMaterial(matLedge);
-        ledges[2].setLocalTranslation(-1.5f,5,-5);
-        this.attachChild(ledges[2]); 
-       
-        
-        //lc = ledges[0].getControl(LedgeControl.class);
-        
-        
     }
     private void initPhysics(){
         RigidBodyControl towerBodyControl = new RigidBodyControl(0.0f);
@@ -142,7 +132,7 @@ public class Level1Tower extends Node{
         towerBodyControl.setKinematic(true);
         msa.bullet.getPhysicsSpace().add(this);
         
-        ledges[0].setLocalTranslation(0,5,-5);
+        ledges[0].setLocalTranslation(-2f,6.5f,-5);
         RigidBodyControl ledgeBodyControl = new RigidBodyControl(0.0f);
         ledges[0].addControl(ledgeBodyControl);
         ledgeBodyControl.setKinematic(true);
@@ -151,7 +141,7 @@ public class Level1Tower extends Node{
         lc = new LedgeControl(ledges[0],false, ledges[0].getLocalTranslation());
         ledges[0].addControl(lc);
         
-        ledges[1].setLocalTranslation(-2,5f,-5);
+        ledges[1].setLocalTranslation(-1f,5f,-5);
         RigidBodyControl ledgeBodyControl1 = new RigidBodyControl(0.0f);
         ledges[1].addControl(ledgeBodyControl1);
         ledgeBodyControl1.setKinematic(true);
@@ -183,10 +173,10 @@ public class Level1Tower extends Node{
             }
             if(!vert){
                 if(dir){
-                    ledge.setLocalTranslation(ledgePos.x-tpf, ledgePos.y, ledgePos.z);
+                    ledge.setLocalTranslation(ledgePos.x+tpf, ledgePos.y, ledgePos.z);
                 }
                 if(!dir){
-                    ledge.setLocalTranslation(ledgePos.x+tpf, ledgePos.y, ledgePos.z);
+                    ledge.setLocalTranslation(ledgePos.x-tpf, ledgePos.y, ledgePos.z);
                 }
             }
             else{
