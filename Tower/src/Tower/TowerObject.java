@@ -4,6 +4,7 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
 /**
@@ -64,11 +65,14 @@ public class TowerObject {
             if (isPressed) {
                 if(name.equals("CamLeft")){
                     msa.getCustomCamera().setRotate(msa.getCustomCamera().getRotate() + 300);
-                    
+                    Vector3f pos = msa.character.follow.getWorldTranslation();
+                    msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y, pos.z));
                     System.out.println("Rotation" + msa.getCustomCamera().getRotate());
                 }
                 if(name.equals("CamRight")){
                     msa.getCustomCamera().setRotate(msa.getCustomCamera().getRotate() - 300);
+                    Vector3f pos = msa.character.follow.getWorldTranslation();
+                    msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y, pos.z));
                     System.out.println("Rotation" + msa.getCustomCamera().getRotate());
 
                 }
