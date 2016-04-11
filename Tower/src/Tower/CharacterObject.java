@@ -81,6 +81,7 @@ public class CharacterObject extends AbstractControl {
             }
         }
     };
+    
     private ActionListener actionListener = new ActionListener(){
         public void onAction(String name, boolean isPressed, float tpf) {
             if(name.equals("Jump")){

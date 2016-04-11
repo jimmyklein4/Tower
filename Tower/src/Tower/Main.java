@@ -26,12 +26,11 @@ public class Main extends SimpleApplication {
     private Node startNode = new Node();
     private Vector3f st = new Vector3f(0,0,4);
     BulletAppState bullet; 
-    TowerObject tower;
+    private TowerObject tower;
+    private CustomCamera customCamera;
+    CharacterObject character;
     Lighting light;
     Spatial sky;
-    private CameraNode camNode;
-    ChaseCamera chase;
-    CharacterObject character;
     /*
     public Main(){
         super(new StatsAppState(), new DebugKeysAppState());
@@ -69,6 +68,10 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleRender(RenderManager rm) {
         //TODO: add render code
+    }
+    
+    public CustomCamera getCustomCamera(){
+        return customCamera;
     }
     
     public Node getStartNode(){
@@ -109,45 +112,10 @@ public class Main extends SimpleApplication {
         tower.getTowerNode().attachChild(character.getCharacterNode());
         tower.getTowerNode().attachChild(character.follow);
 
-        //camNode = new CameraNode("Camera Node",cam);
-        //camNode.setControlDir(ControlDirection.CameraToSpatial);
-        //oto.getCharacterNode().attachChild(camNode);
-        //camNode.setLocalTranslation(0, 0, 10);
-        //camNode.lookAt(oto.getCharacterNode().getLocalTranslation(), Vector3f.UNIT_Y);
-
     }
     
     private void initCamera(){
-        //CameraNode cameraNode = new CameraNode("Camera Node", getCamera());
-        //cameraTarget = new Node();
-        cam.setLocation(new Vector3f(0,0,8));
-        chase = new ChaseCamera(cam, character.getCharacterNode(), inputManager);
-        chase.setMinDistance(6);
-        chase.setMaxDistance(8);
-        chase.setUpVector(new Vector3f(0,1,0));
-        chase.setMaxVerticalRotation(0);
-        chase.setMinVerticalRotation(0);
-        float radian = (float)Math.toRadians(90f);
-        chase.setDefaultHorizontalRotation(radian);
-        chase.setDragToRotate(false);
-        chase.setRotationSpeed(0);
-        chase.setRotationSensitivity(0);
-        chase.setDefaultVerticalRotation(0);
-        //camNode = new CameraNode("Camera Node", cam);
-        //This mode means that camera copies the movements of the target:
-        //camNode.setControlDir(ControlDirection.SpatialToCamera);
-        //Attach the camNode to the target:
-        //character.follow.attachChild(camNode);
-        //Move camNode, e.g. behind and above the target:
-        //camNode.setLocalTranslation(new Vector3f(0, 0, 8));
-        //camNode.
-        //Rotate the camNode to look at the target:
-        //camNode.lookAt(character.follow.getLocalTranslation(), Vector3f.UNIT_Y);
+        customCamera = new CustomCamera(this, character);
         
-        //Setting to false for testing purposes
-        //getFlyByCamera().setEnabled(true);
-        //cameraNode.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
-        //cameraTarget.attachChild(cameraNode);
-        //attachChild(cameraTarget);
     }
 }
