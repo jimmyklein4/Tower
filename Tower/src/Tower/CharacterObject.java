@@ -1,6 +1,8 @@
 package Tower;
 
 import com.bulletphysics.collision.shapes.CollisionShape;
+import com.jme3.animation.AnimChannel;
+import com.jme3.animation.AnimControl;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.bullet.control.CharacterControl;
@@ -9,21 +11,29 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.RenderManager;
+import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.control.AbstractControl;
+import com.jme3.scene.debug.SkeletonDebugger;
 
 /**
  *
  * @author Chris
  * @author Jimmy
  */
-public class CharacterObject {
+public class CharacterObject extends AbstractControl {
     
     private Main msa;
     private Node characterNode = new Node();
+    private AnimChannel channel;
+    private AnimControl control;
     public Node follow = new Node();
     private Spatial cNode;
     private BetterCharacterControl characterBodyControl;
@@ -36,8 +46,10 @@ public class CharacterObject {
         initModel();
         initPhysics();
         sa.getRootNode().attachChild(characterNode);
-        characterNode.scale(0.25f);
+        characterNode.scale(0.20f);
         characterNode.setName("characterNode");
+        
+        //initAnimation();
     }
     
     public Node getCharacterNode(){
@@ -69,6 +81,7 @@ public class CharacterObject {
             }
         }
     };
+    
     private ActionListener actionListener = new ActionListener(){
         public void onAction(String name, boolean isPressed, float tpf) {
             if(name.equals("Jump")){
@@ -104,9 +117,11 @@ public class CharacterObject {
         }
     };
     private void initModel(){
-        cNode = msa.getAssetManager().loadModel("Models/character/character.j3o");
+        cNode = msa.getAssetManager().loadModel("Models/character/char2.j3o");
         characterNode.attachChild(cNode);
-//        
+        
+       
+        
         Quaternion faceRight = new Quaternion(); 
         faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
         cNode.setLocalRotation(faceRight);
@@ -127,6 +142,22 @@ public class CharacterObject {
         
         follow.setLocalTranslation(characterNode.getLocalTranslation());
     }
+    
+    @Override
+    protected void controlUpdate(float tpf) {
+    }
+    /*
+    private void initAnimation(){
+        control = cNode.getControl(AnimControl.class);
+        System.out.println(control.toString());
+        channel = control.createChannel();
+        channel.setAnim("Walk_Blocking");
+    }
+    */
+    @Override
+    protected void controlRender(RenderManager rm, ViewPort vp) {
+    }
+    
     public BetterCharacterControl getCharacterBodyControl(){
         return characterBodyControl;
     }

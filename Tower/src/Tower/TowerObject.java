@@ -129,7 +129,7 @@ public class TowerObject {
             }
             else{
                 if(name.equals("Select")){
-                    msa.chase.setEnabled(true);
+                    msa.getCustomCamera().getChaseCamera().setEnabled(true);
                 }
                 float leftDistance = leftNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
                 float rightDistance = rightNode.getWorldTranslation().distance(msa.getStartNode().getWorldTranslation());
@@ -178,8 +178,8 @@ public class TowerObject {
     private AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float value, float tpf) {
             if (name.equals("Select")) {
-                msa.chase.setEnabled(false);
-                msa.getCamera().lookAt(msa.character.follow.getWorldTranslation(),msa.chase.getUpVector());
+                msa.getCustomCamera().getChaseCamera().setEnabled(false);
+                msa.getCamera().lookAt(msa.character.follow.getWorldTranslation(),msa.getCustomCamera().getChaseCamera().getUpVector());
                 Vector3f currentCollision = getRayCollision();
                 if (currentCollision != null) {
                     currentCollision = currentCollision.subtract(tower.getWorldTranslation());
