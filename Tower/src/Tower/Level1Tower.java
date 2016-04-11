@@ -31,7 +31,7 @@ public class Level1Tower extends Node{
     Geometry ledges[] = new Geometry[20];
     Material matTowerBase, matLedge;
     Vector2f originalCursor;
-    LedgeControl lc = new LedgeControl();
+    LedgeControl lc, lc1;
     
     public Level1Tower(Main msa){
         this.msa = msa;
@@ -120,11 +120,16 @@ public class Level1Tower extends Node{
         
         ledges[0] = new Geometry("Ledge0", meshLedge);
         ledges[0].setMaterial(matLedge);
-        Node ledge0 = new Node();
-        ledge0.attachChild(ledges[0]);
-        this.attachChild(ledge0);
-        ledges[0].setLocalTranslation(0,5,-5);
-        ledges[0].addControl(lc);
+        this.attachChild(ledges[0]);  
+               
+        ledges[1] = new Geometry("Ledge1", meshLedge);
+        ledges[1].setMaterial(matLedge);
+        this.attachChild(ledges[1]);
+        
+        ledges[2] = new Geometry("Ledge2", meshLedge);
+        ledges[2].setMaterial(matLedge);
+        ledges[2].setLocalTranslation(-1.5f,5,-5);
+        this.attachChild(ledges[2]); 
        
         
         //lc = ledges[0].getControl(LedgeControl.class);
@@ -135,31 +140,63 @@ public class Level1Tower extends Node{
         RigidBodyControl towerBodyControl = new RigidBodyControl(0.0f);
         this.addControl(towerBodyControl);
         towerBodyControl.setKinematic(true);
+        msa.bullet.getPhysicsSpace().add(this);
         
+        ledges[0].setLocalTranslation(0,5,-5);
         RigidBodyControl ledgeBodyControl = new RigidBodyControl(0.0f);
         ledges[0].addControl(ledgeBodyControl);
         ledgeBodyControl.setKinematic(true);
         msa.bullet.getPhysicsSpace().add(ledges[0]);
+        //add control
+        lc = new LedgeControl(ledges[0],false, ledges[0].getLocalTranslation());
+        ledges[0].addControl(lc);
         
-        msa.bullet.getPhysicsSpace().add(this);
+        ledges[1].setLocalTranslation(-2,5f,-5);
+        RigidBodyControl ledgeBodyControl1 = new RigidBodyControl(0.0f);
+        ledges[1].addControl(ledgeBodyControl1);
+        ledgeBodyControl1.setKinematic(true);
+        msa.bullet.getPhysicsSpace().add(ledges[1]);
+        //add control
+        lc1 = new LedgeControl(ledges[1],true, ledges[1].getLocalTranslation());
+        ledges[1].addControl(lc1);
+        
+        
     }
     
     class LedgeControl extends AbstractControl{
         float time =0;
         boolean dir = true;
+        boolean vert = false;
+        Vector3f st;
+        Geometry ledge;
+        
+        public LedgeControl(Geometry ledge, boolean vertical, Vector3f stPos){
+            vert = vertical;
+            st = stPos.clone();
+            this.ledge = ledge;
+        }
         @Override
         protected void controlUpdate(float tpf){
-            Vector3f ledgePos = ledges[0].getLocalTranslation();
-            if(ledgePos.x<=-1||ledgePos.x>=1){
+            Vector3f ledgePos = ledge.getLocalTranslation();
+            if((ledgePos.x<=(st.x-1)||ledgePos.y<=(st.y-1))||(ledgePos.x>=(st.x+1)||ledgePos.y>=(st.y+1))){
                 dir = !dir;
             }
-            if(dir){
-                ledges[0].setLocalTranslation(ledgePos.x-tpf, ledgePos.y, ledgePos.z);
+            if(!vert){
+                if(dir){
+                    ledge.setLocalTranslation(ledgePos.x-tpf, ledgePos.y, ledgePos.z);
+                }
+                if(!dir){
+                    ledge.setLocalTranslation(ledgePos.x+tpf, ledgePos.y, ledgePos.z);
+                }
             }
-            if(!dir){
-                ledges[0].setLocalTranslation(ledgePos.x+tpf, ledgePos.y, ledgePos.z);
+            else{
+                if(dir){
+                    ledge.setLocalTranslation(ledgePos.x, ledgePos.y-tpf, ledgePos.z);
+                }
+                if(!dir){
+                    ledge.setLocalTranslation(ledgePos.x, ledgePos.y+tpf, ledgePos.z);
+                }
             }
-            
         }
         @Override
         protected void controlRender(RenderManager rm, ViewPort vp) {

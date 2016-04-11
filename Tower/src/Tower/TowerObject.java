@@ -61,7 +61,7 @@ public class TowerObject {
 
     private void init() {
         initNodes();
-        initPhysics();
+        //initPhysics();
         msa.getRootNode().attachChild(tower);
         initKeys();
     }
@@ -162,6 +162,8 @@ public class TowerObject {
                 } else {
                     System.out.println("Error");
                 }
+                
+                //set character's posision
                 Vector3f pos = msa.character.follow.getWorldTranslation();
                 msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y+0.1f, pos.z));
                 Vector3f charLoc = msa.character.follow.getLocalTranslation();
