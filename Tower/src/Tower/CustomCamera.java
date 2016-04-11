@@ -19,6 +19,7 @@ public class CustomCamera {
     private Camera camera; 
     private ChaseCamera chase;
     private CharacterObject character;
+    private float radian;
     
     public CustomCamera(Main msa, CharacterObject character){
         this.msa = msa;
@@ -31,7 +32,7 @@ public class CustomCamera {
         chase.setUpVector(new Vector3f(0,1,0));
         chase.setMaxVerticalRotation(0);
         chase.setMinVerticalRotation(0);
-        float radian = (float)Math.toRadians(90f);
+        radian = (float)Math.toRadians(90f);
         chase.setDefaultHorizontalRotation(radian);
         chase.setDragToRotate(false);
         chase.setRotationSpeed(0);
@@ -42,4 +43,17 @@ public class CustomCamera {
     public ChaseCamera getChaseCamera(){
         return chase;
     }
+    
+    public float getRotate(){
+        return radian;
+    }
+    
+    public void setRotate(float rotate){
+        radian = rotate;
+        if(radian==360){
+            radian = 0;
+        }
+        chase.setDefaultHorizontalRotation(radian);
+    }
+    
 }

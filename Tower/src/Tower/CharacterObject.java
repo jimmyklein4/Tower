@@ -56,6 +56,11 @@ public class CharacterObject extends AbstractControl {
         return characterNode;
     }
     
+    public void setFaceDirection(Quaternion direction){
+        //walkDirection = direction;
+        characterBodyControl.setWalkDirection(walkDirection);
+    }
+    
     private void initKeys(){
         msa.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
         msa.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
@@ -121,10 +126,9 @@ public class CharacterObject extends AbstractControl {
         characterNode.attachChild(cNode);
         
        
-        
+     
         Quaternion faceRight = new Quaternion(); 
         faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
-        cNode.setLocalRotation(faceRight);
         //To set the camera in the location of the character
         //WARNING: I suspect this is causing the tower to not rotate correctly
         Vector3f camLocation = msa.getCamera().getLocation();
@@ -146,6 +150,8 @@ public class CharacterObject extends AbstractControl {
     @Override
     protected void controlUpdate(float tpf) {
     }
+    
+    
     /*
     private void initAnimation(){
         control = cNode.getControl(AnimControl.class);
@@ -154,6 +160,7 @@ public class CharacterObject extends AbstractControl {
         channel.setAnim("Walk_Blocking");
     }
     */
+    
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) {
     }
