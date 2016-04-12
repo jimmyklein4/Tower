@@ -98,6 +98,7 @@ public class CharacterObject extends AbstractControl {
                 if(isPressed){
                     walkDirection = new Vector3f(-1, 0,0).mult(1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
+                    characterBodyControl.setViewDirection(new Vector3f(-1,0,0));
                 }
                 else{
                     walkDirection.set(0,0,0);
@@ -108,6 +109,7 @@ public class CharacterObject extends AbstractControl {
                 if(isPressed){
                     walkDirection = new Vector3f(1, 0,0).mult(1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
+                    characterBodyControl.setViewDirection(walkDirection);
                 }
                 else{
                     walkDirection.set(0,0,0);
@@ -120,9 +122,9 @@ public class CharacterObject extends AbstractControl {
         cNode = (Node)msa.getAssetManager().loadModel("Models/character/char2.j3o");
         characterNode.attachChild(cNode);
 
-        Quaternion faceRight = new Quaternion(); 
-        faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
-        cNode.setLocalRotation(faceRight);
+//        Quaternion faceRight = new Quaternion(); 
+//        faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
+//        cNode.setLocalRotation(faceRight);
         //To set the camera in the location of the character
         //WARNING: I suspect this is causing the tower to not rotate correctly
         Vector3f camLocation = msa.getCamera().getLocation();
