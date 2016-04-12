@@ -14,6 +14,7 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
+import com.jme3.math.Matrix3f;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
@@ -58,7 +59,7 @@ public class CharacterObject extends AbstractControl {
     
     public void setFaceDirection(Quaternion direction){
         //walkDirection = direction;
-        characterBodyControl.setWalkDirection(walkDirection);
+        cNode.setLocalRotation(direction);
     }
     
     private void initKeys(){
@@ -131,6 +132,7 @@ public class CharacterObject extends AbstractControl {
         faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
         //To set the camera in the location of the character
         //WARNING: I suspect this is causing the tower to not rotate correctly
+        cNode.rotate(faceRight);
         Vector3f camLocation = msa.getCamera().getLocation();
         camLocation.x-=4.5f;
         msa.getCamera().setLocation(camLocation);

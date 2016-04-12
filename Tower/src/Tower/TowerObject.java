@@ -18,12 +18,8 @@ public class TowerObject {
     Level1Tower tower;
     private RigidBodyControl towerBodyControl;
     
-    //private CameraNode cameraNode;
-    //==========================================================================
-
     public TowerObject() {
     }
-    //==========================================================================
 
     public TowerObject(Main msa) {
         this.msa = msa;
@@ -48,7 +44,7 @@ public class TowerObject {
         tower.addControl(towerBodyControl);
         towerBodyControl.setKinematic(true);
         msa.bullet.getPhysicsSpace().add(tower);
-    }
+    } 
     
     private void initKeys() {
         msa.getInputManager().addMapping("CamLeft", new KeyTrigger(KeyInput.KEY_J));
@@ -64,15 +60,16 @@ public class TowerObject {
             
             if (isPressed) {
                 if(name.equals("CamLeft")){
-                    msa.getCustomCamera().setRotate(msa.getCustomCamera().getRotate() + 300);
-                    Vector3f pos = msa.character.follow.getWorldTranslation();
-                    msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y, pos.z));
+                    msa.getCustomCamera().setRotate(msa.getCustomCamera().getRotate() + (float)Math.toRadians(90));
+                    
+                    //Vector3f pos = msa.character.follow.getWorldTranslation();
+                    //msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y, pos.z));
                     System.out.println("Rotation" + msa.getCustomCamera().getRotate());
                 }
                 if(name.equals("CamRight")){
-                    msa.getCustomCamera().setRotate(msa.getCustomCamera().getRotate() - 300);
-                    Vector3f pos = msa.character.follow.getWorldTranslation();
-                    msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y, pos.z));
+                    msa.getCustomCamera().setRotate(msa.getCustomCamera().getRotate() - (float)Math.toRadians(90));
+                    //Vector3f pos = msa.character.follow.getWorldTranslation();
+                    //msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y, pos.z));
                     System.out.println("Rotation" + msa.getCustomCamera().getRotate());
 
                 }
