@@ -49,7 +49,7 @@ public class CharacterObject extends AbstractControl {
         characterNode.scale(0.20f);
         characterNode.setName("characterNode");
         
-        //initAnimation();
+        initAnimation();
     }
     
     public Node getCharacterNode(){
@@ -117,11 +117,9 @@ public class CharacterObject extends AbstractControl {
         }
     };
     private void initModel(){
-        cNode = msa.getAssetManager().loadModel("Models/character/char2.j3o");
+        cNode = (Node)msa.getAssetManager().loadModel("Models/character/char2.j3o");
         characterNode.attachChild(cNode);
-        
-       
-        
+
         Quaternion faceRight = new Quaternion(); 
         faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
         cNode.setLocalRotation(faceRight);
@@ -146,14 +144,17 @@ public class CharacterObject extends AbstractControl {
     @Override
     protected void controlUpdate(float tpf) {
     }
-    /*
+    
     private void initAnimation(){
-        control = cNode.getControl(AnimControl.class);
-        System.out.println(control.toString());
+        Node child = (Node)characterNode.getChild(0);
+        Node grandChild = (Node)child.getChild(0);
+        control = grandChild.getChild(0).getControl(AnimControl.class);
+        
         channel = control.createChannel();
+
+        System.out.println(control.toString());
         channel.setAnim("Walk_Blocking");
     }
-    */
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) {
     }
