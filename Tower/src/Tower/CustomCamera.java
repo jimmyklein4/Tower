@@ -50,6 +50,32 @@ public class CustomCamera {
         return radian;
     }
     
+    public String getFaceDirection(){
+        if(radian==Math.toRadians(90)){
+            return "Front";
+        } else if(radian==Math.toRadians(180)){
+            return "Left";
+        } else if(radian==Math.toRadians(0)){
+            return "Right";
+        } else if(radian==Math.toRadians(-90)){
+            return "Back";
+        }
+        return null;
+    }
+    
+    public Vector3f getWalkDirection(){
+        if(radian==(float)Math.toRadians(90)){
+            return new Vector3f(1, 0, 0);
+        } else if(radian==(float)Math.toRadians(180)){
+            return new Vector3f(0,0,1);
+        } else if(radian==(float)Math.toRadians(0)){
+            return new Vector3f(0,0,-1);
+        } else if(radian==(float)Math.toRadians(-90)){
+            return new Vector3f(-1,0,0);
+        }
+        return null;
+    }
+    
     public void setRotate(float rotate){
         radian = radian+rotate;
 
@@ -62,6 +88,7 @@ public class CustomCamera {
 
         }
         chase.setDefaultHorizontalRotation(radian);
+        System.out.println(radian);
 
     }
     

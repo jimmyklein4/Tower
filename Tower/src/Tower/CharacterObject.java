@@ -40,7 +40,7 @@ public class CharacterObject extends AbstractControl {
     private BetterCharacterControl characterBodyControl;
     private Vector3f camLoc, charLoc;
     private Vector3f walkDirection = new Vector3f(0,0,0);
-    
+     
     public CharacterObject(Main sa){
         this.msa = sa;
         initKeys();
@@ -90,7 +90,7 @@ public class CharacterObject extends AbstractControl {
             }
         }
     };
-    
+    //TODO: Character needs to move with their face direction
     private ActionListener actionListener = new ActionListener(){
         public void onAction(String name, boolean isPressed, float tpf) {
             if(name.equals("Jump")){
@@ -105,20 +105,19 @@ public class CharacterObject extends AbstractControl {
             }
             if(name.equals("Left")){
                 if(isPressed){
-                    walkDirection = new Vector3f(-1, 0,0).mult(1.5f);
+                    walkDirection = msa.getCustomCamera().getWalkDirection().mult(-1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
-                }
-                else{
+                    
+                } else {
                     walkDirection.set(0,0,0);
                     characterBodyControl.setWalkDirection(walkDirection);
                 }
             }
             if(name.equals("Right")){
                 if(isPressed){
-                    walkDirection = new Vector3f(1, 0,0).mult(1.5f);
+                    walkDirection = msa.getCustomCamera().getWalkDirection().mult(1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
-                }
-                else{
+                } else {
                     walkDirection.set(0,0,0);
                     characterBodyControl.setWalkDirection(new Vector3f(0, 0,0));
                 }                
@@ -129,12 +128,8 @@ public class CharacterObject extends AbstractControl {
         cNode = msa.getAssetManager().loadModel("Models/character/char2.j3o");
         characterNode.attachChild(cNode);
         
-       
-     
         Quaternion faceRight = new Quaternion(); 
         faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
-        //To set the camera in the location of the character
-        //WARNING: I suspect this is causing the tower to not rotate correctly
         cNode.rotate(faceRight);
         Vector3f camLocation = msa.getCamera().getLocation();
         camLocation.x-=4.5f;
