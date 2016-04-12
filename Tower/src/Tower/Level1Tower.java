@@ -168,7 +168,7 @@ public class Level1Tower extends Node{
         @Override
         protected void controlUpdate(float tpf){
             Vector3f ledgePos = ledge.getLocalTranslation();
-            if((ledgePos.x<=(st.x-1)||ledgePos.y<=(st.y-1))||(ledgePos.x>=(st.x+1)||ledgePos.y>=(st.y+1))){
+            if((ledgePos.x<=(st.x-2)||ledgePos.y<=(st.y-2))||(ledgePos.x>=(st.x+1)||ledgePos.y>=(st.y+1))){
                 dir = !dir;
             }
             if(!vert){
