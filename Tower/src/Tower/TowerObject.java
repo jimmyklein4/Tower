@@ -56,13 +56,28 @@ public class TowerObject {
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean isPressed, float tpf) {
             
+            /*
+             * Changing the light for only when youre facing the back
+             * I don't like this but jmonkey forums are down and I can't get
+             * ambient light to work right.
+             */ 
             
             if (isPressed) {
                 if(name.equals("CamLeft")){
                     msa.getCustomCamera().setRotate((float)Math.toRadians(90));
+                    if(msa.getCustomCamera().getFaceDirection().equals("Back")){
+                        msa.getLighting().setDirection(msa.getLighting().getDirection().mult(-1));
+                    } else {
+                        msa.getLighting().setDirection(new Vector3f(-2, -5, -10));
+                    }
                 }
                 if(name.equals("CamRight")){
                     msa.getCustomCamera().setRotate((float)Math.toRadians(-90));
+                    if(msa.getCustomCamera().getFaceDirection().equals("Back")){
+                        msa.getLighting().setDirection(msa.getLighting().getDirection().mult(-1));
+                    } else {
+                        msa.getLighting().setDirection(new Vector3f(-2, -5, -10));
+                    }
                 }
             }
         }

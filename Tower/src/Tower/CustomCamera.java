@@ -51,13 +51,13 @@ public class CustomCamera {
     }
     
     public String getFaceDirection(){
-        if(radian==Math.toRadians(90)){
+        if(radian==(float)Math.toRadians(90)){
             return "Front";
-        } else if(radian==Math.toRadians(180)){
+        } else if(radian==(float)Math.toRadians(180)){
             return "Left";
-        } else if(radian==Math.toRadians(0)){
+        } else if(radian==(float)Math.toRadians(0)){
             return "Right";
-        } else if(radian==Math.toRadians(-90)){
+        } else if(radian==(float)Math.toRadians(-90)){
             return "Back";
         }
         return null;

@@ -75,6 +75,9 @@ public class Main extends SimpleApplication {
         return customCamera;
     }
     
+    public Lighting getLighting(){
+        return light;
+    }
     public Node getStartNode(){
         return startNode;
     }
