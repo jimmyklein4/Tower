@@ -113,7 +113,7 @@ public class Level1Tower extends Node{
         
     }
     private void initModel(){
-        towerModel = msa.getAssetManager().loadModel("Models/towerExterior/towerExterior.j3o");
+        towerModel = msa.getAssetManager().loadModel("Models/tower/towerExterior.j3o");
         towerModel.scale(3);
         towerModel.move(new Vector3f(0,-2,0));
         this.attachChild(towerModel);
