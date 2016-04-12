@@ -31,11 +31,7 @@ public class Main extends SimpleApplication {
     CharacterObject character;
     Lighting light;
     Spatial sky;
-    /*
-    public Main(){
-        super(new StatsAppState(), new DebugKeysAppState());
-    }
-    */
+
     public static void main(String[] args) {
         Main app = new Main();
         initAppScreen(app);
@@ -59,7 +55,6 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        //cam.lookAt(tower.getTowerNode().getWorldTranslation(), Vector3f.UNIT_Y);
         Vector3f camLoc = cam.getLocation();
         cam.setLocation(new Vector3f(camLoc.x, character.getCharacterNode().getWorldTranslation().y, camLoc.z));
         
@@ -68,7 +63,6 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleRender(RenderManager rm) {
-        //TODO: add render code
     }
     
     public CustomCamera getCustomCamera(){
@@ -95,7 +89,7 @@ public class Main extends SimpleApplication {
     private void initPhysics(){
         bullet = new BulletAppState();
         stateManager.attach(bullet);
-        //bullet.setDebugEnabled(true);
+        bullet.setDebugEnabled(true);
 
     }
     

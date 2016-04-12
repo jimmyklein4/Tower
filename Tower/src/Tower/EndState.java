@@ -15,7 +15,7 @@ import com.jme3.math.ColorRGBA;
  *
  * @author Chris
  */
-public class TowerEnd {
+public class EndState {
     private BitmapFont bmf;
     private BitmapText height, time, endMessage;
     private AppStateManager asm;
@@ -27,7 +27,7 @@ public class TowerEnd {
      * @param height: Height climbed
      * @param time: Time spent in game
      */
-    public TowerEnd(String height, String time){
+    public EndState(String height, String time){
         init();
         this.height.setText(height);
         this.time.setText(time);

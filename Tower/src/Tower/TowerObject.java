@@ -52,7 +52,6 @@ public class TowerObject {
         msa.getInputManager().addListener(actionListener, new String[]{"CamLeft", "CamRight"});
     }
     
-    //TODO: Make these numbers flow better.
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean isPressed, float tpf) {
             

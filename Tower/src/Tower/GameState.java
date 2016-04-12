@@ -9,6 +9,6 @@ package Tower;
  *
  * @author Chris
  */
-public class TowerGame {
+public class GameState {
 
 }

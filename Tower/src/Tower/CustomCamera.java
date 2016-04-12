@@ -1,18 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Tower;
 
 import com.jme3.input.ChaseCamera;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 
 /**
  *
- * @author Chris 
+ * @author Jimmy 
  */
 public class CustomCamera {
 
@@ -82,14 +76,11 @@ public class CustomCamera {
         if(Math.abs(radian)>=Math.PI*3/2){
             radian = (float)Math.toRadians(90);
             character.setFaceDirection(new Vector3f(0,radian,0));
-
         } else {
             character.setFaceDirection(new Vector3f(0,-rotate,0));
 
         }
         chase.setDefaultHorizontalRotation(radian);
-        System.out.println(radian);
-
     }
     
 }

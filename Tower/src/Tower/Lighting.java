@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Tower;
 
 import com.jme3.light.AmbientLight;
@@ -13,6 +8,7 @@ import com.jme3.math.ColorRGBA;
 /**
  *
  * @author Chris 
+ * @author Jimmy
  */
 public class Lighting {
     Main msa;
@@ -27,11 +23,11 @@ public class Lighting {
         //TODO: Switch to ambient light
         
         //ambientLight = new AmbientLight();
-        
+        //ambientLight.setColor(ColorRGBA.White);
+
         directionalLight = new DirectionalLight();
         directionalLight.setDirection((new Vector3f(-2, -5, -10)).normalizeLocal());
         directionalLight.setColor(ColorRGBA.White);
-        //ambientLight.setColor(ColorRGBA.White);
         
         this.msa.getRootNode().addLight(directionalLight);  
     }

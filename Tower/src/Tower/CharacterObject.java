@@ -29,6 +29,7 @@ import com.jme3.scene.debug.SkeletonDebugger;
  * @author Chris
  * @author Jimmy
  */
+
 public class CharacterObject extends AbstractControl {
     
     private Main msa;
@@ -41,6 +42,8 @@ public class CharacterObject extends AbstractControl {
     private Vector3f camLoc, charLoc;
     private Vector3f walkDirection = new Vector3f(0,0,0);
      
+    //TODO: Need abstract control for animations 
+    
     public CharacterObject(Main sa){
         this.msa = sa;
         initKeys();
@@ -90,7 +93,7 @@ public class CharacterObject extends AbstractControl {
             }
         }
     };
-    //TODO: Character needs to move with their face direction
+
     private ActionListener actionListener = new ActionListener(){
         public void onAction(String name, boolean isPressed, float tpf) {
             if(name.equals("Jump")){
@@ -141,8 +144,6 @@ public class CharacterObject extends AbstractControl {
     
     private void initPhysics(){
         characterBodyControl = new BetterCharacterControl(0.2f, 1f, 20f);
-        
-        //characterBodyControl.setApplyPhysicsLocal(true);
         characterNode.addControl(characterBodyControl);
         msa.bullet.getPhysicsSpace().add(characterNode);
         characterBodyControl.warp(new Vector3f(-4.5f, 2.0f, 4.5f));
@@ -154,7 +155,7 @@ public class CharacterObject extends AbstractControl {
     protected void controlUpdate(float tpf) {
     }
     
-
+    //TODO: Add more animations
     private void initAnimation(){
         Node child = (Node)characterNode.getChild(0);
         Node grandChild = (Node)child.getChild(0);
