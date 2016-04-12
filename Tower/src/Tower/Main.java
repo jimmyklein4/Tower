@@ -54,6 +54,7 @@ public class Main extends SimpleApplication {
         light = new Lighting(this);
         initCamera();
         setDisplayStatView(false);
+        System.out.println(customCamera.getRotate());
     }
 
     @Override

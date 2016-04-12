@@ -14,6 +14,7 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
+import com.jme3.math.Matrix3f;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
@@ -39,7 +40,7 @@ public class CharacterObject extends AbstractControl {
     private BetterCharacterControl characterBodyControl;
     private Vector3f camLoc, charLoc;
     private Vector3f walkDirection = new Vector3f(0,0,0);
-    
+     
     public CharacterObject(Main sa){
         this.msa = sa;
         initKeys();
@@ -54,6 +55,14 @@ public class CharacterObject extends AbstractControl {
     
     public Node getCharacterNode(){
         return characterNode;
+    }
+    
+    public Node getCNode(){
+        return (Node)cNode;
+    }
+    
+    public void setFaceDirection(Vector3f direction){
+        cNode.rotate(direction.x,direction.y,direction.z);
     }
     
     private void initKeys(){
@@ -81,7 +90,7 @@ public class CharacterObject extends AbstractControl {
             }
         }
     };
-    
+    //TODO: Character needs to move with their face direction
     private ActionListener actionListener = new ActionListener(){
         public void onAction(String name, boolean isPressed, float tpf) {
             if(name.equals("Jump")){
@@ -96,22 +105,21 @@ public class CharacterObject extends AbstractControl {
             }
             if(name.equals("Left")){
                 if(isPressed){
-                    walkDirection = new Vector3f(-1, 0,0).mult(1.5f);
+                    walkDirection = msa.getCustomCamera().getWalkDirection().mult(-1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
-                    characterBodyControl.setViewDirection(new Vector3f(-1,0,0));
-                }
-                else{
+
+                    
+                } else {
                     walkDirection.set(0,0,0);
                     characterBodyControl.setWalkDirection(walkDirection);
                 }
             }
             if(name.equals("Right")){
                 if(isPressed){
-                    walkDirection = new Vector3f(1, 0,0).mult(1.5f);
+                    walkDirection = msa.getCustomCamera().getWalkDirection().mult(1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
-                    characterBodyControl.setViewDirection(walkDirection);
-                }
-                else{
+
+                } else {
                     walkDirection.set(0,0,0);
                     characterBodyControl.setWalkDirection(new Vector3f(0, 0,0));
                 }                
@@ -122,11 +130,10 @@ public class CharacterObject extends AbstractControl {
         cNode = (Node)msa.getAssetManager().loadModel("Models/character/char2.j3o");
         characterNode.attachChild(cNode);
 
-//        Quaternion faceRight = new Quaternion(); 
-//        faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
-//        cNode.setLocalRotation(faceRight);
-        //To set the camera in the location of the character
-        //WARNING: I suspect this is causing the tower to not rotate correctly
+        
+        Quaternion faceRight = new Quaternion(); 
+        faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
+        cNode.rotate(faceRight);
         Vector3f camLocation = msa.getCamera().getLocation();
         camLocation.x-=4.5f;
         msa.getCamera().setLocation(camLocation);
@@ -147,6 +154,7 @@ public class CharacterObject extends AbstractControl {
     protected void controlUpdate(float tpf) {
     }
     
+
     private void initAnimation(){
         Node child = (Node)characterNode.getChild(0);
         Node grandChild = (Node)child.getChild(0);
@@ -157,6 +165,7 @@ public class CharacterObject extends AbstractControl {
         System.out.println(control.toString());
         channel.setAnim("Walk_Blocking");
     }
+    
     @Override
     protected void controlRender(RenderManager rm, ViewPort vp) {
     }
