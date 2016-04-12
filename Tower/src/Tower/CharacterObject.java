@@ -57,9 +57,12 @@ public class CharacterObject extends AbstractControl {
         return characterNode;
     }
     
-    public void setFaceDirection(Quaternion direction){
-        //walkDirection = direction;
-        cNode.setLocalRotation(direction);
+    public Node getCNode(){
+        return (Node)cNode;
+    }
+    
+    public void setFaceDirection(Vector3f direction){
+        cNode.rotate(direction.x,direction.y,direction.z);
     }
     
     private void initKeys(){

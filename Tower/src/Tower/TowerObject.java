@@ -60,14 +60,14 @@ public class TowerObject {
             
             if (isPressed) {
                 if(name.equals("CamLeft")){
-                    msa.getCustomCamera().setRotate(msa.getCustomCamera().getRotate() + (float)Math.toRadians(90));
+                    msa.getCustomCamera().setRotate((float)Math.toRadians(90));
                     
                     //Vector3f pos = msa.character.follow.getWorldTranslation();
                     //msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y, pos.z));
                     System.out.println("Rotation" + msa.getCustomCamera().getRotate());
                 }
                 if(name.equals("CamRight")){
-                    msa.getCustomCamera().setRotate(msa.getCustomCamera().getRotate() - (float)Math.toRadians(90));
+                    msa.getCustomCamera().setRotate((float)Math.toRadians(-90));
                     //Vector3f pos = msa.character.follow.getWorldTranslation();
                     //msa.character.getCharacterBodyControl().warp(new Vector3f(pos.x, pos.y, pos.z));
                     System.out.println("Rotation" + msa.getCustomCamera().getRotate());

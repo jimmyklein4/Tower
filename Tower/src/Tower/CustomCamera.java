@@ -51,27 +51,18 @@ public class CustomCamera {
     }
     
     public void setRotate(float rotate){
-        radian = rotate;
-        Quaternion current = character.getCharacterNode().getLocalRotation();
-        float w = (float)(Math.cos(rotate));
-        float y = (float)Math.sin(rotate);
-        Quaternion q =new Quaternion(0,1,0,w);
+        radian = radian+rotate;
+
         if(Math.abs(radian)>=Math.PI*3/2){
             radian = (float)Math.toRadians(90);
-            q.fromAngleAxis((float)Math.toRadians(90), Vector3f.UNIT_Y);
+            character.setFaceDirection(new Vector3f(0,radian,0));
 
         } else {
-            q.fromAngleAxis(rotate-(float)Math.PI, Vector3f.UNIT_Y);
-        }
-        msa.character.setFaceDirection(q.mult(current));
+            character.setFaceDirection(new Vector3f(0,-rotate,0));
 
+        }
         chase.setDefaultHorizontalRotation(radian);
 
-        //q.fromAngleAxis(radian, Vector3f.UNIT_Y);
-        //q.slerp(current, 0);
-        //character.getCharacterNode().setLocalRotation(current);
-        //q=q.mult(new Vector3f(rotate, rotate, rotate)).;
-        System.out.println(q.add(current));
     }
     
 }
