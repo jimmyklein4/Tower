@@ -42,12 +42,13 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         initPhysics();
         initSky();
+        light = new Lighting(this);
+
         startNode.setLocalTranslation(new Vector3f(0,0,4));
         rootNode.attachChild(startNode);
         viewPort.setBackgroundColor(ColorRGBA.White);
         tower = new TowerObject(this);
         initCharacter();
-        light = new Lighting(this);
         initCamera();
         setDisplayStatView(false);
         System.out.println(customCamera.getRotate());
@@ -89,7 +90,7 @@ public class Main extends SimpleApplication {
     private void initPhysics(){
         bullet = new BulletAppState();
         stateManager.attach(bullet);
-        bullet.setDebugEnabled(true);
+        //bullet.setDebugEnabled(true);
 
     }
     

@@ -119,7 +119,7 @@ public class CharacterObject extends AbstractControl {
             }
             if(name.equals("Right")){
                 if(isPressed){
-                    walkDirection = msa.getCustomCamera().getWalkDirection().mult(1.5f);
+                    walkDirection = msa.getCustomCamera().getWalkDirection().mult(0.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
 
                 } else {
@@ -131,8 +131,8 @@ public class CharacterObject extends AbstractControl {
     };
     private void initModel(){
         cNode = (Node)msa.getAssetManager().loadModel("Models/character/char2.j3o");
+        cNode.setMaterial(msa.getAssetManager().loadMaterial("Materials/Generated/char2Mat.j3m"));
         characterNode.attachChild(cNode);
-
         
         Quaternion faceRight = new Quaternion(); 
         faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
@@ -164,7 +164,7 @@ public class CharacterObject extends AbstractControl {
         channel = control.createChannel();
 
         System.out.println(control.toString());
-        channel.setAnim("Walk_Blocking");
+        channel.setAnim("Walk_Faster");
     }
     
     @Override
