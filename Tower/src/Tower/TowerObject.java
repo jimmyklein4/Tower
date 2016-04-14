@@ -45,10 +45,10 @@ public class TowerObject {
     } 
     
     private void initKeys() {
-        msa.getInputManager().addMapping("CamLeft", new KeyTrigger(KeyInput.KEY_J));
-        msa.getInputManager().addMapping("CamRight", new KeyTrigger(KeyInput.KEY_L));
-        msa.getInputManager().addMapping("CamUp", new KeyTrigger(KeyInput.KEY_I));
-        msa.getInputManager().addMapping("CamDown", new KeyTrigger(KeyInput.KEY_K));
+        msa.getInputManager().addMapping("CamLeft", new KeyTrigger(KeyInput.KEY_LEFT));
+        msa.getInputManager().addMapping("CamRight", new KeyTrigger(KeyInput.KEY_RIGHT));
+        msa.getInputManager().addMapping("CamUp", new KeyTrigger(KeyInput.KEY_UP));
+        msa.getInputManager().addMapping("CamDown", new KeyTrigger(KeyInput.KEY_DOWN));
         msa.getInputManager().addListener(actionListener, new String[]{"CamLeft", "CamRight", "CamUp", "CamDown"});
     }
     
