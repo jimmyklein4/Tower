@@ -119,7 +119,7 @@ public class CharacterObject extends AbstractControl {
             }
             if(name.equals("Right")){
                 if(isPressed){
-                    walkDirection = msa.getCustomCamera().getWalkDirection().mult(0.5f);
+                    walkDirection = msa.getCustomCamera().getWalkDirection().mult(1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
 
                 } else {
