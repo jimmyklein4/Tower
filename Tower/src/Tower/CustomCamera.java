@@ -9,11 +9,16 @@ import com.jme3.renderer.Camera;
  */
 public class CustomCamera {
 
+    private final int STATE_CAM_FLAT = 0;
+    private final int STATE_CAM_UP = 1;
+    
     private Main msa;
     private Camera camera; 
     private ChaseCamera chase;
     private CharacterObject character;
     private float radian;
+    private boolean isCamFlat = true;
+
     
     public CustomCamera(Main msa, CharacterObject character){
         this.msa = msa;
@@ -69,7 +74,7 @@ public class CustomCamera {
         return null;
     }
     
-    public void setRotate(float rotate){
+    public void setHRotate(float rotate){
         radian = radian+rotate;
 
         if(Math.abs(radian)>=Math.PI*3/2){
@@ -80,6 +85,20 @@ public class CustomCamera {
 
         }
         chase.setDefaultHorizontalRotation(radian);
+    }
+    
+    public void setVRotate(int state){
+        if(state==STATE_CAM_UP && isCamFlat){
+            /*If you set this to 90 degrees, the camera will not rotate along 
+            * the horizontal
+            */
+            chase.setDefaultVerticalRotation((float)Math.toRadians(89));
+            isCamFlat = false;
+        } else if(state==STATE_CAM_FLAT && !isCamFlat){
+            chase.setDefaultVerticalRotation((float)Math.toRadians(0));            
+            chase.setDefaultHorizontalRotation(radian);
+            isCamFlat = true;
+        }
     }
     
 }

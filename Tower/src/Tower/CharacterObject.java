@@ -28,7 +28,7 @@ public class CharacterObject {
     private BetterCharacterControl characterBodyControl;
     private Vector3f camLoc, charLoc;
     private Vector3f walkDirection = new Vector3f(0, 0, 0);
-
+    private String faceDirection;
     public CharacterObject(Main sa) {
         this.msa = sa;
         initKeys();
@@ -91,6 +91,10 @@ public class CharacterObject {
             }
             if (name.equals("Left")) {
                 if (isPressed) {
+                    if(!faceDirection.equals(name)){
+                        cNode.rotate(0, (float)Math.toRadians(180), 0);
+                        faceDirection=name;
+                    }
                     channel.setAnim("Run");
                     walkDirection = msa.getCustomCamera().getWalkDirection().mult(-1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
@@ -102,6 +106,10 @@ public class CharacterObject {
             }
             if (name.equals("Right")) {
                 if (isPressed) {
+                    if(!faceDirection.equals(name)){
+                        cNode.rotate(0, (float)Math.toRadians(180), 0);
+                        faceDirection=name;
+                    }
                     channel.setAnim("Run");
                     walkDirection = msa.getCustomCamera().getWalkDirection().mult(1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
@@ -126,6 +134,7 @@ public class CharacterObject {
         Vector3f camLocation = msa.getCamera().getLocation();
         camLocation.x -= 4.5f;
         msa.getCamera().setLocation(camLocation);
+        faceDirection = "Right";
     }
 
     private void initPhysics() {
