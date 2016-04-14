@@ -1,37 +1,24 @@
 package Tower;
 
-import com.bulletphysics.collision.shapes.CollisionShape;
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
-import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.control.BetterCharacterControl;
-import com.jme3.bullet.control.CharacterControl;
-import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
-import com.jme3.math.Matrix3f;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
-import com.jme3.renderer.RenderManager;
-import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.control.AbstractControl;
-import com.jme3.scene.debug.SkeletonDebugger;
-
 /**
  *
  * @author Chris
  * @author Jimmy
  */
+public class CharacterObject {
 
-public class CharacterObject extends AbstractControl {
-    
     private Main msa;
     private Node characterNode = new Node();
     private AnimChannel channel;
@@ -40,11 +27,9 @@ public class CharacterObject extends AbstractControl {
     private Spatial cNode;
     private BetterCharacterControl characterBodyControl;
     private Vector3f camLoc, charLoc;
-    private Vector3f walkDirection = new Vector3f(0,0,0);
-     
-    //TODO: Need abstract control for animations 
-    
-    public CharacterObject(Main sa){
+    private Vector3f walkDirection = new Vector3f(0, 0, 0);
+
+    public CharacterObject(Main sa) {
         this.msa = sa;
         initKeys();
         initModel();
@@ -52,40 +37,39 @@ public class CharacterObject extends AbstractControl {
         sa.getRootNode().attachChild(characterNode);
         characterNode.scale(0.20f);
         characterNode.setName("characterNode");
-        
+
         initAnimation();
     }
-    
-    public Node getCharacterNode(){
+
+    public Node getCharacterNode() {
         return characterNode;
     }
-    
-    public Node getCNode(){
-        return (Node)cNode;
+
+    public Node getCNode() {
+        return (Node) cNode;
     }
-    
-    public void setFaceDirection(Vector3f direction){
-        cNode.rotate(direction.x,direction.y,direction.z);
+
+    public void setFaceDirection(Vector3f direction) {
+        cNode.rotate(direction.x, direction.y, direction.z);
     }
-    
-    private void initKeys(){
+
+    private void initKeys() {
         msa.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
         msa.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
         msa.getInputManager().addListener(analogListener, new String[]{"Left", "Right"});
-        
+
         msa.getInputManager().addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
         msa.getInputManager().addListener(actionListener, new String[]{"Jump", "Left", "Right"});
     }
-    
     private AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float value, float tpf) {
-            if(name.equals("Left")){
+            if (name.equals("Left")) {
                 camLoc = msa.getCamera().getLocation();
                 charLoc = characterNode.getWorldTranslation();
                 msa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
                 follow.setLocalTranslation(characterNode.getLocalTranslation());
             }
-            if(name.equals("Right")){ 
+            if (name.equals("Right")) {
                 camLoc = msa.getCamera().getLocation();
                 charLoc = characterNode.getWorldTranslation();
                 msa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
@@ -93,85 +77,81 @@ public class CharacterObject extends AbstractControl {
             }
         }
     };
-
-    private ActionListener actionListener = new ActionListener(){
+    private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean isPressed, float tpf) {
-            if(name.equals("Jump")){
-                if(isPressed)
+            if (name.equals("Jump")) {
+                if (isPressed) {
                     characterBodyControl.jump();
-                else{
+                } else {
                     camLoc = msa.getCamera().getLocation();
                     camLoc.setY(characterNode.getLocalTranslation().y);
                     msa.getCamera().setLocation(camLoc);
                     follow.setLocalTranslation(characterNode.getLocalTranslation());
                 }
             }
-            if(name.equals("Left")){
-                if(isPressed){
+            if (name.equals("Left")) {
+                if (isPressed) {
+                    channel.setAnim("Run");
                     walkDirection = msa.getCustomCamera().getWalkDirection().mult(-1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
-
-                    
                 } else {
-                    walkDirection.set(0,0,0);
+                    channel.setAnim("Stand");
+                    walkDirection.set(0, 0, 0);
                     characterBodyControl.setWalkDirection(walkDirection);
                 }
             }
-            if(name.equals("Right")){
-                if(isPressed){
-                    walkDirection = msa.getCustomCamera().getWalkDirection().mult(0.5f);
+            if (name.equals("Right")) {
+                if (isPressed) {
+                    channel.setAnim("Run");
+                    walkDirection = msa.getCustomCamera().getWalkDirection().mult(1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
 
                 } else {
-                    walkDirection.set(0,0,0);
-                    characterBodyControl.setWalkDirection(new Vector3f(0, 0,0));
-                }                
-            }    
+                    channel.setAnim("Stand");
+                    walkDirection.set(0, 0, 0);
+                    characterBodyControl.setWalkDirection(new Vector3f(0, 0, 0));
+                }
+            }
         }
     };
-    private void initModel(){
-        cNode = (Node)msa.getAssetManager().loadModel("Models/character/char2.j3o");
+
+    private void initModel() {
+        cNode = (Node) msa.getAssetManager().loadModel("Models/character/char2.j3o");
         cNode.setMaterial(msa.getAssetManager().loadMaterial("Materials/Generated/char2Mat.j3m"));
         characterNode.attachChild(cNode);
-        
-        Quaternion faceRight = new Quaternion(); 
-        faceRight.fromAngleAxis(FastMath.PI/2 , new Vector3f(0,1,0)); 
+
+        Quaternion faceRight = new Quaternion();
+        faceRight.fromAngleAxis(FastMath.PI / 2, new Vector3f(0, 1, 0));
         cNode.rotate(faceRight);
         Vector3f camLocation = msa.getCamera().getLocation();
-        camLocation.x-=4.5f;
+        camLocation.x -= 4.5f;
         msa.getCamera().setLocation(camLocation);
     }
-    
-    private void initPhysics(){
+
+    private void initPhysics() {
         characterBodyControl = new BetterCharacterControl(0.2f, 1f, 20f);
         characterNode.addControl(characterBodyControl);
         msa.bullet.getPhysicsSpace().add(characterNode);
-        characterBodyControl.warp(new Vector3f(-4.5f, 2.0f, 4.5f));
-        
+        characterBodyControl.warp(new Vector3f(-4.5f, 2.0f, 5.5f));
+
         follow.setLocalTranslation(characterNode.getLocalTranslation());
     }
-    
-    @Override
-    protected void controlUpdate(float tpf) {
-    }
-    
-    //TODO: Add more animations
-    private void initAnimation(){
-        Node child = (Node)characterNode.getChild(0);
-        Node grandChild = (Node)child.getChild(0);
-        control = grandChild.getChild(0).getControl(AnimControl.class);
-        
-        channel = control.createChannel();
 
+
+    //TODO: Add more animations
+    private void initAnimation() {
+        Node child = (Node) characterNode.getChild(0);
+        Node grandChild = (Node) child.getChild(0);
+        control = grandChild.getChild(0).getControl(AnimControl.class);
+        channel = control.createChannel();
+        
         System.out.println(control.toString());
-        channel.setAnim("Walk_Faster");
-    }
-    
-    @Override
-    protected void controlRender(RenderManager rm, ViewPort vp) {
-    }
-    
-    public BetterCharacterControl getCharacterBodyControl(){
+        channel.setAnim("Stand");
+   }
+
+    public BetterCharacterControl getCharacterBodyControl() {
         return characterBodyControl;
     }
+
+    
 }
