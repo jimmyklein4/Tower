@@ -20,16 +20,9 @@ public class Lighting {
     }
     public Lighting(Main msa){
         this.msa = msa;
-        //TODO: Switch to ambient light
         
         ambientLight = new AmbientLight();
-        ambientLight.setColor(ColorRGBA.White);
-
-        //directionalLight = new DirectionalLight();
-        //directionalLight.setDirection((new Vector3f(-2, -5, -10)).normalizeLocal());
-        //directionalLight.setColor(ColorRGBA.White);
-        
-        //this.msa.getRootNode().addLight(directionalLight);  
+        ambientLight.setColor(ColorRGBA.White.mult(1.3f));
         this.msa.getRootNode().addLight(ambientLight);
     }
     
