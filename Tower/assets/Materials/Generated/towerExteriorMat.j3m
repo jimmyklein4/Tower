@@ -1,11 +1,12 @@
 Material MyMaterial : Common/MatDefs/Light/Lighting.j3md {
     MaterialParameters {
+        DiffuseMap : Flip Repeat Models/towerExterior/towerTexture.png
         Minnaert : false
-        Specular : 1.0 0.91135025 0.24799526 1.0
-        Diffuse : 0.64000005 0.47554365 0.16688073 1.0
+        Specular : 1.0 1.0 1.0 1.0
+        Diffuse : 1.0 1.0 1.0 1.0
         UseMaterialColors : true
         ParallaxHeight : 0.05
-        Ambient : 1.0 0.8 0.2 1.0
+        Ambient : 1.0 1.0 1.0 1.0
         Shininess : 20.0
         WardIso : false
     }
