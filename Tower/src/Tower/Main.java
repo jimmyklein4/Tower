@@ -2,16 +2,12 @@ package Tower;
 
 import com.jme3.app.DebugKeysAppState;
 import com.jme3.scene.Node;
-import com.jme3.scene.CameraNode;
 import com.jme3.app.SimpleApplication;
-import com.jme3.app.StatsAppState;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.input.ChaseCamera;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.control.CameraControl.ControlDirection;
 import com.jme3.system.AppSettings;
 import com.jme3.util.SkyFactory;
 import java.awt.Dimension;
@@ -56,9 +52,6 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        Vector3f camLoc = cam.getLocation();
-        cam.setLocation(new Vector3f(camLoc.x, character.getCharacterNode().getWorldTranslation().y, camLoc.z));
-        
         
     }
 

@@ -4,7 +4,6 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
 /**
@@ -46,37 +45,28 @@ public class TowerObject {
     } 
     
     private void initKeys() {
-        msa.getInputManager().addMapping("CamLeft", new KeyTrigger(KeyInput.KEY_J));
-        msa.getInputManager().addMapping("CamRight", new KeyTrigger(KeyInput.KEY_K));
-
-        msa.getInputManager().addListener(actionListener, new String[]{"CamLeft", "CamRight"});
+        msa.getInputManager().addMapping("CamLeft", new KeyTrigger(KeyInput.KEY_LEFT));
+        msa.getInputManager().addMapping("CamRight", new KeyTrigger(KeyInput.KEY_RIGHT));
+        msa.getInputManager().addMapping("CamUp", new KeyTrigger(KeyInput.KEY_UP));
+        msa.getInputManager().addMapping("CamDown", new KeyTrigger(KeyInput.KEY_DOWN));
+        msa.getInputManager().addListener(actionListener, new String[]{"CamLeft", "CamRight", "CamUp", "CamDown"});
     }
     
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean isPressed, float tpf) {
             
-            /*
-             * Changing the light for only when youre facing the back
-             * I don't like this but jmonkey forums are down and I can't get
-             * ambient light to work right.
-             */ 
-            
             if (isPressed) {
                 if(name.equals("CamLeft")){
-                    msa.getCustomCamera().setRotate((float)Math.toRadians(90));
-                    if(msa.getCustomCamera().getFaceDirection().equals("Back")){
-                        msa.getLighting().setDirection(msa.getLighting().getDirection().mult(-1));
-                    } else {
-                        msa.getLighting().setDirection(new Vector3f(-2, -5, -10));
-                    }
+                    msa.getCustomCamera().setHRotate((float)Math.toRadians(90));
                 }
                 if(name.equals("CamRight")){
-                    msa.getCustomCamera().setRotate((float)Math.toRadians(-90));
-                    if(msa.getCustomCamera().getFaceDirection().equals("Back")){
-                        msa.getLighting().setDirection(msa.getLighting().getDirection().mult(-1));
-                    } else {
-                        msa.getLighting().setDirection(new Vector3f(-2, -5, -10));
-                    }
+                    msa.getCustomCamera().setHRotate((float)Math.toRadians(-90));
+                }
+                if(name.equals("CamUp")){
+                    msa.getCustomCamera().setVRotate(1);
+                }                
+                if(name.equals("CamDown")){
+                    msa.getCustomCamera().setVRotate(0);
                 }
             }
         }
