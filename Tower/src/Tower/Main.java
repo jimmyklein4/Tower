@@ -94,7 +94,7 @@ public class Main extends SimpleApplication {
     private void initPhysics(){
         bullet = new BulletAppState();
         stateManager.attach(bullet);
-        //bullet.setDebugEnabled(true);
+        bullet.setDebugEnabled(true);
 
     }
     //==========================================================================
