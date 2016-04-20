@@ -47,7 +47,6 @@ public class StartState extends AbstractAppState implements ActionListener{
         Main.killAll(main);
         asm = stateManager;
         main.initSky();
-        main.initAudio();
         initKeys();
         initText();
         main.getFlyByCamera().setEnabled(false);

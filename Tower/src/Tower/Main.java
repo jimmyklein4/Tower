@@ -51,7 +51,7 @@ public class Main extends SimpleApplication {
         //initTower();
         //initCharacter();
         //initCamera();
-        //initAudio();
+        initAudio();
         //setDisplayStatView(false);
         //System.out.println(customCamera.getRotate());
         

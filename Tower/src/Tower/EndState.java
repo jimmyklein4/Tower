@@ -52,7 +52,6 @@ public class EndState extends AbstractAppState implements ActionListener{
         System.out.println("Reached the end");
         inputManager = main.getInputManager();
         main.initSky();
-        main.initAudio();
         
         main.getFlyByCamera().setEnabled(false);
         initKeys();
@@ -78,7 +77,6 @@ public class EndState extends AbstractAppState implements ActionListener{
                 StartState start = new StartState();
                 asm.detach(this);
                 asm.attach(start);
-                main.ambientSound.stop();
             }
         }
     }
