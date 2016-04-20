@@ -38,6 +38,7 @@ public class EndState extends AbstractAppState implements ActionListener{
         this.height.setText(height);
         this.time.setText(time);
     }
+    
     @Override
     public void initialize(AppStateManager stateManager, Application app){
         main = (Main) app;
