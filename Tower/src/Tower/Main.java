@@ -28,7 +28,7 @@ import java.awt.Toolkit;
 public class Main extends SimpleApplication {
     
     private Node startNode = new Node();
-    private AudioNode ambientSound;
+    public AudioNode ambientSound;
     private Vector3f st = new Vector3f(0,0,4);
     BulletAppState bullet; 
     private TowerObject tower;

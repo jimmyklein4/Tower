@@ -71,13 +71,14 @@ public class EndState extends AbstractAppState implements ActionListener{
 
     public void onAction(String name, boolean isPressed, float tpf) {
         if(isPressed){
-            if(name.equals("Exit")){
+            if(name.equals("Exit") || name.equals("Quit")){
                 main.stop();
             }
             if(name.equals("New")){
                 StartState start = new StartState();
                 asm.detach(this);
                 asm.attach(start);
+                main.ambientSound.stop();
             }
         }
     }
@@ -86,9 +87,10 @@ public class EndState extends AbstractAppState implements ActionListener{
     }
     
     private void initKeys(){
-        inputManager.addMapping("Exit", new KeyTrigger(KeyInput.KEY_N));
-        inputManager.addMapping("New", new KeyTrigger(KeyInput.KEY_B));
+        inputManager.addMapping("Exit", new KeyTrigger(KeyInput.KEY_ESCAPE));
+        inputManager.addMapping("Quit", new KeyTrigger(KeyInput.KEY_Q));
+        inputManager.addMapping("New", new KeyTrigger(KeyInput.KEY_SPACE));
         
-        inputManager.addListener(this, "Exit", "New");
+        inputManager.addListener(this, "Exit", "New", "Quit");
     }
 }

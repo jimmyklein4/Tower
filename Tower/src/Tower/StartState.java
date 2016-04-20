@@ -44,6 +44,7 @@ public class StartState extends AbstractAppState implements ActionListener{
         super.initialize(stateManager, app);
         //cleanup();
         main = (Main)app;
+        Main.killAll(main);
         asm = stateManager;
         main.initSky();
         main.initAudio();
@@ -65,11 +66,11 @@ public class StartState extends AbstractAppState implements ActionListener{
         welcomeText = new BitmapText(bmf);
         instructionText = new BitmapText(bmf);
         
-        welcomeText.setSize(bmf.getCharSet().getRenderedSize() * 13);
+        welcomeText.setSize(bmf.getCharSet().getRenderedSize() * 8);
         welcomeText.setColor(ColorRGBA.Black);
         welcomeText.setText("TOWER");
         
-        instructionText.setSize(bmf.getCharSet().getRenderedSize() * 8);
+        instructionText.setSize(bmf.getCharSet().getRenderedSize() * 3);
         instructionText.setColor(ColorRGBA.Black);
         instructionText.setText("Press [SPACE] to Start");
         
