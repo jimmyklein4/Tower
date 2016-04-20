@@ -27,9 +27,10 @@ public class TowerObject {
     public TowerObject() {
     }
 
-    public TowerObject(Main msa) {
+    public TowerObject(Main msa, int level) {
         this.msa = msa;
-        tower = new Level1Tower(msa);
+        if(level==1)
+            tower = new Level1Tower(msa);
         init();
     }
 

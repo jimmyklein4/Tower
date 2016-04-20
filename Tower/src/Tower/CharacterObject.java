@@ -36,6 +36,7 @@ public class CharacterObject {
     private BetterCharacterControl characterBodyControl;
     private Vector3f camLoc, charLoc;
     private Vector3f walkDirection = new Vector3f(0, 0, 0);
+    private Vector3f checkPoint;
     private String faceDirection;
     public CharacterObject(Main sa) {
         this.msa = sa;
@@ -151,7 +152,8 @@ public class CharacterObject {
         characterBodyControl = new BetterCharacterControl(0.2f, 1f, 20f);
         characterNode.addControl(characterBodyControl);
         msa.bullet.getPhysicsSpace().add(characterNode);
-        characterBodyControl.warp(new Vector3f(-4.5f, 2.0f, 5.5f));
+        checkPoint = new Vector3f(-4.5f, 2.0f, 5.5f);
+        characterBodyControl.warp(checkPoint);
 
         follow.setLocalTranslation(characterNode.getLocalTranslation());
     }
@@ -170,6 +172,10 @@ public class CharacterObject {
 
     public BetterCharacterControl getCharacterBodyControl() {
         return characterBodyControl;
+    }
+    
+    public void setCheckPoint(){
+        checkPoint = characterNode.getLocalTranslation();
     }
     
     private void initAudio(){

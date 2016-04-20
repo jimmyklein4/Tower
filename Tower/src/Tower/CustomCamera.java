@@ -85,6 +85,7 @@ public class CustomCamera {
 
         }
         chase.setDefaultHorizontalRotation(radian);
+        character.setCheckPoint();
     }
     
     public void setVRotate(int state){

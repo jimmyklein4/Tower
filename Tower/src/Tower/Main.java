@@ -118,7 +118,7 @@ public class Main extends SimpleApplication {
     }
     //==========================================================================
     public void initTower(){
-        tower = new TowerObject(this);
+        tower = new TowerObject(this, 1);
     }
     //==========================================================================
     private void initAudio(){
