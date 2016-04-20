@@ -3,6 +3,7 @@ package Tower;
 import com.jme3.app.DebugKeysAppState;
 import com.jme3.scene.Node;
 import com.jme3.app.SimpleApplication;
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -20,6 +21,7 @@ import java.awt.Toolkit;
 public class Main extends SimpleApplication {
     
     private Node startNode = new Node();
+    private AudioNode ambientSound;
     private Vector3f st = new Vector3f(0,0,4);
     BulletAppState bullet; 
     private TowerObject tower;
@@ -46,6 +48,7 @@ public class Main extends SimpleApplication {
         tower = new TowerObject(this);
         initCharacter();
         initCamera();
+        initAudio();
         setDisplayStatView(false);
         System.out.println(customCamera.getRotate());
     }
@@ -104,6 +107,15 @@ public class Main extends SimpleApplication {
         tower.getTowerNode().attachChild(character.getCharacterNode());
         tower.getTowerNode().attachChild(character.follow);
 
+    }
+    
+    private void initAudio(){
+        ambientSound = new AudioNode(assetManager, "Sounds/TEMPLE-Adam_Goh-7394_hifi.wav", false);
+        ambientSound.setPositional(false);
+        ambientSound.setLooping(true);
+        ambientSound.setVolume(4);
+        rootNode.attachChild(ambientSound);
+        ambientSound.play();
     }
     
     private void initCamera(){
