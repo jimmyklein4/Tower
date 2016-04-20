@@ -62,28 +62,35 @@ public class CustomCamera {
     }
     
     public Vector3f getWalkDirection(){
-        if(radian==(float)Math.toRadians(90)){
+        if(radian==(float)Math.toRadians(90)||radian==(float)Math.toRadians(-270)){
             return new Vector3f(1, 0, 0);
-        } else if(radian==(float)Math.toRadians(180)){
+        } else if(radian==(float)Math.toRadians(180)||radian==(float)Math.toRadians(-180)){
             return new Vector3f(0,0,1);
-        } else if(radian==(float)Math.toRadians(0)){
+        } else if(radian==(float)Math.toRadians(0)||radian==(float)Math.toRadians(-360)||radian==(float)Math.toRadians(360)){
             return new Vector3f(0,0,-1);
-        } else if(radian==(float)Math.toRadians(-90)){
+        } else if(radian==(float)Math.toRadians(-90)||radian==(float)Math.toRadians(270)){
             return new Vector3f(-1,0,0);
         }
+        System.out.print(Math.toDegrees(radian));
         return null;
     }
     
     public void setHRotate(float rotate){
-        radian = radian+rotate;
-
-        if(Math.abs(radian)>=Math.PI*3/2){
-            radian = (float)Math.toRadians(90);
-            character.setFaceDirection(new Vector3f(0,radian,0));
-        } else {
+        if(Math.abs(Math.toDegrees(radian))<271){
+            radian = radian+rotate;
+        }
+        else{
+            radian = 0+rotate;
+        }
+        System.out.println("radians = "+ Math.toDegrees(radian));
+//
+//        if(Math.abs(radian)>=Math.PI*3/2){
+//            radian = (float)Math.toRadians(90);
+//            character.setFaceDirection(new Vector3f(0,radian,0));
+//        } else {
             character.setFaceDirection(new Vector3f(0,-rotate,0));
 
-        }
+//        }
         chase.setDefaultHorizontalRotation(radian);
         character.setCheckPoint();
     }

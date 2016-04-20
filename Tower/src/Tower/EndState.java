@@ -27,19 +27,19 @@ public class EndState extends AbstractAppState implements ActionListener{
     private Main main;
     private InputManager inputManager;
     
-//    public EndState(){
-//        
-//    }
-//    
-//    /**
-//     * 
-//     * @param height: Height climbed
-//     * @param time: Time spent in game
-//     */
-//    public EndState(String height, String time){
-//        this.height.setText(height);
-//        this.time.setText(time);
-//    }
+    public EndState(){
+        
+    }
+    
+    /**
+     * 
+     * @param height: Height climbed
+     * @param time: Time spent in game
+     */
+    public EndState(String height, String time){
+        this.height.setText(height);
+        this.time.setText(time);
+    }
     
     @Override
     public void initialize(AppStateManager stateManager, Application app){
