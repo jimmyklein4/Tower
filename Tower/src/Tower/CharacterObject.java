@@ -1,7 +1,14 @@
 package Tower;
 
+/**
+ * Audio Credit: Ryan Curtis
+ * Audio Source: http://www.flashkit.com/soundfx/Ambience/Woop-Ryan_Cur-8800/index.php
+ */
+
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
+import com.jme3.audio.AudioData.DataType;
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
@@ -20,6 +27,7 @@ import com.jme3.scene.Spatial;
 public class CharacterObject {
 
     private Main msa;
+    private AudioNode jumpSound;
     private Node characterNode = new Node();
     private AnimChannel channel;
     private AnimControl control;
@@ -34,6 +42,7 @@ public class CharacterObject {
         initKeys();
         initModel();
         initPhysics();
+        initAudio();
         sa.getRootNode().attachChild(characterNode);
         characterNode.scale(0.20f);
         characterNode.setName("characterNode");
@@ -82,6 +91,7 @@ public class CharacterObject {
             if (name.equals("Jump")) {
                 if (isPressed) {
                     characterBodyControl.jump();
+                    jumpSound.playInstance();
                 } else {
                     camLoc = msa.getCamera().getLocation();
                     camLoc.setY(characterNode.getLocalTranslation().y);
@@ -160,6 +170,14 @@ public class CharacterObject {
 
     public BetterCharacterControl getCharacterBodyControl() {
         return characterBodyControl;
+    }
+    
+    private void initAudio(){
+        jumpSound = new AudioNode(msa.getAssetManager(), "Sounds/Woop-Ryan_Cur-8800_hifi.wav", false);
+        jumpSound.setPositional(false);
+        jumpSound.setLooping(false);
+        jumpSound.setVolume(1);
+        msa.getRootNode().attachChild(jumpSound);
     }
 
     
