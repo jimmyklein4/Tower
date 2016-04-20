@@ -48,7 +48,7 @@ public class EndState extends AbstractAppState implements ActionListener{
         main = (Main) app;
         asm = stateManager;
         
-        //main.killAll(main);
+        main.killAll(main);
         System.out.println("Reached the end");
         inputManager = main.getInputManager();
         main.initSky();
