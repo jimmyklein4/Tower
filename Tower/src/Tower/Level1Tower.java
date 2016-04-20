@@ -138,7 +138,7 @@ public class Level1Tower extends Node{
         towerBodyControl.setKinematic(true);
         msa.bullet.getPhysicsSpace().add(this);
         
-        ledges[0].setLocalTranslation(-2.1f,6.5f,-5);
+        ledges[0].setLocalTranslation(-2.2f,6.5f,-5);
         ledgeBodyControl[0] = new RigidBodyControl(0.0f);
         ledges[0].addControl(ledgeBodyControl[0]);
         ledgeBodyControl[0].setKinematic(true);
@@ -208,10 +208,10 @@ public class Level1Tower extends Node{
             }
             else{
                 if(dir){
-                    ledge.setLocalTranslation(ledgePos.x, ledgePos.y, ledgePos.z+ tpf);
+                    ledge.setLocalTranslation(ledgePos.x, ledgePos.y, ledgePos.z+ (tpf*0.7f));
                 }
                 if(!dir){
-                    ledge.setLocalTranslation(ledgePos.x, ledgePos.y, ledgePos.z- tpf);
+                    ledge.setLocalTranslation(ledgePos.x, ledgePos.y, ledgePos.z- (tpf*0.7f));
                 }
             }
         }
