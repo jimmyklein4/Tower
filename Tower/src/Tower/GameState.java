@@ -33,6 +33,7 @@ public class GameState extends AbstractAppState implements ActionListener{
         main = (Main) app;
         asm = stateManager;
         inputManager = app.getInputManager();
+        inputManager.clearMappings();
         main.initPhysics();
         main.initTower();
         main.initCharacter();

@@ -9,6 +9,8 @@ import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 
 /**
  *
@@ -16,7 +18,7 @@ import com.jme3.input.controls.KeyTrigger;
  */
 public class StartState extends AbstractAppState implements ActionListener{
     
-    BitmapText welcomeText;
+    BitmapText welcomeText, instructionText;
     BitmapFont bmf;
     Main main;
     AppStateManager asm;
@@ -46,15 +48,42 @@ public class StartState extends AbstractAppState implements ActionListener{
         main.initSky();
         main.initAudio();
         initKeys();
+        initText();
         main.getFlyByCamera().setEnabled(false);
         main.setDisplayStatView(false);
     }
     //==========================================================================
     private void initKeys(){
         inputManager = main.getInputManager();
-        inputManager.addMapping("Start", new KeyTrigger(KeyInput.KEY_M));
+        inputManager.addMapping("Start", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Quit", new KeyTrigger(KeyInput.KEY_ESCAPE));
         inputManager.addListener(this, "Start", "Quit");
+    }
+    //==========================================================================
+    private void initText(){
+        bmf = main.getAssetManager().loadFont("Interface/Fonts/Jokerman.fnt");
+        welcomeText = new BitmapText(bmf);
+        instructionText = new BitmapText(bmf);
+        
+        welcomeText.setSize(bmf.getCharSet().getRenderedSize() * 13);
+        welcomeText.setColor(ColorRGBA.Black);
+        welcomeText.setText("TOWER");
+        
+        instructionText.setSize(bmf.getCharSet().getRenderedSize() * 8);
+        instructionText.setColor(ColorRGBA.Black);
+        instructionText.setText("Press [SPACE] to Start");
+        
+        main.getGuiNode().attachChild(welcomeText);
+        welcomeText.setLocalTranslation(new Vector3f(
+                Main.screenWidth * .5f - (welcomeText.getLineWidth() * .5f), 
+                Main.screenHeight * .5f + (welcomeText.getHeight()*.5f),
+                0));
+        
+        main.getGuiNode().attachChild(instructionText);
+        instructionText.setLocalTranslation(new Vector3f(
+                Main.screenWidth * .5f - instructionText.getLineWidth() * .5f,
+                Main.screenHeight - welcomeText.getLocalTranslation().y,
+                0));
     }
 }
 
