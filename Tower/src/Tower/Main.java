@@ -52,9 +52,9 @@ public class Main extends SimpleApplication {
         startNode.setLocalTranslation(new Vector3f(0,0,4));
         rootNode.attachChild(startNode);
         viewPort.setBackgroundColor(ColorRGBA.White);
-        
-        //initCharacter();
-        //initCamera();
+        initTower();
+        initCharacter();
+        initCamera();
         initAudio();
         setDisplayStatView(false);
         //System.out.println(customCamera.getRotate());
