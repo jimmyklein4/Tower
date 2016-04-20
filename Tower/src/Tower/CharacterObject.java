@@ -37,7 +37,8 @@ public class CharacterObject {
     private Vector3f camLoc, charLoc;
     private Vector3f walkDirection = new Vector3f(0, 0, 0);
     private Vector3f checkPoint;
-    private String faceDirection;
+    private String faceDirection;    
+    private boolean isJumping = false;
     public CharacterObject(Main sa) {
         this.msa = sa;
         initKeys();
@@ -74,12 +75,20 @@ public class CharacterObject {
     private AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float value, float tpf) {
             if (name.equals("Left")) {
+                if(isJumping && characterBodyControl.isOnGround()){
+                    channel.setAnim("Run");
+                    isJumping = false;
+                }
                 camLoc = msa.getCamera().getLocation();
                 charLoc = characterNode.getWorldTranslation();
                 msa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
                 follow.setLocalTranslation(characterNode.getLocalTranslation());
             }
             if (name.equals("Right")) {
+                if(isJumping && characterBodyControl.isOnGround()){
+                    channel.setAnim("Run");
+                    isJumping = false;
+                }
                 camLoc = msa.getCamera().getLocation();
                 charLoc = characterNode.getWorldTranslation();
                 msa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
@@ -91,9 +100,11 @@ public class CharacterObject {
         public void onAction(String name, boolean isPressed, float tpf) {
             if (name.equals("Jump")) {
                 if (isPressed) {
+                    channel.setAnim("Jump");
                     characterBodyControl.jump();
                     jumpSound.playInstance();
                 } else {
+                    isJumping = true;
                     camLoc = msa.getCamera().getLocation();
                     camLoc.setY(characterNode.getLocalTranslation().y);
                     msa.getCamera().setLocation(camLoc);
@@ -106,7 +117,9 @@ public class CharacterObject {
                         cNode.rotate(0, (float)Math.toRadians(180), 0);
                         faceDirection=name;
                     }
-                    channel.setAnim("Run");
+                    if(characterBodyControl.isOnGround()){
+                        channel.setAnim("Run");
+                    }
                     walkDirection = msa.getCustomCamera().getWalkDirection().mult(-1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
                 } else {
@@ -121,7 +134,9 @@ public class CharacterObject {
                         cNode.rotate(0, (float)Math.toRadians(180), 0);
                         faceDirection=name;
                     }
-                    channel.setAnim("Run");
+                    if(characterBodyControl.isOnGround()){
+                        channel.setAnim("Run");
+                    }
                     walkDirection = msa.getCustomCamera().getWalkDirection().mult(1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
 
