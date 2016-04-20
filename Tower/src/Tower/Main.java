@@ -1,5 +1,11 @@
 package Tower;
 
+/**
+ * Audio Credit: Adam Goh
+ * Audio Source: http://www.flashkit.com/soundfx/Ambience/TEMPLE-Adam_Goh-7394/index.php
+ * 
+ */
+
 import com.jme3.app.DebugKeysAppState;
 import com.jme3.scene.Node;
 import com.jme3.app.SimpleApplication;
@@ -16,7 +22,9 @@ import java.awt.Toolkit;
 
 /**
  * 
- * @author
+ * @author Chris
+ * @author Jimmy
+ * @author Theo
  */
 public class Main extends SimpleApplication {
     

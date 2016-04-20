@@ -1,5 +1,10 @@
 package Tower;
 
+/**
+ * Audio Credit: Martin Brizuela
+ * Audio Source: http://www.flashkit.com/soundfx/Ambience/FSWISH-Martin_B-7856/index.php
+ */
+
 import com.jme3.audio.AudioNode;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.input.KeyInput;

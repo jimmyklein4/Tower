@@ -1,5 +1,10 @@
 package Tower;
 
+/**
+ * Audio Credit: Ryan Curtis
+ * Audio Source: http://www.flashkit.com/soundfx/Ambience/Woop-Ryan_Cur-8800/index.php
+ */
+
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.audio.AudioData.DataType;

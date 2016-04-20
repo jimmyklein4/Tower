@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Tower;
 
 import com.jme3.app.SimpleApplication;
@@ -112,6 +108,7 @@ public class Level1Tower extends Node{
         this.attachChild(ledges[28]);
         
     }
+    
     private void initModel(){
         towerModel = msa.getAssetManager().loadModel("Models/towerExterior/towerExterior.j3o");
         towerModel.setMaterial(msa.getAssetManager().loadMaterial("Materials/Generated/towerExteriorMat.j3m"));
@@ -127,6 +124,7 @@ public class Level1Tower extends Node{
         ledges[1].setMaterial(matLedge);
         this.attachChild(ledges[1]);
     }
+    
     private void initPhysics(){
         RigidBodyControl towerBodyControl = new RigidBodyControl(0.0f);
         this.addControl(towerBodyControl);
