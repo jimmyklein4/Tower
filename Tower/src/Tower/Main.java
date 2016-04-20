@@ -11,6 +11,7 @@ import com.jme3.scene.Node;
 import com.jme3.app.SimpleApplication;
 import com.jme3.audio.AudioNode;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
@@ -28,7 +29,7 @@ import java.awt.Toolkit;
 public class Main extends SimpleApplication {
     
     private Node startNode = new Node();
-    private AudioNode ambientSound;
+    public AudioNode ambientSound;
     private Vector3f st = new Vector3f(0,0,4);
     BulletAppState bullet; 
     private TowerObject tower;

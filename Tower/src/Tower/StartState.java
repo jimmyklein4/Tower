@@ -32,6 +32,7 @@ public class StartState extends AbstractAppState implements ActionListener{
                 GameState game = new GameState();
                 asm.detach(this);
                 asm.attach(game);
+                main.ambientSound.stop();
             }
             if(name.equals("Quit")){
                 main.stop();
