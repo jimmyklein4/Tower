@@ -50,8 +50,10 @@ public class EndState extends AbstractAppState implements ActionListener{
         Main.killAll(main);
         System.out.println("Reached the end");
         inputManager = main.getInputManager();
-        main.initAudio();
         main.initSky();
+        main.initAudio();
+        
+        main.getFlyByCamera().setEnabled(false);
         initKeys();
         System.out.println("Keys initialized");
         
