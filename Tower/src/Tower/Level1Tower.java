@@ -157,7 +157,7 @@ public class Level1Tower extends Node{
         ledges[1].addControl(lc[1]);
         
         for(int i = 2; i < 10; i++){
-            ledges[i].setLocalTranslation(-5f, 5f+(1f*i), -4f + ((i)*1f));
+            ledges[i].setLocalTranslation(-5f, 5f+(1f*i), -5f + ((i)*1f));
             ledgeBodyControl[i] = new RigidBodyControl(0.0f);
             ledges[i].addControl(ledgeBodyControl[i]);
             ledgeBodyControl[i].setKinematic(true);
