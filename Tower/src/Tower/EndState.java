@@ -45,14 +45,18 @@ public class EndState extends AbstractAppState implements ActionListener{
     public void initialize(AppStateManager stateManager, Application app){
         super.initialize(stateManager, app);
         cleanup();
-        System.out.println("Reached the end");
         main = (Main) app;
         asm = stateManager;
+        Main.killAll(main);
+        System.out.println("Reached the end");
         inputManager = main.getInputManager();
-        main.initAudio();
         main.initSky();
+        main.initAudio();
+        
+        main.getFlyByCamera().setEnabled(false);
         initKeys();
         System.out.println("Keys initialized");
+        
         //bmf = main.getAssetManager().loadFont("Interface/Fonts/Jokerman.fnt");
         //height = new BitmapText(bmf);
         //height.setColor(ColorRGBA.Blue);

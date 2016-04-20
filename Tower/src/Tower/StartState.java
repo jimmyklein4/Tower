@@ -47,7 +47,6 @@ public class StartState extends AbstractAppState implements ActionListener{
         main.initAudio();
         initKeys();
         main.getFlyByCamera().setEnabled(false);
-        main.getFlyByCamera().setDragToRotate(true);
         main.setDisplayStatView(false);
     }
     //==========================================================================

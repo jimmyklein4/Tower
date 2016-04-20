@@ -141,7 +141,7 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(startNode);
     }
     //==========================================================================
-    public void killAll(Main m){
+    protected static void killAll(Main m){
         m.guiNode.detachAllChildren();
         m.rootNode.detachAllChildren();
         m.inputManager.clearMappings();
