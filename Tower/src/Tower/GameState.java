@@ -23,11 +23,15 @@ public class GameState extends AbstractAppState implements ActionListener{
     private InputManager inputManager;
     private boolean paused = false;
     
+    protected GameState(){
+    }
+    
     @Override
     public void initialize(AppStateManager stateManager, Application app){
         main = (Main) app;
         asm = stateManager;
         inputManager = app.getInputManager();
+        main.initPhysics();
         main.initTower();
         main.initCharacter();
         main.initCamera();
@@ -36,7 +40,7 @@ public class GameState extends AbstractAppState implements ActionListener{
     
     private void initKeys(){
         inputManager.addMapping("Pause", new KeyTrigger(KeyInput.KEY_P));
-        inputManager.addMapping("Quit", new KeyTrigger(KeyInput.KEY_ESCAPE));
+        inputManager.addMapping("Quit", new KeyTrigger(KeyInput.KEY_O));
         
         inputManager.addListener(this, "Pause", "Quit");
     }   
@@ -45,8 +49,10 @@ public class GameState extends AbstractAppState implements ActionListener{
         if(isPressed){
             if(name.equals("Quit")){
                 EndState end = new EndState(); //TODO Add the height and time
+                //StartState end = new StartState();
                 asm.detach(this);
                 asm.attach(end);
+                System.out.println("Reached here");
             }
             if(name.equals("Pause")){
                 if(paused){

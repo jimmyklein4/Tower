@@ -21,7 +21,6 @@ public class StartState extends AbstractAppState implements ActionListener{
     Main main;
     AppStateManager asm;
     InputManager inputManager;
-    private AppStateManager stateManager;
     
         
     //==========================================================================
@@ -39,19 +38,20 @@ public class StartState extends AbstractAppState implements ActionListener{
     }
     //==========================================================================
     @Override
-    public void initialize(AppStateManager statManager, Application app){
+    public void initialize(AppStateManager stateManager, Application app){
         main = (Main)app;
         asm = stateManager;
-        
+        main.initSky();
+        main.initAudio();
         initKeys();
-        main.initTower();
         main.getFlyByCamera().setEnabled(false);
         main.getFlyByCamera().setDragToRotate(true);
+        main.setDisplayStatView(false);
     }
     //==========================================================================
     private void initKeys(){
         inputManager = main.getInputManager();
-        inputManager.addMapping("Start", new KeyTrigger(KeyInput.KEY_NUMPADENTER));
+        inputManager.addMapping("Start", new KeyTrigger(KeyInput.KEY_M));
         inputManager.addMapping("Quit", new KeyTrigger(KeyInput.KEY_ESCAPE));
         inputManager.addListener(this, "Start", "Quit");
     }

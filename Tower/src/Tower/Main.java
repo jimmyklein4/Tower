@@ -32,7 +32,7 @@ public class Main extends SimpleApplication {
     private Vector3f st = new Vector3f(0,0,4);
     BulletAppState bullet; 
     private TowerObject tower;
-    private CustomCamera customCamera;
+    public CustomCamera customCamera;
     CharacterObject character;
     Lighting light;
     Spatial sky;
@@ -45,19 +45,17 @@ public class Main extends SimpleApplication {
     //==========================================================================
     @Override
     public void simpleInitApp() {
-        initPhysics();
-        initSky();
         light = new Lighting(this);
-
-        startNode.setLocalTranslation(new Vector3f(0,0,4));
-        rootNode.attachChild(startNode);
         viewPort.setBackgroundColor(ColorRGBA.White);
-        initTower();
-        initCharacter();
-        initCamera();
-        initAudio();
-        setDisplayStatView(false);
+        //initTower();
+        //initCharacter();
+        //initCamera();
+        //initAudio();
+        //setDisplayStatView(false);
         //System.out.println(customCamera.getRotate());
+        
+        StartState start = new StartState();
+        stateManager.attach(start);
     }
     //==========================================================================
     @Override
@@ -91,14 +89,14 @@ public class Main extends SimpleApplication {
         sa.setShowSettings(false);
     }
     //==========================================================================
-    private void initPhysics(){
+    public void initPhysics(){
         bullet = new BulletAppState();
         stateManager.attach(bullet);
         bullet.setDebugEnabled(true);
 
     }
     //==========================================================================
-    private void initSky(){
+    public void initSky(){
         sky = SkyFactory.createSky(assetManager, 
         assetManager.loadTexture("Textures/SkyboxN.png"), 
         assetManager.loadTexture("Textures/SkyboxN.png"), 
@@ -121,7 +119,7 @@ public class Main extends SimpleApplication {
         tower = new TowerObject(this, 1);
     }
     //==========================================================================
-    private void initAudio(){
+    public void initAudio(){
         ambientSound = new AudioNode(assetManager, "Sounds/TEMPLE-Adam_Goh-7394_hifi.wav", false);
         ambientSound.setPositional(false);
         ambientSound.setLooping(true);
@@ -132,5 +130,14 @@ public class Main extends SimpleApplication {
     //==========================================================================
     public void initCamera(){
         customCamera = new CustomCamera(this, character);    
+    }
+    //==========================================================================
+    public Node getCharacter(){
+        return character.getCharacterNode();
+    }
+    //==========================================================================
+    public void initStart(){
+        startNode.setLocalTranslation(new Vector3f(0,0,4));
+        rootNode.attachChild(startNode);
     }
 }

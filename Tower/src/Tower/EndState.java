@@ -11,7 +11,9 @@ import com.jme3.app.state.AppStateManager;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.input.InputManager;
+import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.ColorRGBA;
 
 /**
@@ -23,7 +25,7 @@ public class EndState extends AbstractAppState implements ActionListener{
     private BitmapText height, time, endMessage;
     private AppStateManager asm;
     private Main main;
-    private InputManager input;
+    private InputManager inputManager;
     
     public EndState(){
         
@@ -41,20 +43,42 @@ public class EndState extends AbstractAppState implements ActionListener{
     
     @Override
     public void initialize(AppStateManager stateManager, Application app){
+        System.out.println("Reached the end");
         main = (Main) app;
         asm = stateManager;
-        bmf = main.getAssetManager().loadFont("Interface/Fonts/Jokerman.fnt");
-        height = new BitmapText(bmf);
+        inputManager = main.getInputManager();
+        main.initAudio();
+        main.initSky();
+        initKeys();
+        System.out.println("Keys initialized");
+        //bmf = main.getAssetManager().loadFont("Interface/Fonts/Jokerman.fnt");
+        //height = new BitmapText(bmf);
         //height.setColor(ColorRGBA.Blue);
         //height.setSize(size);
         //height.setLocalTranslation(x, y, z);
-        time = new BitmapText(bmf);
+        //time = new BitmapText(bmf);
         //time.setColor(ColorRGBA.Blue);
         //time.setSize(size);
         //time.setLocalTranslation(x, y, z);
     }
 
     public void onAction(String name, boolean isPressed, float tpf) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(isPressed){
+            if(name.equals("Exit")){
+                main.stop();
+            }
+            if(name.equals("New")){
+                StartState start = new StartState();
+                asm.detach(this);
+                asm.attach(start);
+            }
+        }
+    }
+    
+    private void initKeys(){
+        inputManager.addMapping("Exit", new KeyTrigger(KeyInput.KEY_N));
+        inputManager.addMapping("New", new KeyTrigger(KeyInput.KEY_B));
+        
+        inputManager.addListener(this, "Exit", "New");
     }
 }
