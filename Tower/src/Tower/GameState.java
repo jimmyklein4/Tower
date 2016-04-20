@@ -28,6 +28,8 @@ public class GameState extends AbstractAppState implements ActionListener{
     
     @Override
     public void initialize(AppStateManager stateManager, Application app){
+        super.initialize(stateManager, app);
+        cleanup();
         main = (Main) app;
         asm = stateManager;
         inputManager = app.getInputManager();

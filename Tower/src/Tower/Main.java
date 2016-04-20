@@ -140,4 +140,10 @@ public class Main extends SimpleApplication {
         startNode.setLocalTranslation(new Vector3f(0,0,4));
         rootNode.attachChild(startNode);
     }
+    //==========================================================================
+    public void killAll(Main m){
+        m.guiNode.detachAllChildren();
+        m.rootNode.detachAllChildren();
+        m.inputManager.clearMappings();
+    }
 }

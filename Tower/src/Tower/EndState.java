@@ -43,6 +43,8 @@ public class EndState extends AbstractAppState implements ActionListener{
     
     @Override
     public void initialize(AppStateManager stateManager, Application app){
+        super.initialize(stateManager, app);
+        cleanup();
         System.out.println("Reached the end");
         main = (Main) app;
         asm = stateManager;
