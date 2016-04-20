@@ -21,9 +21,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 /**
- * 
- * @author Chris
  * @author Jimmy
+ * @author Chris
  * @author Theo
  */
 public class Main extends SimpleApplication {
@@ -37,13 +36,13 @@ public class Main extends SimpleApplication {
     CharacterObject character;
     Lighting light;
     Spatial sky;
-
+    //==========================================================================
     public static void main(String[] args) {
         Main app = new Main();
         initAppScreen(app);
         app.start();
     }
-
+    //==========================================================================
     @Override
     public void simpleInitApp() {
         initPhysics();
@@ -60,27 +59,28 @@ public class Main extends SimpleApplication {
         setDisplayStatView(false);
         System.out.println(customCamera.getRotate());
     }
-
+    //==========================================================================
     @Override
     public void simpleUpdate(float tpf) {
         
     }
-
+    //==========================================================================
     @Override
     public void simpleRender(RenderManager rm) {
     }
-    
+    //==========================================================================
     public CustomCamera getCustomCamera(){
         return customCamera;
     }
-    
+    //==========================================================================
     public Lighting getLighting(){
         return light;
     }
+    //==========================================================================
     public Node getStartNode(){
         return startNode;
     }
-    
+    //==========================================================================
     private static void initAppScreen(SimpleApplication sa){
         AppSettings apps = new AppSettings(true);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -90,14 +90,14 @@ public class Main extends SimpleApplication {
         sa.setSettings(apps);
         sa.setShowSettings(false);
     }
-    
+    //==========================================================================
     private void initPhysics(){
         bullet = new BulletAppState();
         stateManager.attach(bullet);
         //bullet.setDebugEnabled(true);
 
     }
-    
+    //==========================================================================
     private void initSky(){
         sky = SkyFactory.createSky(assetManager, 
         assetManager.loadTexture("Textures/SkyboxN.png"), 
@@ -108,7 +108,7 @@ public class Main extends SimpleApplication {
         assetManager.loadTexture("Textures/SkyboxBottom.png"));
         rootNode.attachChild(sky);
     }
-    
+    //==========================================================================
     private void initCharacter(){
         character = new CharacterObject(this);
         flyCam.setEnabled(false);
@@ -116,7 +116,7 @@ public class Main extends SimpleApplication {
         tower.getTowerNode().attachChild(character.follow);
 
     }
-    
+    //==========================================================================
     private void initAudio(){
         ambientSound = new AudioNode(assetManager, "Sounds/TEMPLE-Adam_Goh-7394_hifi.wav", false);
         ambientSound.setPositional(false);
@@ -125,9 +125,8 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(ambientSound);
         ambientSound.play();
     }
-    
+    //==========================================================================
     private void initCamera(){
-        customCamera = new CustomCamera(this, character);
-        
+        customCamera = new CustomCamera(this, character);    
     }
 }
