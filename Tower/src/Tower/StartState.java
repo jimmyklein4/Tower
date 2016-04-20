@@ -38,6 +38,7 @@ public class StartState extends AbstractAppState implements ActionListener{
         }
     }
     //==========================================================================
+    @Override
     public void initialize(AppStateManager statManager, Application app){
         main = (Main)app;
         asm = stateManager;
