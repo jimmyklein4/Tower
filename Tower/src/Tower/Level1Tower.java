@@ -45,7 +45,7 @@ public class Level1Tower extends Node{
     private void initMesh() {
         meshTowerBase = new Box(4, 10, 4);
         meshLedge = new Box(0.25f,0.1f,1f);
-        meshLedge2 = new Box(1f, 0.1f, 0.25f);
+        meshLedge2 = new Box(1f, 0.1f, 0.35f);
     }
     //==========================================================================
 
@@ -187,7 +187,7 @@ public class Level1Tower extends Node{
             if((ledgePos.x<=(st.x-2)||ledgePos.y<=(st.y-2))||(ledgePos.x>=(st.x+1)||ledgePos.y>=(st.y+1))||ledgePos.z<=(st.z-1)||ledgePos.z>=(st.z+2)){
                 dir = !dir;
             }
-            if(axis=="z"&&(ledgePos.z<=-5||ledgePos.z>=5)){
+            else if(axis=="z"&&(ledgePos.z<=-5||ledgePos.z>=5)){
                 dir = !dir;
             }
             if(axis == "x"){
