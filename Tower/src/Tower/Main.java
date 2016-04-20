@@ -36,6 +36,7 @@ public class Main extends SimpleApplication {
     CharacterObject character;
     Lighting light;
     Spatial sky;
+    public static int screenWidth, screenHeight;
     //==========================================================================
     public static void main(String[] args) {
         Main app = new Main();
@@ -83,7 +84,9 @@ public class Main extends SimpleApplication {
         AppSettings apps = new AppSettings(true);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         screen.width *=0.75;
+        screenWidth = screen.width;
         screen.height *= 0.75;
+        screenHeight = screen.height;
         apps.setResolution(screen.width, screen.height);
         sa.setSettings(apps);
         sa.setShowSettings(false);
