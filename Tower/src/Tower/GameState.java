@@ -5,10 +5,12 @@
 
 package Tower;
 
+import com.jme3.app.state.AbstractAppState;
+
 /**
  *
  * @author Chris
  */
-public class GameState {
+public class GameState extends AbstractAppState{
 
 }

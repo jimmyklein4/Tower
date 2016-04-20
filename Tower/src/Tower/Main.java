@@ -52,12 +52,12 @@ public class Main extends SimpleApplication {
         startNode.setLocalTranslation(new Vector3f(0,0,4));
         rootNode.attachChild(startNode);
         viewPort.setBackgroundColor(ColorRGBA.White);
-        tower = new TowerObject(this);
-        initCharacter();
-        initCamera();
+        
+        //initCharacter();
+        //initCamera();
         initAudio();
         setDisplayStatView(false);
-        System.out.println(customCamera.getRotate());
+        //System.out.println(customCamera.getRotate());
     }
     //==========================================================================
     @Override
@@ -109,12 +109,16 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(sky);
     }
     //==========================================================================
-    private void initCharacter(){
+    public void initCharacter(){
         character = new CharacterObject(this);
         flyCam.setEnabled(false);
         tower.getTowerNode().attachChild(character.getCharacterNode());
         tower.getTowerNode().attachChild(character.follow);
 
+    }
+    //==========================================================================
+    public void initTower(){
+        tower = new TowerObject(this);
     }
     //==========================================================================
     private void initAudio(){
@@ -126,7 +130,7 @@ public class Main extends SimpleApplication {
         ambientSound.play();
     }
     //==========================================================================
-    private void initCamera(){
+    public void initCamera(){
         customCamera = new CustomCamera(this, character);    
     }
 }
