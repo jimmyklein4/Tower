@@ -11,6 +11,7 @@ import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.ui.Picture;
 
 /**
  *
@@ -18,6 +19,7 @@ import com.jme3.math.Vector3f;
  */
 public class StartState extends AbstractAppState implements ActionListener{
     
+    Picture pic;
     BitmapText welcomeText, instructionText;
     BitmapFont bmf;
     Main main;
@@ -61,6 +63,14 @@ public class StartState extends AbstractAppState implements ActionListener{
     }
     //==========================================================================
     private void initText(){
+        
+        pic = new Picture("Start Pic");
+        pic.setImage(main.getAssetManager(), "Materials/Text/title.png", true);
+        pic.setWidth(Main.screenWidth);
+        pic.setHeight(Main.screenHeight);
+        pic.setPosition(0, 0);
+        main.getGuiNode().attachChild(pic);
+        /*
         bmf = main.getAssetManager().loadFont("Interface/Fonts/Jokerman.fnt");
         welcomeText = new BitmapText(bmf);
         instructionText = new BitmapText(bmf);
@@ -84,6 +94,7 @@ public class StartState extends AbstractAppState implements ActionListener{
                 Main.screenWidth * .5f - instructionText.getLineWidth() * .5f,
                 Main.screenHeight - welcomeText.getLocalTranslation().y,
                 0));
+      */
     }
 }
 
