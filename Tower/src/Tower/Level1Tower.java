@@ -132,7 +132,9 @@ public class Level1Tower extends Node {
         @Override
         protected void controlUpdate(float tpf) {
             Vector3f ledgePos = ledge.getLocalTranslation();
-            if ((ledgePos.x <= (st.x - 2) || ledgePos.y <= (st.y - 2)) || (ledgePos.x >= (st.x + 1) || ledgePos.y >= (st.y + 1)) || ledgePos.z <= (st.z - 1) || ledgePos.z >= (st.z + 2)) {
+            if ((ledgePos.x <= (st.x - 3) || ledgePos.y <= (st.y - 3)) || 
+                    (ledgePos.x >= (st.x + 3) || ledgePos.y >= (st.y + 2)) || 
+                    ledgePos.z <= (st.z - 2) || ledgePos.z >= (st.z + 3)) {
                 dir = !dir;
             } else if (axis.equals("z") && (ledgePos.z <= -5 || ledgePos.z >= 5)) {
                 dir = !dir;
