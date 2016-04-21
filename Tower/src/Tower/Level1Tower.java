@@ -32,10 +32,6 @@ public class Level1Tower extends Node {
 
     public Level1Tower(Main msa) {
         this.msa = msa;
-        init();
-    }
-
-    private void init() {
         initMesh();
         initMat();
         initModel();

@@ -21,16 +21,23 @@ public class TowerObject {
     Main msa;
     AudioNode turnSound;
     boolean rotated = false;
-    Level1Tower tower;
+    //private Level1Tower tower;
+    private Level2Maze tower;
     private RigidBodyControl towerBodyControl;
     
     public TowerObject() {
     }
 
+    /*
+     * Level1Tower commented out for testing reasons of level2Maze
+     */
     public TowerObject(Main msa, int level) {
         this.msa = msa;
+        /*
         if(level==1)
             tower = new Level1Tower(msa);
+        */
+        tower = new Level2Maze(msa);
         init();
     }
 
