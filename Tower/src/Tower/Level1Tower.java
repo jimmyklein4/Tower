@@ -82,6 +82,7 @@ public class Level1Tower extends Node {
         towerBodyControl.setKinematic(true);
         msa.bullet.getPhysicsSpace().add(this);
 
+        //first two moving ledges(ledges[0] , ledges[1])
         ledges[0].setLocalTranslation(-2.2f, 6.5f, -5);
         ledgeBodyControl[0] = new RigidBodyControl(0.0f);
         ledges[0].addControl(ledgeBodyControl[0]);
