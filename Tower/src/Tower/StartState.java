@@ -3,14 +3,10 @@ package Tower;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
-import com.jme3.font.BitmapFont;
-import com.jme3.font.BitmapText;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
 import com.jme3.ui.Picture;
 
 /**
@@ -20,8 +16,6 @@ import com.jme3.ui.Picture;
 public class StartState extends AbstractAppState implements ActionListener{
     
     Picture pic;
-    BitmapText welcomeText, instructionText;
-    BitmapFont bmf;
     Main main;
     AppStateManager asm;
     InputManager inputManager;
