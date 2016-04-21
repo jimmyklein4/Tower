@@ -22,7 +22,9 @@ public class TowerObject {
     AudioNode turnSound;
     boolean rotated = false;
     //private Level1Tower tower;
+    private int level = 0;
     private Level2Maze tower;
+    private Level1Tower tower1;
     private RigidBodyControl towerBodyControl;
     
     public TowerObject() {
@@ -33,30 +35,61 @@ public class TowerObject {
      */
     public TowerObject(Main msa, int level) {
         this.msa = msa;
-        /*
-        if(level==1)
-            tower = new Level1Tower(msa);
-        */
-        tower = new Level2Maze(msa);
+        this.level = level;
+        if(level==1){
+            tower1 = new Level1Tower(msa);
+        }
+        else if(level==2){
+            tower = new Level2Maze(msa);
+        }
+        else
+            tower1 = new Level1Tower(msa);
         init();
     }
 
     public Node getTowerNode() {
-        return tower;
+        if(level==1){
+            return tower1;
+        }
+        else if(level == 2){
+            return tower;
+        }
+        else
+            return tower1;
     }
 
     private void init() {
         initAudio();
         initPhysics();
-        msa.getRootNode().attachChild(tower);
+        if(level==1){
+             msa.getRootNode().attachChild(tower1);
+        }
+        else if(level == 2){
+             msa.getRootNode().attachChild(tower);
+        }
+        else
+             msa.getRootNode().attachChild(tower1);
         initKeys();
     }
 
     private void initPhysics() {
         towerBodyControl = new RigidBodyControl(0.0f);
-        tower.addControl(towerBodyControl);
-        towerBodyControl.setKinematic(true);
-        msa.bullet.getPhysicsSpace().add(tower);
+        
+        if(level==1){
+            tower1.addControl(towerBodyControl);
+            towerBodyControl.setKinematic(true);
+            msa.bullet.getPhysicsSpace().add(tower1);
+        }
+        else if(level == 2){
+            tower.addControl(towerBodyControl);
+            towerBodyControl.setKinematic(true);
+            msa.bullet.getPhysicsSpace().add(tower);
+        }
+        else{
+            tower.addControl(towerBodyControl);
+            towerBodyControl.setKinematic(true);
+            msa.bullet.getPhysicsSpace().add(tower1);
+        }
     } 
     
     private void initAudio(){
