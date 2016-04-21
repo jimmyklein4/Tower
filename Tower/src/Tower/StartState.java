@@ -70,31 +70,6 @@ public class StartState extends AbstractAppState implements ActionListener{
         pic.setHeight(Main.screenHeight);
         pic.setPosition(0, 0);
         main.getGuiNode().attachChild(pic);
-        /*
-        bmf = main.getAssetManager().loadFont("Interface/Fonts/Jokerman.fnt");
-        welcomeText = new BitmapText(bmf);
-        instructionText = new BitmapText(bmf);
-        
-        welcomeText.setSize(bmf.getCharSet().getRenderedSize() *Main.screenWidth/150);
-        welcomeText.setColor(ColorRGBA.Black);
-        welcomeText.setText("TOWER");
-        
-        instructionText.setSize(bmf.getCharSet().getRenderedSize() *Main.screenWidth/450);
-        instructionText.setColor(ColorRGBA.Black);
-        instructionText.setText("Press [SPACE] to Start");
-        
-        main.getGuiNode().attachChild(welcomeText);
-        welcomeText.setLocalTranslation(new Vector3f(
-                Main.screenWidth * .5f - (welcomeText.getLineWidth() * .5f), 
-                Main.screenHeight * .5f + (welcomeText.getHeight()*.5f),
-                0));
-        
-        main.getGuiNode().attachChild(instructionText);
-        instructionText.setLocalTranslation(new Vector3f(
-                Main.screenWidth * .5f - instructionText.getLineWidth() * .5f,
-                Main.screenHeight - welcomeText.getLocalTranslation().y,
-                0));
-      */
     }
 }
 
