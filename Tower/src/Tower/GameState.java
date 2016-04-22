@@ -101,12 +101,12 @@ public class GameState extends AbstractAppState implements ActionListener{
         controlSwitch.setColor(ColorRGBA.White);
         
         pauseText.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 450);
-        controlExit.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 650);
-        controlQuit.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 650);
-        controlPause.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 650);
-        controlJump.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 650);
-        controlMove.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 650);
-        controlSwitch.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 650);
+        controlExit.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
+        controlQuit.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
+        controlPause.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
+        controlJump.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
+        controlMove.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
+        controlSwitch.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
         
         pauseText.setText("Paused");
         controlExit.setText("Press [ESC] to exit");
