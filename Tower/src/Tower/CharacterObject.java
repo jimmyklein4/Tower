@@ -70,7 +70,8 @@ public class CharacterObject {
         msa.getInputManager().addListener(analogListener, new String[]{"Left", "Right"});
 
         msa.getInputManager().addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
-        msa.getInputManager().addListener(actionListener, new String[]{"Jump", "Left", "Right"});
+        msa.getInputManager().addMapping("getLocation", new KeyTrigger(KeyInput.KEY_I));
+        msa.getInputManager().addListener(actionListener, new String[]{"Jump", "Left", "Right", "getLocation"});
     }
     private AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float value, float tpf) {
@@ -145,6 +146,10 @@ public class CharacterObject {
                     walkDirection.set(0, 0, 0);
                     characterBodyControl.setWalkDirection(new Vector3f(0, 0, 0));
                 }
+            }
+            if(name.equals("getLocation")){
+                Vector3f loc = characterNode.getLocalTranslation();
+                System.out.println("Location = "+ loc.x+" "+loc.y+" "+ loc.z);
             }
         }
     };
