@@ -3,10 +3,14 @@ package Tower;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.ui.Picture;
 
 /**
@@ -19,6 +23,8 @@ public class StartState extends AbstractAppState implements ActionListener{
     Main main;
     AppStateManager asm;
     InputManager inputManager;
+    BitmapFont bmf;
+    BitmapText level1, level2;
         
     //==========================================================================
     public void onAction(String name, boolean isPressed, float tpf) {
@@ -68,13 +74,31 @@ public class StartState extends AbstractAppState implements ActionListener{
     }
     //==========================================================================
     private void initText(){
-        
         pic = new Picture("Start Pic");
         pic.setImage(main.getAssetManager(), "Materials/Text/title.png", true);
         pic.setWidth(Main.screenWidth);
         pic.setHeight(Main.screenHeight);
         pic.setPosition(0, 0);
         main.getGuiNode().attachChild(pic);
+        
+        bmf = main.getAssetManager().loadFont("Interface/Fonts/Jokerman.fnt");
+        level1 = new BitmapText(bmf);
+        level2 = new BitmapText(bmf);
+        
+        level1.setColor(ColorRGBA.Black);
+        level2.setColor(ColorRGBA.Black);
+        
+        level1.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
+        level2.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
+        
+        level1.setText("Press [1] to start Level 1");
+        level2.setText("Press [2] to start Level 2");
+        
+        level1.setLocalTranslation(new Vector3f(0, level1.getHeight() * 2, 0));
+        level2.setLocalTranslation(new Vector3f(0, level2.getHeight(), 0));
+        
+        main.getGuiNode().attachChild(level1);
+        main.getGuiNode().attachChild(level2);
     }
     //==========================================================================
 }
