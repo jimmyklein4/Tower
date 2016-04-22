@@ -86,9 +86,9 @@ public class Main extends SimpleApplication {
     private static void initAppScreen(SimpleApplication sa){
         AppSettings apps = new AppSettings(true);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        screen.width *=0.9;
+        screen.width *=0.85;
         screenWidth = screen.width;
-        screen.height *= 0.9;
+        screen.height *= 0.85;
         screenHeight = screen.height;
         apps.setResolution(screen.width, screen.height);
         sa.setSettings(apps);
@@ -120,7 +120,6 @@ public class Main extends SimpleApplication {
         flyCam.setEnabled(false);
         tower.getTowerNode().attachChild(character.getCharacterNode());
         tower.getTowerNode().attachChild(character.follow);
-
     }
     //==========================================================================
     public void initTower(int level){
