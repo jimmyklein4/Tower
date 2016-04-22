@@ -58,7 +58,7 @@ public class GameState extends AbstractAppState implements ActionListener{
     public void onAction(String name, boolean isPressed, float tpf) {
         if(isPressed){
             if(name.equals("EndState")){
-                EndState end = new EndState(); //TODO Add the height and time
+                EndState end = new EndState(timeText, main.getCharacter().getWorldTranslation().y); //TODO Add the height and time
                 //StartState end = new StartState();
                 asm.detach(this);
                 asm.attach(end);
@@ -175,4 +175,5 @@ public class GameState extends AbstractAppState implements ActionListener{
         String t = String.format("Time: %3.1f", gameTime);
         timeText.setText(t);
     }
+    //==========================================================================
 }

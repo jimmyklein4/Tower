@@ -15,6 +15,7 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 
 /**
  *
@@ -22,7 +23,8 @@ import com.jme3.math.ColorRGBA;
  */
 public class EndState extends AbstractAppState implements ActionListener{
     private BitmapFont bmf;
-    private BitmapText height, time, endMessage;
+    private BitmapText time, endMessage, heightText;
+    private float height;
     private AppStateManager asm;
     private Main main;
     private InputManager inputManager;
@@ -36,36 +38,23 @@ public class EndState extends AbstractAppState implements ActionListener{
      * @param height: Height climbed
      * @param time: Time spent in game
      */
-    public EndState(String height, String time){
-        this.height.setText(height);
-        this.time.setText(time);
+    public EndState(BitmapText time, float height){
+        this.height = height;
+        this.time = time;
     }
     //==========================================================================
     @Override
     public void initialize(AppStateManager stateManager, Application app){
-        super.initialize(stateManager, app);
-        cleanup();
         main = (Main) app;
         asm = stateManager;
         
         main.killAll(main);
-        System.out.println("Reached the end");
         inputManager = main.getInputManager();
         main.initSky();
         
         main.getFlyByCamera().setEnabled(false);
         initKeys();
-        System.out.println("Keys initialized");
-        
-        //bmf = main.getAssetManager().loadFont("Interface/Fonts/Jokerman.fnt");
-        //height = new BitmapText(bmf);
-        //height.setColor(ColorRGBA.Blue);
-        //height.setSize(size);
-        //height.setLocalTranslation(x, y, z);
-        //time = new BitmapText(bmf);
-        //time.setColor(ColorRGBA.Blue);
-        //time.setSize(size);
-        //time.setLocalTranslation(x, y, z);
+        initText();
     }
     //==========================================================================
     public void onAction(String name, boolean isPressed, float tpf) {
@@ -77,6 +66,7 @@ public class EndState extends AbstractAppState implements ActionListener{
                 StartState start = new StartState();
                 asm.detach(this);
                 asm.attach(start);
+                main.getGuiNode().detachAllChildren();
             }
         }
     }
@@ -93,4 +83,38 @@ public class EndState extends AbstractAppState implements ActionListener{
         inputManager.addListener(this, "Exit", "New", "Quit");
     }
     //==========================================================================
+    private void initText(){
+        bmf = main.getAssetManager().loadFont("Interface/Fonts/Jokerman.fnt");
+        endMessage = new BitmapText(bmf);
+        heightText = new BitmapText(bmf);
+        
+        endMessage.setColor(ColorRGBA.Black);
+        heightText.setColor(ColorRGBA.Black);
+        time.setColor(ColorRGBA.Black);
+        
+        String t = String.format("Height: %3.1f", height);
+        heightText.setText(t);
+        endMessage.setText("Game Over");
+        
+        endMessage.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 450);
+        heightText.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
+        
+        endMessage.setLocalTranslation(new Vector3f(
+                Main.screenWidth / 2 - (endMessage.getLineWidth()/2),
+                Main.screenHeight / 2 + endMessage.getHeight(),
+                0));
+        time.setLocalTranslation(new Vector3f(
+                Main.screenWidth / 2 - (endMessage.getLineWidth()/2),
+                Main.screenHeight / 2 + endMessage.getLineHeight() - time.getHeight() * 2,
+                0));
+        heightText.setLocalTranslation(new Vector3f(
+                Main.screenWidth / 2 - (endMessage.getLineWidth()/2),
+                Main.screenHeight / 2 + endMessage.getLineHeight() - time.getHeight() * 3,
+                0));
+        
+        
+        main.getGuiNode().attachChild(time);
+        main.getGuiNode().attachChild(endMessage);
+        main.getGuiNode().attachChild(heightText);
+    }
 }
