@@ -94,7 +94,7 @@ public class EndState extends AbstractAppState implements ActionListener{
         heightText.setColor(ColorRGBA.Black);
         time.setColor(ColorRGBA.Black);
         
-        String t = String.format("Height: %3.1f", height);
+        String t = String.format("Height: %3.1f \n\nPress Space to start over", height);
         heightText.setText(t);
         
         if(won){
