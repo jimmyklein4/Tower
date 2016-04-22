@@ -38,6 +38,7 @@ public class Main extends SimpleApplication {
     Lighting light;
     Spatial sky;
     public static int screenWidth, screenHeight;
+    public boolean paused = false;
     //==========================================================================
     public static void main(String[] args) {
         Main app = new Main();
@@ -96,7 +97,7 @@ public class Main extends SimpleApplication {
     public void initPhysics(){
         bullet = new BulletAppState();
         stateManager.attach(bullet);
-        bullet.setDebugEnabled(true);
+        bullet.setDebugEnabled(false);
 
     }
     //==========================================================================
@@ -150,4 +151,5 @@ public class Main extends SimpleApplication {
         m.rootNode.detachAllChildren();
         m.inputManager.clearMappings();
     }
+    //==========================================================================
 }

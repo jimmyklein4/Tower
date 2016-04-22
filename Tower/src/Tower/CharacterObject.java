@@ -74,7 +74,7 @@ public class CharacterObject {
     }
     private AnalogListener analogListener = new AnalogListener() {
         public void onAnalog(String name, float value, float tpf) {
-            if (name.equals("Left")) {
+            if (name.equals("Left") && !msa.paused) {
                 if(isJumping && characterBodyControl.isOnGround()){
                     channel.setAnim("Run");
                     isJumping = false;
@@ -84,7 +84,7 @@ public class CharacterObject {
                 msa.getCamera().setLocation(new Vector3f(charLoc.x, charLoc.y, camLoc.z));
                 follow.setLocalTranslation(characterNode.getLocalTranslation());
             }
-            if (name.equals("Right")) {
+            if (name.equals("Right") && !msa.paused) {
                 if(isJumping && characterBodyControl.isOnGround()){
                     channel.setAnim("Run");
                     isJumping = false;
@@ -98,7 +98,7 @@ public class CharacterObject {
     };
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean isPressed, float tpf) {
-            if (name.equals("Jump")) {
+            if (name.equals("Jump") && !msa.paused) {
                 if (isPressed) {
                     channel.setAnim("Jump");
                     characterBodyControl.jump();
@@ -111,7 +111,7 @@ public class CharacterObject {
                     follow.setLocalTranslation(characterNode.getLocalTranslation());
                 }
             }
-            if (name.equals("Left")) {
+            if (name.equals("Left") && !msa.paused) {
                 if (isPressed) {
                     if(!faceDirection.equals(name)){
                         cNode.rotate(0, (float)Math.toRadians(180), 0);
@@ -128,7 +128,7 @@ public class CharacterObject {
                     characterBodyControl.setWalkDirection(walkDirection);
                 }
             }
-            if (name.equals("Right")) {
+            if (name.equals("Right") && !msa.paused) {
                 if (isPressed) {
                     if(!faceDirection.equals(name)){
                         cNode.rotate(0, (float)Math.toRadians(180), 0);

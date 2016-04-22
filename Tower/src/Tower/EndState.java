@@ -26,11 +26,11 @@ public class EndState extends AbstractAppState implements ActionListener{
     private AppStateManager asm;
     private Main main;
     private InputManager inputManager;
-    
+    //==========================================================================
     public EndState(){
         
     }
-    
+    //==========================================================================
     /**
      * 
      * @param height: Height climbed
@@ -40,7 +40,7 @@ public class EndState extends AbstractAppState implements ActionListener{
         this.height.setText(height);
         this.time.setText(time);
     }
-    
+    //==========================================================================
     @Override
     public void initialize(AppStateManager stateManager, Application app){
         super.initialize(stateManager, app);
@@ -67,7 +67,7 @@ public class EndState extends AbstractAppState implements ActionListener{
         //time.setSize(size);
         //time.setLocalTranslation(x, y, z);
     }
-
+    //==========================================================================
     public void onAction(String name, boolean isPressed, float tpf) {
         if(isPressed){
             if(name.equals("Exit") || name.equals("Quit")){
@@ -80,10 +80,11 @@ public class EndState extends AbstractAppState implements ActionListener{
             }
         }
     }
+    //==========================================================================
     @Override
     public void update(float tpf){
     }
-    
+    //==========================================================================
     private void initKeys(){
         inputManager.addMapping("Exit", new KeyTrigger(KeyInput.KEY_ESCAPE));
         inputManager.addMapping("Quit", new KeyTrigger(KeyInput.KEY_Q));
@@ -91,4 +92,5 @@ public class EndState extends AbstractAppState implements ActionListener{
         
         inputManager.addListener(this, "Exit", "New", "Quit");
     }
+    //==========================================================================
 }

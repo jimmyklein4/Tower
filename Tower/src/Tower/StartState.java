@@ -19,7 +19,6 @@ public class StartState extends AbstractAppState implements ActionListener{
     Main main;
     AppStateManager asm;
     InputManager inputManager;
-    
         
     //==========================================================================
     public void onAction(String name, boolean isPressed, float tpf) {
@@ -65,5 +64,6 @@ public class StartState extends AbstractAppState implements ActionListener{
         pic.setPosition(0, 0);
         main.getGuiNode().attachChild(pic);
     }
+    //==========================================================================
 }
 
