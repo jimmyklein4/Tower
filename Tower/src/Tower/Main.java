@@ -86,9 +86,9 @@ public class Main extends SimpleApplication {
     private static void initAppScreen(SimpleApplication sa){
         AppSettings apps = new AppSettings(true);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        screen.width *=0.75;
+        screen.width *=0.9;
         screenWidth = screen.width;
-        screen.height *= 0.75;
+        screen.height *= 0.9;
         screenHeight = screen.height;
         apps.setResolution(screen.width, screen.height);
         sa.setSettings(apps);
