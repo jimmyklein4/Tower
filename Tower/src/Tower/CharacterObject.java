@@ -28,6 +28,7 @@ public class CharacterObject {
 
     private Main msa;
     private AudioNode jumpSound;
+    private AudioNode walkSound;
     private Node characterNode = new Node();
     private AnimChannel channel;
     private AnimControl control;
@@ -106,6 +107,7 @@ public class CharacterObject {
                     channel.setAnim("Jump");
                     characterBodyControl.jump();
                     jumpSound.playInstance();
+                    walkSound.stop();
                 } else {
                     isJumping = true;
                     camLoc = msa.getCamera().getLocation();
@@ -122,12 +124,14 @@ public class CharacterObject {
                     }
                     if(characterBodyControl.isOnGround()){
                         channel.setAnim("Run");
+                        walkSound.play();
                     }
                     walkDirection = msa.getCustomCamera().getWalkDirection().mult(-1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
                 } else {
                     channel.setAnim("Stand");
                     walkDirection.set(0, 0, 0);
+                    walkSound.stop();
                     characterBodyControl.setWalkDirection(walkDirection);
                 }
             }
@@ -139,13 +143,14 @@ public class CharacterObject {
                     }
                     if(characterBodyControl.isOnGround()){
                         channel.setAnim("Run");
+                        walkSound.play();
                     }
                     walkDirection = msa.getCustomCamera().getWalkDirection().mult(1.5f);
                     characterBodyControl.setWalkDirection(walkDirection);
-
                 } else {
                     channel.setAnim("Stand");
                     walkDirection.set(0, 0, 0);
+                    walkSound.stop();
                     characterBodyControl.setWalkDirection(new Vector3f(0, 0, 0));
                 }
             }
@@ -216,7 +221,14 @@ public class CharacterObject {
         jumpSound.setPositional(false);
         jumpSound.setLooping(false);
         jumpSound.setVolume(1);
+        
+        walkSound = new AudioNode(msa.getAssetManager(), "Sounds/footstep.wav", false);
+        walkSound.setPositional(false);
+        walkSound.setLooping(true);
+        walkSound.setVolume(1);
+        
         msa.getRootNode().attachChild(jumpSound);
+        msa.getRootNode().attachChild(walkSound);
     }
 
     
