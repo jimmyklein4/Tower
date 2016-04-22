@@ -39,6 +39,8 @@ public class CharacterObject {
     private Vector3f checkPoint;
     private String faceDirection;    
     private boolean isJumping = false;
+    private int lives = 2;
+    
     public CharacterObject(Main sa) {
         this.msa = sa;
         initKeys();
@@ -195,7 +197,18 @@ public class CharacterObject {
     }
     
     public void setCheckPoint(){
-        checkPoint = characterNode.getLocalTranslation();
+        checkPoint = characterNode.getLocalTranslation().clone();
+    }
+    public Vector3f getCheckPoint(){
+        return checkPoint;
+    }
+    public int die(){
+        lives--;
+        
+        return lives;
+    }
+    public int getLives(){
+        return lives;
     }
     
     private void initAudio(){

@@ -28,6 +28,7 @@ public class EndState extends AbstractAppState implements ActionListener{
     private AppStateManager asm;
     private Main main;
     private InputManager inputManager;
+    private Boolean won;
     //==========================================================================
     public EndState(){
         
@@ -38,9 +39,10 @@ public class EndState extends AbstractAppState implements ActionListener{
      * @param height: Height climbed
      * @param time: Time spent in game
      */
-    public EndState(BitmapText time, float height){
+    public EndState(BitmapText time, float height, Boolean won){
         this.height = height;
         this.time = time;
+        this.won = won;
     }
     //==========================================================================
     @Override
@@ -94,7 +96,13 @@ public class EndState extends AbstractAppState implements ActionListener{
         
         String t = String.format("Height: %3.1f", height);
         heightText.setText(t);
-        endMessage.setText("Game Over");
+        
+        if(won){
+            endMessage.setText("Game Over\nYou Win!");
+        }
+        else{
+            endMessage.setText("Game Over\nYou Lose");
+        }
         
         endMessage.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 450);
         heightText.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);

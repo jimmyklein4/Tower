@@ -160,4 +160,7 @@ public class Main extends SimpleApplication {
             level = i;
         }
     }
+     public AppSettings getSettings() {
+      return (settings);
+  }
 }

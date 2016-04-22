@@ -11,6 +11,7 @@ import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.system.AppSettings;
 
 /**
  *
@@ -22,7 +23,7 @@ public class GameState extends AbstractAppState implements ActionListener{
     private InputManager inputManager;
     private BitmapFont bmf;
     private BitmapText pauseText, controlJump, controlMove, controlPause, 
-                       controlQuit, controlExit, controlSwitch, timeText;
+                       controlQuit, controlExit, controlSwitch, timeText, livesText;
     private float gameTime;
     private int level;
     //==========================================================================
@@ -62,7 +63,7 @@ public class GameState extends AbstractAppState implements ActionListener{
     public void onAction(String name, boolean isPressed, float tpf) {
         if(isPressed){
             if(name.equals("EndState")){
-                EndState end = new EndState(timeText, main.getCharacter().getWorldTranslation().y); //TODO Add the height and time
+                EndState end = new EndState(timeText, main.getCharacter().getWorldTranslation().y, false); //TODO Add the height and time
                 //StartState end = new StartState();
                 asm.detach(this);
                 asm.attach(end);
@@ -99,6 +100,7 @@ public class GameState extends AbstractAppState implements ActionListener{
         controlQuit = new BitmapText(bmf);
         controlSwitch = new BitmapText(bmf);
         timeText = new BitmapText(bmf);
+        livesText = new BitmapText(bmf);
         
         pauseText.setColor(ColorRGBA.White);
         controlExit.setColor(ColorRGBA.White);
@@ -107,7 +109,17 @@ public class GameState extends AbstractAppState implements ActionListener{
         controlJump.setColor(ColorRGBA.White);
         controlMove.setColor(ColorRGBA.White);
         controlSwitch.setColor(ColorRGBA.White);
-        timeText.setColor(ColorRGBA.White);
+        timeText.setColor(ColorRGBA.Black);
+        
+        //set livesText, sorry for the block of unrelated code
+        //quickly adding my previous code to this commit
+        livesText.setSize(bmf.getCharSet().getRenderedSize()*2);
+        livesText.setColor(ColorRGBA.Black);
+        livesText.setText("Lives: "+ main.character.getLives());
+        AppSettings s = main.getSettings();
+        float lineY = s.getHeight(); 
+        livesText.setLocalTranslation(0, lineY, 0f);
+        main.getGuiNode().attachChild(livesText);
         
         pauseText.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 450);
         controlExit.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
@@ -178,6 +190,20 @@ public class GameState extends AbstractAppState implements ActionListener{
         }
         String t = String.format("Time: %3.1f", gameTime);
         timeText.setText(t);
+        
+        if(main.character.getCharacterNode().getLocalTranslation().y<-1){
+            if(main.character.die()==0){
+                EndState end = new EndState(timeText, main.getCharacter().getWorldTranslation().y, false); //TODO Add the height and time
+                //StartState end = new StartState();
+                asm.detach(this);
+                asm.attach(end);
+            }
+            else{
+                main.character.getCharacterBodyControl().warp(main.character.getCheckPoint());
+                String live = "Lives: "+ main.character.getLives();
+                livesText.setText(live);
+            }
+        }
     }
     //==========================================================================
 }
