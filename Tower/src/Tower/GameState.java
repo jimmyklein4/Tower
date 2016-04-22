@@ -22,7 +22,8 @@ public class GameState extends AbstractAppState implements ActionListener{
     private InputManager inputManager;
     private BitmapFont bmf;
     private BitmapText pauseText, controlJump, controlMove, controlPause, 
-                       controlQuit, controlExit, controlSwitch;
+                       controlQuit, controlExit, controlSwitch, timeText;
+    private float gameTime;
     //==========================================================================
     protected GameState(){
     }
@@ -43,6 +44,7 @@ public class GameState extends AbstractAppState implements ActionListener{
         main.initCamera();
         initKeys();
         initText();
+        main.getGuiNode().attachChild(timeText);
     }
     //==========================================================================
     private void initKeys(){
@@ -67,6 +69,7 @@ public class GameState extends AbstractAppState implements ActionListener{
                     main.paused = false;
                     System.out.println("Paused = " + main.paused);
                     main.getGuiNode().detachAllChildren();
+                    main.getGuiNode().attachChild(timeText);
                     //remove pause information
                 }
                 else{
@@ -91,6 +94,7 @@ public class GameState extends AbstractAppState implements ActionListener{
         controlPause = new BitmapText(bmf);
         controlQuit = new BitmapText(bmf);
         controlSwitch = new BitmapText(bmf);
+        timeText = new BitmapText(bmf);
         
         pauseText.setColor(ColorRGBA.White);
         controlExit.setColor(ColorRGBA.White);
@@ -99,6 +103,7 @@ public class GameState extends AbstractAppState implements ActionListener{
         controlJump.setColor(ColorRGBA.White);
         controlMove.setColor(ColorRGBA.White);
         controlSwitch.setColor(ColorRGBA.White);
+        timeText.setColor(ColorRGBA.White);
         
         pauseText.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 450);
         controlExit.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
@@ -107,6 +112,7 @@ public class GameState extends AbstractAppState implements ActionListener{
         controlJump.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
         controlMove.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
         controlSwitch.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
+        timeText.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 800);
         
         pauseText.setText("Paused");
         controlExit.setText("Press [ESC] to exit");
@@ -115,6 +121,7 @@ public class GameState extends AbstractAppState implements ActionListener{
         controlJump.setText("Press [SPACE] to jump");
         controlMove.setText("Press [WASD] to move");
         controlSwitch.setText("Press [UP DOWN LEFT RIGHT] to move the tower");
+        
         
         pauseText.setLocalTranslation(new Vector3f(
                 Main.screenWidth / 2 - (pauseText.getLineWidth()/2),
@@ -144,7 +151,7 @@ public class GameState extends AbstractAppState implements ActionListener{
                 0,
                 Main.screenHeight-controlExit.getHeight()-controlQuit.getHeight()-controlPause.getHeight()-controlJump.getHeight()-controlMove.getHeight(),
                 0));
-        
+        timeText.setLocalTranslation(new Vector3f(0, timeText.getHeight(), 0));
     }
     //==========================================================================
     private void attachAllText(){
@@ -155,5 +162,17 @@ public class GameState extends AbstractAppState implements ActionListener{
         main.getGuiNode().attachChild(controlJump);
         main.getGuiNode().attachChild(controlMove);
         main.getGuiNode().attachChild(controlSwitch);
+    }
+    //==========================================================================
+    @Override
+    public void update(float tpf){
+        if(main.paused){
+            
+        }
+        else{
+            gameTime += tpf;
+        }
+        String t = String.format("Time: %3.1f", gameTime);
+        timeText.setText(t);
     }
 }
