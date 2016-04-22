@@ -28,6 +28,16 @@ public class StartState extends AbstractAppState implements ActionListener{
                 asm.detach(this);
                 asm.attach(game);
             }
+            if(name.equals("Level1")){
+                GameState game = new GameState(1);
+                asm.detach(this);
+                asm.attach(game);
+            }
+            if(name.equals("Level2")){
+                GameState game = new GameState(2);
+                asm.detach(this);
+                asm.attach(game);
+            }
             if(name.equals("Quit")){
                 main.stop();
             }
@@ -52,7 +62,9 @@ public class StartState extends AbstractAppState implements ActionListener{
         inputManager = main.getInputManager();
         inputManager.addMapping("Start", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Quit", new KeyTrigger(KeyInput.KEY_ESCAPE));
-        inputManager.addListener(this, "Start", "Quit");
+        inputManager.addMapping("Level1", new KeyTrigger(KeyInput.KEY_1));
+        inputManager.addMapping("Level2", new KeyTrigger(KeyInput.KEY_2));
+        inputManager.addListener(this, "Start", "Quit", "Level1", "Level2");
     }
     //==========================================================================
     private void initText(){
