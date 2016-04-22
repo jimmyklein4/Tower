@@ -51,12 +51,7 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         light = new Lighting(this);
         viewPort.setBackgroundColor(ColorRGBA.White);
-        //initTower();
-        //initCharacter();
-        //initCamera();
         initAudio();
-        //setDisplayStatView(false);
-        //System.out.println(customCamera.getRotate());
         
         StartState start = new StartState();
         stateManager.attach(start);
@@ -159,7 +154,9 @@ public class Main extends SimpleApplication {
             level = i;
         }
     }
+    //==========================================================================
      public AppSettings getSettings() {
       return (settings);
-  }
+     }
+     //=========================================================================
 }
