@@ -98,10 +98,10 @@ public class EndState extends AbstractAppState implements ActionListener{
         heightText.setText(t);
         
         if(won){
-            endMessage.setText("Game Over\nYou Win!");
+            endMessage.setText("You Win!");
         }
         else{
-            endMessage.setText("Game Over\nYou Lose");
+            endMessage.setText("Game Over");
         }
         
         endMessage.setSize(bmf.getCharSet().getRenderedSize() * Main.screenWidth / 450);

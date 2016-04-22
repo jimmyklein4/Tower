@@ -24,7 +24,7 @@ public class GameState extends AbstractAppState implements ActionListener{
     private BitmapFont bmf;
     private BitmapText pauseText, controlJump, controlMove, controlPause, 
                        controlQuit, controlExit, controlSwitch, timeText, livesText;
-    private float gameTime;
+    private float gameTime, height = 0;
     private int level;
     //==========================================================================
     protected GameState(){
@@ -63,7 +63,7 @@ public class GameState extends AbstractAppState implements ActionListener{
     public void onAction(String name, boolean isPressed, float tpf) {
         if(isPressed){
             if(name.equals("EndState")){
-                EndState end = new EndState(timeText, main.getCharacter().getWorldTranslation().y, false); //TODO Add the height and time
+                EndState end = new EndState(timeText, height, false); //TODO Add the height and time
                 //StartState end = new StartState();
                 asm.detach(this);
                 asm.attach(end);
@@ -182,6 +182,9 @@ public class GameState extends AbstractAppState implements ActionListener{
     //==========================================================================
     @Override
     public void update(float tpf){
+        if(main.getCharacter().getWorldTranslation().y > height){
+            height = main.getCharacter().getWorldTranslation().y;
+        }
         if(main.paused){
             
         }
@@ -193,7 +196,7 @@ public class GameState extends AbstractAppState implements ActionListener{
         
         if(main.character.getCharacterNode().getLocalTranslation().y<-1){
             if(main.character.die()==0){
-                EndState end = new EndState(timeText, main.getCharacter().getWorldTranslation().y, false); //TODO Add the height and time
+                EndState end = new EndState(timeText, height, false); //TODO Add the height and time
                 //StartState end = new StartState();
                 asm.detach(this);
                 asm.attach(end);
