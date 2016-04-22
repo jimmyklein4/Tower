@@ -39,6 +39,7 @@ public class Main extends SimpleApplication {
     Spatial sky;
     public static int screenWidth, screenHeight;
     public boolean paused = false;
+    private int level = 1;
     //==========================================================================
     public static void main(String[] args) {
         Main app = new Main();
@@ -122,8 +123,8 @@ public class Main extends SimpleApplication {
 
     }
     //==========================================================================
-    public void initTower(){
-        tower = new TowerObject(this, 1);
+    public void initTower(int level){
+        tower = new TowerObject(this, level);
     }
     //==========================================================================
     public void initAudio(){
@@ -154,4 +155,9 @@ public class Main extends SimpleApplication {
         m.inputManager.clearMappings();
     }
     //==========================================================================
+    public void setLevel(int i){
+        if(i > level){
+            level = i;
+        }
+    }
 }

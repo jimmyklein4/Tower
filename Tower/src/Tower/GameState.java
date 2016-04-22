@@ -24,10 +24,14 @@ public class GameState extends AbstractAppState implements ActionListener{
     private BitmapText pauseText, controlJump, controlMove, controlPause, 
                        controlQuit, controlExit, controlSwitch, timeText;
     private float gameTime;
+    private int level;
     //==========================================================================
     protected GameState(){
     }
     //==========================================================================
+    protected GameState(int level){
+        this.level = level;
+    }
     @Override
     public void initialize(AppStateManager stateManager, Application app){
         super.initialize(stateManager, app);
@@ -39,7 +43,7 @@ public class GameState extends AbstractAppState implements ActionListener{
         inputManager.clearMappings();
         main.initSky();
         main.initPhysics();
-        main.initTower();
+        main.initTower(level);
         main.initCharacter();
         main.initCamera();
         initKeys();

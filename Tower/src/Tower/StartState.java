@@ -24,7 +24,7 @@ public class StartState extends AbstractAppState implements ActionListener{
     public void onAction(String name, boolean isPressed, float tpf) {
         if(isPressed){
             if(name.equals("Start")){
-                GameState game = new GameState();
+                GameState game = new GameState(1);
                 asm.detach(this);
                 asm.attach(game);
             }
