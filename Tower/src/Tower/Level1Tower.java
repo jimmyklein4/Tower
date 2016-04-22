@@ -157,7 +157,14 @@ public class Level1Tower extends Node {
             Vector3f ledgePos = ledge.getLocalTranslation();
             if ((ledgePos.x <= (st.x - 2) || ledgePos.y <= (st.y - 2)) || (ledgePos.x >= (st.x + 1) || ledgePos.y >= (st.y + 1)) || ledgePos.z <= (st.z - 1) || ledgePos.z >= (st.z + 2)){
                 dir = !dir;
-            } else if (axis.equals("z") && (ledgePos.z <= -5 || ledgePos.z >= 5)) {
+            }
+            else if(axis.equals("x")&&ledgePos.x>(st.x+1)){
+                ledge.setLocalTranslation(st.x+0.8f, ledgePos.y, ledgePos.z);
+            }
+            else if(axis.equals("x")&&ledgePos.x<(st.x-2)){
+                ledge.setLocalTranslation(st.x-1.8f, ledgePos.y, ledgePos.z);
+            }
+            else if (axis.equals("z") && (ledgePos.z <= -5 || ledgePos.z >= 5)) {
                 dir = !dir;
             }
             if (axis.equals("x")) {
