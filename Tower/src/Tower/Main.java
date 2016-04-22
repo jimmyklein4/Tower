@@ -32,7 +32,7 @@ public class Main extends SimpleApplication {
     public AudioNode ambientSound;
     private Vector3f st = new Vector3f(0,0,4);
     BulletAppState bullet; 
-    private TowerObject tower;
+    public TowerObject tower;
     public CustomCamera customCamera;
     CharacterObject character;
     Lighting light;

@@ -23,8 +23,8 @@ public class TowerObject {
     boolean rotated = false;
     //private Level1Tower tower;
     private int level = 0;
-    private Level2Maze tower;
-    private Level1Tower tower1;
+    public Level2Maze tower;
+    public Level1Tower tower1;
     private RigidBodyControl towerBodyControl;
     
     public TowerObject() {

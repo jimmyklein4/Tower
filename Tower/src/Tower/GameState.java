@@ -204,6 +204,14 @@ public class GameState extends AbstractAppState implements ActionListener{
                 livesText.setText(live);
             }
         }
+        if(level == 1){
+            if(main.character.getCharacterNode().getWorldTranslation().distance(main.tower.tower1.endGate.getWorldTranslation())<0.5f){
+                EndState end = new EndState(timeText, main.getCharacter().getWorldTranslation().y, true); //TODO Add the height and time
+                //StartState end = new StartState();
+                asm.detach(this);
+                asm.attach(end);
+            }
+        }
     }
     //==========================================================================
 }
